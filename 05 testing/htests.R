@@ -3,22 +3,6 @@ library(apa) # for cohens_d
 library(ppcor) # for pcor and spcor
 library(BayesFactor) # all the Bayes...
 
-# library(tidyverse)
-# pdat <- tibble(
-#   ID = seq_len(46),
-#   sex = sample(c("F","M"), size = 46, replace = T),
-#   Cond_A = rnorm(46),
-#   Cond_B = Cond_A + rnorm(46, 3),
-#   Group = rep(letters[1:2], each = 23),
-#   Depression = c(rnorm(23),rnorm(23)),
-#   Anxiety = Depression + rnorm(46,,2),
-#   Joy = rnorm(46,,2)
-# )
-#
-# pdat$Anxiety[14] <- NA
-#
-# saveRDS(pdat,"pdat.Rds")
-
 pdat <- readRDS("pdat.Rds")
 
 
