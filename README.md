@@ -7,7 +7,7 @@ taught at Ben-Gurion University on the Negev (2019-2020).
 
 <sub>(Please note that some code does not work *on purpose*, to force
 students to learn to debug.)  
-(Other code might not work becuase… I’m only human, okay??)</sub>
+(Other code might not work because… I’m only human, okay??)</sub>
 
 ## List of packages
 
@@ -45,3 +45,10 @@ You can install all the packages by running:
 ``` r
 install.packages(pkgs, dependencies = TRUE)
 ```
+
+### To Do
+
+  - [ ] Bayesian Regression
+      - [ ] Equivalence testing(?)
+  - [ ] Assumption checks
+  - [ ] Logistic Regression
