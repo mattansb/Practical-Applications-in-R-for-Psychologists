@@ -3,7 +3,10 @@
 
 This Github repo contains all lesson files used in the *Advanced
 Research Methods foR Psychologists - Practical Applications in R*,
-taught at Ben-Gurion University on the Negev (2019-2020).
+taught at Ben-Gurion University on the Negev (2019-2020). These lessons
+cover the basics of R, basic frequentist and Bayesian testing, and the
+basics of linear regression modeling (moderation, prediction, model
+comparison, etc…).
 
 **Notes:**
 
@@ -35,17 +38,18 @@ pkgs <- c(
   # 09 mediation & curvilinear,
   "ggplot2", "performance", "emmeans", "JSmediation",
   # 10 beyond NHST
-   "BayesFactor", "bayestestR", "see"
+   "BayesFactor", "bayestestR", "see",
+  # 11 misc2
+  "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel"
 )
 ```
 
-Overall, these are the packages used in this course:
+You can install all the packages used by running:
 
     pkgs <- c("apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",  
-    "ggplot2", "Hmisc", "interactions", "JSmediation", "mice", "parameters",  
-    "performance", "ppcor", "psych", "see", "tidyr", "tidyverse")
-
-You can install all the packages by running:
+    "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",  
+    "JSmediation", "mice", "parameters", "performance", "ppcor",  
+    "psych", "see", "tidyr", "tidyverse")
 
 ``` r
 install.packages(pkgs, dependencies = TRUE)
@@ -54,5 +58,4 @@ install.packages(pkgs, dependencies = TRUE)
 ### To Do
 
   - [ ] Equivalence testing(?)
-  - [ ] Assumption checks
   - [ ] Logistic Regression
