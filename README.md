@@ -1,15 +1,27 @@
 
 # Advanced Research Methods foR Psychologists
 
-This Github repo contains all lesson files used in the *Advanced
-Research Methods foR Psychologists - Practical Applications in R*,
-taught at Ben-Gurion University on the Negev (2019-2020). These lessons
-cover the basics of R, basic frequentist and Bayesian testing, and the
-basics of linear regression modeling (moderation, prediction, model
-comparison, etc…).
+This Github repo contains all lesson files used in the graduate-level
+course: *Advanced Research Methods foR Psychologists - Practical
+Applications in R*, taught at Ben-Gurion University on the Negev (fall
+2019 semester).
+
+The goal is to impart students with the basic tools to process data,
+describe data (w/ summary statistics and plots), and finally build,
+evaluate and compare statistical models (using both the frequentist and
+Bayesian approach), focusing mostly on linear regression modeling. These
+lesson will lay the foundation for the advance courses:
+
+  - Structural equation modelling (*SEM*)
+  - Analysis of factorial data with (*ANOVA*).
+  - Hierarchical linear models (*HLM*).
+  - Machine Learning (*ML*).
 
 **Notes:**
 
+  - This repo contains only materials relating to *Practical
+    Applications in R*, and does not contain any theoretical or
+    introductory materials.  
   - Please note that some code does not work *on purpose*, to force
     students to learn to debug. <sub>(Other code might not work because…
     I’m only human, okay??)</sub>  
@@ -46,6 +58,8 @@ pkgs <- c(
 
 You can install all the packages used by running:
 
+    # in alphabetical order:
+
     pkgs <- c(
       "apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",
       "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",
@@ -59,5 +73,5 @@ install.packages(pkgs, dependencies = TRUE)
 
 ### To Do
 
-  - [ ] Equivalence testing(?)
-  - [ ] Logistic Regression
+  - [ ] Equivalence testing (?)
+  - [ ] Logistic Regression (?)
