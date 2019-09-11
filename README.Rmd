@@ -48,10 +48,11 @@ pkgs <- c(
 
 You can install all the packages used by running:
 
-```{r echo=FALSE, comment = ""}
+```{r echo=FALSE, comment = "", warning=FALSE}
 pkgs <- sort(unique(pkgs))
 
-cat("pkgs <-",capture.output(dput(pkgs)), fill = 80)
+
+styler::style_text(capture.output(cat("pkgs <-",capture.output(dput(pkgs)), fill = 80)))
 ```
 
 ```{r eval=FALSE}

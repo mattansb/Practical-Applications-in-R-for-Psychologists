@@ -46,10 +46,12 @@ pkgs <- c(
 
 You can install all the packages used by running:
 
-    pkgs <- c("apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",  
-    "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",  
-    "JSmediation", "mice", "parameters", "performance", "ppcor",  
-    "psych", "see", "tidyr", "tidyverse")
+    pkgs <- c(
+      "apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",
+      "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",
+      "JSmediation", "mice", "parameters", "performance", "ppcor",
+      "psych", "see", "tidyr", "tidyverse"
+    )
 
 ``` r
 install.packages(pkgs, dependencies = TRUE)
