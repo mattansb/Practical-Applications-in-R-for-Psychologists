@@ -9,11 +9,11 @@ Applications in R*, taught at Ben-Gurion University on the Negev (fall
 The goal is to impart students with the basic tools to process data,
 describe data (w/ summary statistics and plots), and finally build,
 evaluate and compare statistical models (using both the frequentist and
-Bayesian approach), focusing mostly on linear regression modeling. These
-lesson will lay the foundation for the advance courses:
+Bayesian approach), focusing mostly on linear regression modeling. This
+course will lay the foundation for the topic-focused courses:
 
   - Structural equation modelling (*SEM*)
-  - Analysis of factorial data with (*ANOVA*).
+  - Analysis of factorial designs (*ANOVA*).
   - Hierarchical linear models (*HLM*).
   - Machine Learning (*ML*).
 
