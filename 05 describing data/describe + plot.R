@@ -125,6 +125,9 @@ ggplot(mapping = aes(x = 0)) +
   geom_rug() +
   xlim(-5,5)
 
+# Learn how to better visualize your data:
+# https://serialmentor.com/dataviz/visualizing-amounts.html
+
 # Exercise ----------------------------------------------------------------
 
 # 1. Summarize the data in `df_NPAS_with_score` by describing the

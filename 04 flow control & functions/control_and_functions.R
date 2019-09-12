@@ -29,17 +29,18 @@ worker
 # note: if..else is a control flow function. Takes only one logical value.
 # to use with a data frame: use ifelse (taking a vector as input).
 # compare this:
-
-if (data$Nerdness < 2) {
-  data$personality <- "cool"
-} else if (data$Nerdness>4) {
-  data$personality <- "nerd"
+if (iris$Sepal.Length > 5) {
+  iris$Sepal <- "long"
+} else if (iris$Sepal.Length > 6) {
+  iris$Sepal <- "very long"
 } else {
-  data$personality <- "boring"
+  iris$Sepal <- "short"
 }
 
 # to this:
-data$personality <- ifelse(data$Nerdness<2,"cool",ifelse(data$Nerdness>4,"nerd","boring"))
+iris$Sepal <- ifelse(iris$Sepal.Length > 5, "long",
+                     ifelse(iris$Sepal.Length > 6, "very long",
+                            "short"))
 
 
 # Loops -------------------------------------------------------------------

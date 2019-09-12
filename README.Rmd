@@ -34,23 +34,23 @@ Here is a list of packages used in the course, by lesson:
 pkgs <- c(
   # 02 data.frames
   "tidyverse", # "reader", "dplyr", "tidyr",
-  # 03 misc1
+  # 03 missing data
   "Hmisc", "mice", "dplyr", "tidyr", 
-  # 04 describing data
+  # 05 describing data
   "dplyr", "psych", "ggplot2",
-  # 05 testing
+  # 06 testing
   "psych", "apa", "ppcor", "BayesFactor", 
-  # 06 regression
+  # 07 regression
   "dplyr", "parameters", "performance", "psych", "see",
-  # 07 hierarchical (and dummy)
+  # 08 hierarchical (and dummy)
   "dplyr", "emmeans", "car", "performance",
-  # 08 moderation
+  # 09 moderation
   "dplyr", "emmeans", "interactions",
-  # 09 mediation & curvilinear,
+  # 10 mediation & curvilinear,
   "ggplot2", "performance", "emmeans", "JSmediation",
-  # 10 beyond NHST
+  # 11 beyond NHST
    "BayesFactor", "bayestestR", "see",
-  # 11 misc2
+  # 12 assumption checks
   "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel"
 )
 ```
