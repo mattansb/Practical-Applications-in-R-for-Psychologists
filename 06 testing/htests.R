@@ -25,12 +25,20 @@ cohens_d(res)
 
 ttestBF(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 
+# You can also set the width of the prior with `rscale`.
+# Read more about selecting and reporting this, here:
+# http://xeniaschmalz.blogspot.com/2019/09/justifying-bayesian-prior-parameters-in.html
+
 # corr test ---------------------------------------------------------------
 
 ## simple correlation
 
 cor.test(pdat$Depression, pdat$Joy)
 correlationBF(pdat$Depression, pdat$Joy)
+
+# You can also set the width of the prior with `rscale`.
+# Read more about selecting and reporting this, here:
+# http://xeniaschmalz.blogspot.com/2019/09/justifying-bayesian-prior-parameters-in.html
 
 cor.test(pdat$Depression, pdat$Joy, method = "spearman")
 
