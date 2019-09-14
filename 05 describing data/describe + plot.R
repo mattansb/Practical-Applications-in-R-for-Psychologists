@@ -61,16 +61,16 @@ data_with_Group %>%
 
 df_NPAS <- readRDS("NPAS-data_clean.Rds")
 
+df_NPAS %>%
+  select(Q1:Q26) %>%
+  psych::alpha()
+
 mutate_colsum <- function(.data, col_name = "sum", ..., .keep = TRUE){
   tmp <- select_at(.data, vars(...))
   if (isFALSE(.keep)) .data[,colnames(tmp)] <- NULL
   .data[[col_name]] <- rowSums(tmp)
   .data
 }
-
-df_NPAS %>%
-  select(Q1:Q26) %>%
-  psych::alpha()
 
 df_NPAS_with_score <- df_NPAS %>%
   mutate_colsum("Nerdy", Q1:Q26, .keep = FALSE)
@@ -97,11 +97,9 @@ ggplot(df_NPAS_with_score, aes(x = Nerdy, y = Knowlage, color = gender)) +
   geom_smooth()
 
 ggplot(df_NPAS_with_score,mapping = aes(x=ASD, y=Nerdy, color = urban)) +
-  geom_point() +
   geom_boxplot()
 
 ggplot(df_NPAS_with_score,mapping = aes(x=ASD, y=Nerdy, color = urban)) +
-  geom_point() +
   geom_boxplot() +
   facet_grid(~gender)
 
