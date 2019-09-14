@@ -34,7 +34,7 @@ Here is a list of packages used in the course, by lesson:
 pkgs <- c(
   # 02 data.frames
   "tidyverse", # "reader", "dplyr", "tidyr",
-  # 03 missing data
+  # 04 missing data
   "Hmisc", "mice", "dplyr", "tidyr", 
   # 05 describing data
   "dplyr", "psych", "ggplot2",
@@ -53,6 +53,12 @@ pkgs <- c(
   # 12 assumption checks
   "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel"
 )
+```
+
+And their versions:
+```{r, echo=FALSE}
+packinfo <- installed.packages(fields = c("Package", "Version"))
+packinfo[packinfo[,"Package"] %in% pkgs,"Version"]
 ```
 
 You can install all the packages used by running:

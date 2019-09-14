@@ -35,7 +35,7 @@ Here is a list of packages used in the course, by lesson:
 pkgs <- c(
   # 02 data.frames
   "tidyverse", # "reader", "dplyr", "tidyr",
-  # 03 missing data
+  # 04 missing data
   "Hmisc", "mice", "dplyr", "tidyr", 
   # 05 describing data
   "dplyr", "psych", "ggplot2",
@@ -55,6 +55,17 @@ pkgs <- c(
   "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel"
 )
 ```
+
+And their versions:
+
+    ##          apa  BayesFactor   bayestestR          car        dplyr 
+    ##      "0.3.2" "0.9.12-4.2"      "0.2.5"      "3.0-3"      "0.8.3" 
+    ##      emmeans       GGally      ggplot2 ggResidpanel        Hmisc 
+    ##      "1.4.1"      "1.4.0"      "3.2.1"      "0.3.0"      "4.2-0" 
+    ## interactions  JSmediation         mice   parameters  performance 
+    ##      "1.1.1"      "0.1.0"      "3.6.0"      "0.1.0"      "0.3.0" 
+    ##        ppcor        psych          see        tidyr    tidyverse 
+    ##        "1.1"     "1.8.12"      "0.2.1"      "1.0.0"      "1.2.1"
 
 You can install all the packages used by running:
 
