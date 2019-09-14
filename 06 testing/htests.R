@@ -70,6 +70,10 @@ proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 # chi test ----------------------------------------------------------------
 
+res <- chisq.test(pdat$sex, pdat$Group, correct = FALSE)
+res
+
+
 cramers_v <- function(chisq.test.res){
   chisq <- unname(chisq.test.res$statistic)
   n <- sum(chisq.test.res$observed)
@@ -77,9 +81,6 @@ cramers_v <- function(chisq.test.res){
 
   c("cramers_v" = sqrt(chisq / (n * (k - 1))))
 }
-
-res <- chisq.test(pdat$sex, pdat$Group, correct = FALSE)
-res
 
 cramers_v(res)
 
