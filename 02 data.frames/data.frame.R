@@ -1,8 +1,9 @@
 
 # Data frames -------------------------------------------------------------
 
-df <- data.frame(a = letters[1:14],
-                 x = rnorm(14))
+df <- data.frame(x = letters[5:18],
+                 y = rnorm(14),
+                 z = 3)
 df
 
 # but usually...
@@ -39,6 +40,7 @@ MemoryExp[c(1,2,3), 5]
 MemoryExp$noise <- rnorm(nrow(MemoryExp))
 
 mean(MemoryExp$Hit[MemoryExp$Delay == "Short"])
+# we'll see next time a better, cleaner way to do this...
 
 MemoryExp_clean <- na.omit(MemoryExp)
 MemoryExp_clean_long_only <- MemoryExp_clean[MemoryExp_clean$Delay == "Long", ]
@@ -118,15 +120,17 @@ data_clean_piped <- data_raw %>%
   mutate(RT_z = scale(RT)) %>%
   ungroup()
 
-all.equal(data_clean,data_clean_piped)
+all.equal(data_clean, data_clean_piped)
 
 
 # Join --------------------------------------------------------------------
 
 subject_info <- read.csv("emotional_2back_sub_data.csv")
+head(subject_info)
 
 data_clean_joined <- data_clean %>%
   full_join(subject_info, by = "Subject")
+head(data_clean_joined)
 
 # Outliers ----------------------------------------------------------------
 
@@ -160,12 +164,21 @@ head(data_wide)
 
 # Wide to Long
 data_long <- data_wide %>%
-  gather(key = "condition", value = "mRT", neg_diff:pos_same)
+  pivot_longer(
+    neg_diff:pos_same,
+    names_to = "condition",
+    values_to = "mRT"
+  )
 head(data_long) # but not TIDY
 
+
 data_long_tidy <- data_wide %>%
-  gather(key = "condition", value = "mRT", neg_diff:pos_same) %>%
-  separate(col = "condition", into = c("Emotion","SameDiff"), sep = "_")
+  pivot_longer(
+    neg_diff:pos_same,
+    names_to = c("Emotion","SameDiff"),
+    names_pattern = "(.*)_(.*)",
+    values_to = "mRT"
+  )
 head(data_long_tidy)
 
 # Long to Wide
@@ -173,6 +186,11 @@ data_wide_again <- data_long_tidy %>%
   unite(col = "condition",Emotion, SameDiff) %>%
   spread(key = condition, value = mRT)
 
+data_wide_again <- data_long_tidy %>%
+  pivot_wider(
+    names_from = c("Emotion","SameDiff"),
+    values_from = "mRT"
+  )
 head(data_wide_again)
 
 # Export data -------------------------------------------------------------
