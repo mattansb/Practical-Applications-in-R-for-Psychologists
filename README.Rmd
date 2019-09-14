@@ -37,7 +37,7 @@ pkgs <- c(
   # 04 missing data
   "Hmisc", "mice", "dplyr", "tidyr", 
   # 05 describing data
-  "dplyr", "psych", "ggplot2",
+  "dplyr", "parameters", "summarytools", "psych", "ggplot2",
   # 06 testing
   "psych", "apa", "ppcor", "BayesFactor", 
   # 07 regression

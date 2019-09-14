@@ -38,7 +38,7 @@ pkgs <- c(
   # 04 missing data
   "Hmisc", "mice", "dplyr", "tidyr", 
   # 05 describing data
-  "dplyr", "psych", "ggplot2",
+  "dplyr", "parameters", "summarytools", "psych", "ggplot2",
   # 06 testing
   "psych", "apa", "ppcor", "BayesFactor", 
   # 07 regression
@@ -64,8 +64,10 @@ And their versions:
     ##      "1.4.1"      "1.4.0"      "3.2.1"      "0.3.0"      "4.2-0" 
     ## interactions  JSmediation         mice   parameters  performance 
     ##      "1.1.1"      "0.1.0"      "3.6.0"      "0.1.0"      "0.3.0" 
-    ##        ppcor        psych          see        tidyr    tidyverse 
-    ##        "1.1"     "1.8.12"      "0.2.1"      "1.0.0"      "1.2.1"
+    ##        ppcor        psych          see summarytools        tidyr 
+    ##        "1.1"     "1.8.12"      "0.2.1"      "0.9.4"      "1.0.0" 
+    ##    tidyverse 
+    ##      "1.2.1"
 
 You can install all the packages used by running:
 
@@ -75,7 +77,7 @@ You can install all the packages used by running:
       "apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",
       "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",
       "JSmediation", "mice", "parameters", "performance", "ppcor",
-      "psych", "see", "tidyr", "tidyverse"
+      "psych", "see", "summarytools", "tidyr", "tidyverse"
     )
 
 ``` r
