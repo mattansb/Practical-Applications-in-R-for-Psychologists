@@ -24,7 +24,7 @@ summary(m_curvi)
 anova(m_lin, m_curvi)
 performance::compare_performance(m_lin, m_curvi)
 
-# uncentered (not recomended)
+# uncentered
 m_curvi2 <- lm(child_satisfaction ~ parental_strictness + I(parental_strictness^2), parental_iris)
 summary(m_curvi2)
 
@@ -35,12 +35,3 @@ ggplot(parental_iris, aes(parental_strictness,child_satisfaction)) +
   geom_segment(aes(xend = parental_strictness, yend = Y_pred_curvlin),
                position = position_nudge(-0.03), color = "blue") +
   geom_line(aes(y = Y_pred_curvlin), color = "blue", size = 1)
-
-
-# Explore -----------------------------------------------------------------
-# what does this do?
-
-library(emmeans)
-mean_sd <- function(x) {mean(x) + c(-1,0,1) * sd(x)}
-
-emtrends(m_curvi, ~ parental_strictness, "parental_strictness", cov.red = mean_sd)
