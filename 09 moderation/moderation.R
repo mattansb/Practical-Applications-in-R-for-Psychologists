@@ -151,7 +151,7 @@ emtrends(m_interaction_short, ~ strictness_c, "involvement_c")
 
 mean_sd <- function(x) {mean(x) + c(-1,0,1) * sd(x)}
 mean_sd(c(1,2,3,3,3,3))
-# pcik-a-point!
+# pick-a-point with "at"!
 
 (et_involvement <- emtrends(m_interaction_short, ~ strictness_c, "involvement_c"))
 
