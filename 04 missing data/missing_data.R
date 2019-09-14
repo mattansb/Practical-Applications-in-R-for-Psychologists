@@ -5,9 +5,7 @@ head(tai_missing)
 
 #how many missing?
 tai_missing %>%
-  gather("Var","value",everything()) %>%
-  group_by(Var) %>%
-  summarise(missing_vals = mean(is.na(value)))
+  summarise_all( ~ mean(is.na(.x)))
 
 # Test MCAR ---------------------------------------------------------------
 
@@ -34,7 +32,7 @@ library(mice)
 md.pattern(tai_missing, plot = FALSE)
 
 imputed_Data <- mice(tai_missing, m = 5, maxit = 1, method = 'pmm', seed = 500)
-imputed_Data$imp %>% map(head)
+imputed_Data$imp %>% lapply(head)
 
 tai_imp_full <- complete(imputed_Data,action = 2)
 
