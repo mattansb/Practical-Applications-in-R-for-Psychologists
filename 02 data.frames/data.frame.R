@@ -175,7 +175,7 @@ head(data_long) # but not TIDY
 data_long_tidy <- data_wide %>%
   pivot_longer(
     neg_diff:pos_same,
-    names_to = c("Emotion","SameDiff"),
+    names_to = "Emotion","SameDiff",
     names_pattern = "(.*)_(.*)",
     values_to = "mRT"
   )
@@ -196,10 +196,10 @@ head(data_wide_again)
 # Export data -------------------------------------------------------------
 
 # save
-write.csv(QIMU_score, file = "QIMU_score.csv") # read.csv() into object
-saveRDS(QIMU_score,"QIMU_score.Rds") # readRDS() into object (why do this?)
+write.csv(data_long, file = "data_long.csv") # read.csv() into object
+saveRDS(data_long,"data_long.Rds") # readRDS() into object (why do this?)
 
-save(QIMU_raw,QIMU_score,file = "selected_objects.rdata") # load() into environment
+save(data_long,data_wide_again,file = "selected_objects.rdata") # load() into environment
 save.image(file = "all_objects.rdata") # load() into environment
 
 
