@@ -1,5 +1,5 @@
 library(dplyr)
-library(parameters) # for parameters_standardize and model_bootstrap
+library(parameters) # for parameters_standardize
 library(performance) # for model_performance etc..
 # will also need `psych` for dataset
 
@@ -31,9 +31,6 @@ parameters_standardize(fit, method = "classic")
 confint(fit)
 plot(model_parameters(fit))
 
-# bootstrap
-parameters_bootstrap(fit)
-
 # model indices
 model_performance(fit)
 rmse(fit)
@@ -47,7 +44,6 @@ summary(fit2)
 parameters_standardize(fit2, method = "classic")
 confint(fit2)
 plot(model_parameters(fit2))
-parameters_bootstrap(fit2)
 model_performance(fit22)
 
 # how will this affect the results?

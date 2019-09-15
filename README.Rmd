@@ -50,8 +50,8 @@ pkgs <- c(
   "ggplot2", "performance", "emmeans", "JSmediation",
   # 11 beyond NHST
    "BayesFactor", "bayestestR", "see",
-  # 12 assumption checks
-  "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel"
+  # 12 assumption checks & non-parameteric inference
+  "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel", "parameters", "permuco"
 )
 ```
 
@@ -85,3 +85,4 @@ install.packages(pkgs, dependencies = TRUE)
 
 - [ ] Equivalence testing (?)
 - [ ] Logistic Regression (?)
+- [ ] Power analysis with `pwr`?

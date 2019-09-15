@@ -51,8 +51,8 @@ pkgs <- c(
   "ggplot2", "performance", "emmeans", "JSmediation",
   # 11 beyond NHST
    "BayesFactor", "bayestestR", "see",
-  # 12 assumption checks
-  "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel"
+  # 12 assumption checks & non-parameteric inference
+  "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel", "parameters", "permuco"
 )
 ```
 
@@ -64,10 +64,10 @@ And their versions:
     ##      "1.4.1"      "1.4.0"      "3.2.1"      "0.3.0"      "4.2-0" 
     ## interactions  JSmediation         mice   parameters  performance 
     ##      "1.1.1"      "0.1.0"      "3.6.0"      "0.1.0"      "0.3.0" 
-    ##        ppcor        psych          see summarytools        tidyr 
-    ##        "1.1"     "1.8.12"      "0.2.1"      "0.9.4"      "1.0.0" 
-    ##    tidyverse 
-    ##      "1.2.1"
+    ##      permuco        ppcor        psych          see summarytools 
+    ##      "1.0.2"        "1.1"     "1.8.12"      "0.2.1"      "0.9.4" 
+    ##        tidyr    tidyverse 
+    ##      "1.0.0"      "1.2.1"
 
 You can install all the packages used by running:
 
@@ -76,8 +76,8 @@ You can install all the packages used by running:
     pkgs <- c(
       "apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",
       "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",
-      "JSmediation", "mice", "parameters", "performance", "ppcor",
-      "psych", "see", "summarytools", "tidyr", "tidyverse"
+      "JSmediation", "mice", "parameters", "performance", "permuco",
+      "ppcor", "psych", "see", "summarytools", "tidyr", "tidyverse"
     )
 
 ``` r
@@ -88,3 +88,4 @@ install.packages(pkgs, dependencies = TRUE)
 
   - [ ] Equivalence testing (?)
   - [ ] Logistic Regression (?)
+  - [ ] Power analysis with `pwr`?
