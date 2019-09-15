@@ -7,10 +7,8 @@ df <- data.frame(x = letters[5:18],
 df
 
 # but usually...
-fname <- "MemoryExp.csv"
-fname <- file.choose()
-
-MemoryExp <- read.csv(fname)
+MemoryExp <- read.csv("MemoryExp.csv")
+MemoryExp <- read.csv(file.choose())
 MemoryExp
 str(MemoryExp)
 head(MemoryExp)
@@ -176,7 +174,7 @@ data_long_tidy <- data_wide %>%
   pivot_longer(
     neg_diff:pos_same,
     names_to = "Emotion","SameDiff",
-    names_pattern = "(.*)_(.*)",
+    names_sep = "_",
     values_to = "mRT"
   )
 head(data_long_tidy)
