@@ -56,7 +56,7 @@ library(tidyverse)
 
 
 data_raw <- read.csv("emotional_2back.csv")   # data frame
-data_raw <- read_csv("emotional_2back.csv")   # tibble - but doesn't like hebrew....
+data_raw <- read_csv("emotional_2back.csv")   # tibble - but doesn't always like hebrew....
 
 str(data_raw)
 glimpse(data_raw)
