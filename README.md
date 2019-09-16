@@ -27,9 +27,17 @@ course will lay the foundation for the topic-focused courses:
     I’m only human, okay??)</sub>  
   - Solutions to exercises are not provided here (yet?). Sorry.
 
-## List of packages
+## Setup
 
-Here is a list of packages used in the course, by lesson:
+You will need:
+
+1.  A fresh installation of [**`R`**](https://cran.r-project.org/)
+    (preferably version 3.6 or above).
+2.  [RStudio](https://www.rstudio.com/products/rstudio/download/)
+    (optional - but I recommend using an IDE).
+3.  The following packages, listed by lesson:
+
+<!-- end list -->
 
 ``` r
 pkgs <- c(
@@ -56,18 +64,7 @@ pkgs <- c(
 )
 ```
 
-And their versions:
-
-    ##          apa  BayesFactor   bayestestR          car        dplyr 
-    ##      "0.3.2" "0.9.12-4.2"      "0.2.5"      "3.0-3"      "0.8.3" 
-    ##      emmeans       GGally      ggplot2 ggResidpanel        Hmisc 
-    ##      "1.4.1"      "1.4.0"      "3.2.1"      "0.3.0"      "4.2-0" 
-    ## interactions  JSmediation         mice   parameters  performance 
-    ##      "1.1.1"      "0.1.0"      "3.6.0"      "0.1.0"      "0.3.0" 
-    ##      permuco        ppcor        psych          see summarytools 
-    ##      "1.0.2"        "1.1"     "1.8.12"      "0.2.1"      "0.9.4" 
-    ##        tidyr    tidyverse 
-    ##      "1.0.0"      "1.2.1"
+<!-- And their versions: -->
 
 You can install all the packages used by running:
 
@@ -84,7 +81,7 @@ You can install all the packages used by running:
 install.packages(pkgs, dependencies = TRUE)
 ```
 
-### To Do
+## To Do
 
   - [ ] Equivalence testing (?)
   - [ ] Logistic Regression (?)
