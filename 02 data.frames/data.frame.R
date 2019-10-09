@@ -55,7 +55,7 @@ library(tidyverse)
 # Import data -------------------------------------------------------------
 
 
-data_raw <- read.csv("emotional_2back.csv")   # data frame
+data_raw <- read.csv("emotional_2back.csv", stringsAsFactors = TRUE)   # data frame
 data_raw <- read_csv("emotional_2back.csv")   # tibble - but doesn't always like hebrew....
 
 str(data_raw)
@@ -96,8 +96,12 @@ data_clean <- mutate(data_clean,
 
 # group_by -- group data by row value. Useful for use in combination with mutate
 data_clean <- group_by(data_clean, Emotion)
+group_keys(data_clean) # see what is grouped by
+
 data_clean <- mutate(data_clean, RT_z = scale(RT))
-data_clean <- ungroup(data_clean)
+
+data_clean <- ungroup(data_clean) # tip: always ungroup when you're done with grouping!
+group_keys(data_clean)
 
 View(data_clean)
 
