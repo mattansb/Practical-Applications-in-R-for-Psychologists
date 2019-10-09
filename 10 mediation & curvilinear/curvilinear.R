@@ -1,3 +1,4 @@
+library(performance) # for compare_performance, r2
 
 parental_iris <- read.csv("parental_iris.csv")
 head(parental_iris)
@@ -22,11 +23,16 @@ ggplot(parental_iris, aes(parental_strictness,child_satisfaction)) +
 m_curvi <- lm(child_satisfaction ~ poly(parental_strictness,2), parental_iris)
 summary(m_curvi)
 anova(m_lin, m_curvi)
-performance::compare_performance(m_lin, m_curvi)
+compare_performance(m_lin, m_curvi)
 
 # uncentered
 m_curvi2 <- lm(child_satisfaction ~ parental_strictness + I(parental_strictness^2), parental_iris)
 summary(m_curvi2)
+
+# centering never affects r^2 (or many other things - we only ever do it
+# for convenience)
+r2(m_curvi)
+r2(m_curvi2)
 
 parental_iris$Y_pred_curvlin <- predict(m_curvi2)
 
