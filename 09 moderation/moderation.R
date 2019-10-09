@@ -13,7 +13,7 @@ head(parental_iris)
 parental_iris_long_way <- parental_iris %>%
   mutate(
     # center parental_involvement
-    involvement_c = scale(parental_involvement, center = T, scale = F),
+    involvement_c = c(scale(parental_involvement, center = T, scale = F)), # Why is `scale` inside `c`?
     # dummy vars
     d_avoidant = as.numeric(attachment == "avoidant"),
     d_anxious  = as.numeric(attachment == "anxious"),
@@ -40,7 +40,7 @@ summary(m_interaction) # what does each parameter mean?
 parental_iris_long_way2 <- parental_iris %>%
   mutate(
     # center parental_involvement
-    involvement_c = scale(parental_involvement, center = T, scale = F),
+    involvement_c = c(scale(parental_involvement, center = T, scale = F)),
     # dummy vars
     d_secure  = as.numeric(attachment == "secure"),
     d_anxious = as.numeric(attachment == "anxious"),
@@ -59,7 +59,7 @@ summary(m_interaction2)
 parental_iris_long_way3 <- parental_iris %>%
   mutate(
     # center parental_involvement
-    involvement_c = scale(parental_involvement, center = T, scale = F),
+    involvement_c = c(scale(parental_involvement, center = T, scale = F)),
     # dummy vars
     d_secure   = as.numeric(attachment == "secure"),
     d_avoidant = as.numeric(attachment == "avoidant"),
@@ -81,7 +81,7 @@ summary(m_interaction3)
 parental_iris_short_way <- parental_iris %>%
   mutate(
     # center parental_involvement
-    involvement_c = scale(parental_involvement, center = T, scale = F),
+    involvement_c = c(scale(parental_involvement, center = T, scale = F)),
     # recode so that "secure" is base group
     attachment = factor(attachment, levels = c("secure","avoidant","anxious"))
   )
@@ -128,9 +128,9 @@ emtrends(m_interaction_short, ~ 1, "involvement_c")
 parental_iris_short_way <- parental_iris %>%
   mutate(
     # center parental_involvement
-    involvement_c = scale(parental_involvement, center = T, scale = F),
+    involvement_c = c(scale(parental_involvement, center = T, scale = F)),
     # center parental_strictness
-    strictness_c = scale(parental_strictness, center = T, scale = F),
+    strictness_c = c(scale(parental_strictness, center = T, scale = F)),
   )
 
 ## 2. Fit the model(s)
@@ -171,6 +171,7 @@ emtrends(m_interaction_short, ~ 1, "involvement_c")
 # 1. Extract the simple slopes for parental_strictness (conditioned on
 #    parental_involvement).
 # 2. Using the `interactions` package:
-#    A. Plot an interaction plot.   (`interact_plot`)
-#    B. Plot a Johnson-Neyman plot. (`johnson_neyman`)
+#    A. Preform 1 again.            (`sim_slopes`)
+#    B. Plot an interaction plot.   (`interact_plot`)
+#    C. Plot a Johnson-Neyman plot. (`johnson_neyman`)
 # *. Do the Continuous moderator the LONG way.
