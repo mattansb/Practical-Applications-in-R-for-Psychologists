@@ -56,7 +56,7 @@ pkgs <- c(
   # 09 moderation
   "dplyr", "emmeans", "interactions",
   # 10 mediation & curvilinear,
-  "ggplot2", "performance", "emmeans", "JSmediation",
+  "ggplot2", "performance", "JSmediation",
   # 11 beyond NHST
    "BayesFactor", "bayestestR", "see",
   # 12 assumption checks & non-parameteric inference
