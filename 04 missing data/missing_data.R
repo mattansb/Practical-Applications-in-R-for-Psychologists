@@ -7,9 +7,15 @@ head(tai_missing)
 tai_missing %>%
   summarise_all( ~ mean(is.na(.x)))
 
-# Test MCAR ---------------------------------------------------------------
 
-#' HOW TO TEST MISSING AT RANDOM??
+# Test Patterns of Missingness --------------------------------------------
+
+#' How to test patterns of missingness (MCAR, MAR, MNAR)?
+#' It is out of the scope of our work here, but this is a really (really)
+#' good tutorial about detecting & visializing patterns of missingness
+#' using the `finalfit` package.
+#'
+#' https://finalfit.org/articles/missing.html
 
 
 # Impute ------------------------------------------------------------------
