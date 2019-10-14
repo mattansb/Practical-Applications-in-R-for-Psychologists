@@ -44,7 +44,7 @@ pkgs <- c(
   # 02 data.frames
   "tidyverse", # "reader", "dplyr", "tidyr",
   # 04 missing data
-  "Hmisc", "mice", "dplyr", "tidyr", 
+  "finalfit", "Hmisc", "mice", 
   # 05 describing data
   "dplyr", "parameters", "summarytools", "psych", "ggplot2",
   # 06 testing
@@ -72,9 +72,9 @@ You can install all the packages used by running:
 
     pkgs <- c(
       "apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",
-      "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",
+      "finalfit", "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",
       "JSmediation", "mice", "parameters", "performance", "permuco",
-      "ppcor", "psych", "see", "summarytools", "tidyr", "tidyverse"
+      "ppcor", "psych", "see", "summarytools", "tidyverse"
     )
 
 ``` r

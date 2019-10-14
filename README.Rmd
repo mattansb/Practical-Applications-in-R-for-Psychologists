@@ -39,7 +39,7 @@ pkgs <- c(
   # 02 data.frames
   "tidyverse", # "reader", "dplyr", "tidyr",
   # 04 missing data
-  "Hmisc", "mice", "dplyr", "tidyr", 
+  "finalfit", "Hmisc", "mice", 
   # 05 describing data
   "dplyr", "parameters", "summarytools", "psych", "ggplot2",
   # 06 testing
