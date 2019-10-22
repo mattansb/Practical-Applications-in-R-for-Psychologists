@@ -98,7 +98,7 @@ anova(m_additive_short, m_interaction_short)
 summary(m_interaction_short)
 summary(m_interaction) # for comparison
 
-model.matrix(m_interaction)
+model.matrix(m_interaction_short)
 
 ## 3. Simple slopes analysis
 
