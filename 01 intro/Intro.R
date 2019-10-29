@@ -9,6 +9,7 @@ a + 4
 b <- 4
 a + b
 a * b
+a <- 8
 
 
 c <- a + b
@@ -16,10 +17,11 @@ c <- a * b
 c <- b - a
 c <- B - A
 
-(a <- 5)
+c <- a + b
+(c <- a + b)
 
 # Operators ---------------------------------------------------------------
-?`+`
+
 #   + addition
 #   - subtraction
 #   * multiplication
@@ -46,7 +48,7 @@ a + (b / 2)
 #   round(x)    round to the nearest integer
 #   trunc(x)    get rid of decimal digits
 
-
+?exp
 
 
 
@@ -62,9 +64,13 @@ Group1 / a
 x <- a > b
 y <- b > a
 z <- a == 7
+z <- a != 7
 z <- a = 7
+z <- a <- 7
 
 is.logical(a)
+is.logical("TRUE")
+is.logical(TRUE)
 is.numeric(a)
 is.character(a)
 
@@ -73,6 +79,9 @@ is.character(a)
 blah <- exp
 blah(1)
 
+blahblah <- is.logical
+blahblah(FALSE)
+is.logical(TRUE)
 
 # Vectors -----------------------------------------------------------------
 # a vector is a "chain" of values
@@ -96,32 +105,42 @@ plot(math.grades,english.grades)
 
 
 pass.english <- english.grades >= 56 # what will this make?
-
+pass.english
+english.grades
+sum(pass.english)
+mean(pass.english)
+TRUE + 4
 
 hebrew.grades <- c(100, NA, 99, 100, 80, 75)
 is.na(hebrew.grades)
 mean(hebrew.grades)
 mean(hebrew.grades, na.rm = TRUE)
 mean(x = hebrew.grades, na.rm = TRUE)
+mean(hebrew.grades, 0, TRUE)
 mean(na.rm = TRUE, x = hebrew.grades)
-
+mean(na.rm = TRUE, hebrew.grades)
+mean(TRUE, hebrew.grades)
 
 # Creating vectors
 v1 <- c(1,2,3,4,5,6,7,8,9,10)
 v2 <- 1:10
 v3 <- seq(from = 1, to = 10, by = 1)
 v4 <- seq(from = 1, to = 10, length = 10)
+seq(from = 1, to = 10, length = 4)
 
 v5 <- rep(0, 1000)
+v5
 v6 <- rep(c(1, 2, 5), each = 10)
 v7 <- rep(c(1, 2, 5), times = 10)
 
 # operations
 v8 <- v1 * 5
 v9 <- v6 + v7
+c(1,2,3,4) + c(1,2)
 
 # sample
 v10 <- sample(v9, 100, replace = TRUE)
+v10
 
 set.seed(1)
 v10 <- sample(v9, 100, replace = TRUE)
