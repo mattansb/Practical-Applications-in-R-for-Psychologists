@@ -43,23 +43,23 @@ You will need:
 pkgs <- c(
   # 02 data.frames
   "tidyverse", # "reader", "dplyr", "tidyr",
-  # 04 missing data
+  # 03 missing data
   "finalfit", "Hmisc", "mice", 
-  # 05 describing data
+  # 04 describing data
   "dplyr", "parameters", "summarytools", "psych", "ggplot2",
-  # 06 testing
+  # 05 testing
   "psych", "apa", "ppcor", "BayesFactor", 
-  # 07 regression
+  # 06 regression
   "dplyr", "parameters", "performance", "psych", "see",
-  # 08 hierarchical (and dummy)
+  # 07 hierarchical (and dummy)
   "dplyr", "emmeans", "car", "performance",
-  # 09 moderation
+  # 08 moderation
   "dplyr", "emmeans", "interactions",
-  # 10 mediation & curvilinear,
+  # 09 mediation & curvilinear,
   "ggplot2", "performance", "JSmediation",
-  # 11 beyond NHST
+  # 10 beyond NHST
    "BayesFactor", "bayestestR", "see",
-  # 12 assumption checks & non-parameteric inference
+  # 11 assumption checks & non-parameteric inference
   "performance", "dplyr", "ggplot2", "GGally", "ggResidpanel", "parameters", "permuco"
 )
 ```
