@@ -76,12 +76,12 @@ is.character(a)
 
 # Functions??? ------------------------------------------------------------
 
-blah <- exp
-blah(1)
+shoe <- sqrt
+shoe(9)
 
 blahblah <- is.logical
 blahblah(FALSE)
-is.logical(TRUE)
+blahblah("a")
 
 # Vectors -----------------------------------------------------------------
 # a vector is a "chain" of values
@@ -97,7 +97,6 @@ mean(math.grades)
 sd(math.grades)
 max(math.grades)
 range(math.grades)
-mean(math.grades)
 median(math.grades)
 cor(math.grades, english.grades)
 hist(math.grades)
