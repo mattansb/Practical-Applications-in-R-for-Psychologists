@@ -113,6 +113,11 @@ ggplot(df_NPAS_with_score,mapping = aes(x=ASD, y=Nerdy, color = urban)) +
 rnorm(1)
 rnorm(10)
 rnorm(1000) %>% hist()
+rnorm(1000, mean = 100, sd = 15) %>% hist()
+runif(1000) %>% hist()
+rexp(1000) %>% hist()
+rchisq(1000, df = 12) %>% hist()
+
 qnorm(.05) # input is probability
 pnorm(-1.96) # input is random variable value
 qt(.95,df = 12)
@@ -134,6 +139,6 @@ ggplot(mapping = aes(x = 0)) +
 # 2. Repeat (1) but for EACH gender and ASD group.
 # 3. Using ggplot, try and answer the following question:
 #    a. What is the relationship between sexual orientation (`orientation`)
-#       and nerdiness (`Nerdy`).
+#       and nerdiness (`Nerdy`). see `?geom_smooth`
 #    b. Does it vary by ASD? education? Both?
 
