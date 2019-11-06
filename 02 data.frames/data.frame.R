@@ -51,12 +51,15 @@ sd(MemoryExp_clean$Hit_z)
 # The ***tidyverse***  ----------------------------------------------------
 
 library(tidyverse)
+library(haven) # for read_spss & write_sav
 
 # Import data -------------------------------------------------------------
 
 
 data_raw <- read.csv("emotional_2back.csv", stringsAsFactors = TRUE)   # data frame
 data_raw <- read_csv("emotional_2back.csv")   # tibble - but doesn't always like hebrew....
+data_raw <- read_spss("emotional_2back.sav") # for SPSS files
+# see also the readxl pkg for excel files.
 
 str(data_raw)
 glimpse(data_raw)
@@ -199,6 +202,8 @@ head(data_wide_again)
 
 # save
 write.csv(data_long, file = "data_long.csv") # read.csv() into object
+# or write_sav? BUT WHY????
+
 saveRDS(data_long,"data_long.Rds") # readRDS() into object (why do this?)
 
 save(data_long,data_wide_again,file = "selected_objects.rdata") # load() into environment
