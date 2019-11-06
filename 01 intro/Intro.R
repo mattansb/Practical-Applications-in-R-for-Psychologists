@@ -147,9 +147,15 @@ v10 <- sample(v9, 100, replace = TRUE)
 # Extract and replace
 v9[1]
 v9[20:30]
+i <- c(1,3,4)
+v9[i]
+v9[c(1,3,4)] # same
+
+
 v9[v9 > 6]
 mean(v9[v9 > 6])
 
+v9[1]
 v9[1] <- 100
 v9[c(2,4,6)] <- -99
 v9
@@ -163,11 +169,11 @@ v10 <- c(v9, 5)
 v16 <- c(v1, v8)
 
 which(math.grades > 80 & math.grades <= 90)
-str(math.grades)
 
 # naming vector elements
 names(math.grades) <- 1:6
 names(english.grades) <- c("yossi", "danny", "avi", "moshe", "david", "eli")
+names(english.grades)
 english.grades["avi"]
 english.grades[3]
 english.grades[7 %% 4]
@@ -175,16 +181,18 @@ english.grades[7 %% 4]
 french.grades <- c("yossi" = 90,
                    "danny" = 100,
                    "avi" = 56)
-
+mean(french.grades)
+french.grades["yossi"] + 2
 # Factors -----------------------------------------------------------------
 
 sex <- sample(c("F","M"), size = 10, replace = TRUE)
-factor(sex)
+x <- factor(sex)
+# x[4] <- "G"
 factor(sex, levels = c("M","F")) # who cares about the order?
 factor(sex, levels = c("M","f")) # be carful...
 factor(sex, levels = c("M"))
 factor(sex, labels = c("Female","Male"))
-
+factor(sex, levels = c("M","F"), labels = c("Male","Female"))
 # Lists -------------------------------------------------------------------
 
 # mix
@@ -196,6 +204,10 @@ list2 <- list("Name" = "Beer-Sheva", "Population" = 200000, "is_negev" = TRUE)
 list2$Name
 list2[["Name"]]
 list2[[1]]
+list2["Name"]
+
+list2[["Population"]] + 5
+list2["Population"] + 5
 list2[1] # whats the difference???
 list2[c("Name","Population")]
 
@@ -208,7 +220,9 @@ list3[1]*3
 list3[[1]]*3
 
 list3[[3]][5]
-list3[["c"]][5]
+list3[["c"]][[5]]
+
+list3[["b"]] <- list3[["b"]] + 2
 
 # R projects --------------------------------------------------------------
 
