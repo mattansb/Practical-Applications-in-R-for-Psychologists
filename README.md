@@ -42,7 +42,7 @@ You will need:
 ``` r
 pkgs <- c(
   # 02 data.frames
-  "tidyverse", # "reader", "dplyr", "tidyr",
+  "tidyverse", "haven", # "reader", "dplyr", "tidyr",
   # 03 missing data
   "finalfit", "Hmisc", "mice", 
   # 04 describing data
@@ -72,9 +72,9 @@ You can install all the packages used by running:
 
     pkgs <- c(
       "apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",
-      "finalfit", "GGally", "ggplot2", "ggResidpanel", "Hmisc", "interactions",
-      "JSmediation", "mice", "parameters", "performance", "permuco",
-      "ppcor", "psych", "see", "summarytools", "tidyverse"
+      "finalfit", "GGally", "ggplot2", "ggResidpanel", "haven", "Hmisc",
+      "interactions", "JSmediation", "mice", "parameters", "performance",
+      "permuco", "ppcor", "psych", "see", "summarytools", "tidyverse"
     )
 
 ``` r

@@ -17,36 +17,36 @@ ncol(MemoryExp)
 nrow(MemoryExp)
 View(MemoryExp)
 summary(MemoryExp) # more on this next lesson...
+# Should subject number have a "mean"?
 
-# extract & replace
-MemoryExp[1, ]
-MemoryExp[, 1]
+# extract & replace with [row, column]
+MemoryExp[1, ] # first row
+MemoryExp[, 1] # first column
 MemoryExp[3, 5]
 
 MemoryExp[4, 5] # many ways to do the same thing...
-MemoryExp[4, "Hit"]
+MemoryExp[4, Hit]
 MemoryExp$Hit[4]
-MemoryExp[["Hit"]][4]
-MemoryExp[, 5][4]
-MemoryExp[, "Hit"][4]
+# MemoryExp[["Hit"]][4]
+# MemoryExp[, 5][4]
+# MemoryExp[, "Hit"][4]
 
-MemoryExp[c(1,2,3), 5]
+MemoryExp[c(1,2,3), ]
 MemoryExp[c(1,2,3), 5] <- NA
-MemoryExp[c(1,2,3), 5]
+MemoryExp[c(1,2,3), ]
 
 # new variable
-MemoryExp$noise <- rnorm(nrow(MemoryExp))
+MemoryExp$noise <- rnorm(n = nrow(MemoryExp))
 
-mean(MemoryExp$Hit[MemoryExp$Delay == "Short"])
-# we'll see next time a better, cleaner way to do this...
+MemoryExp$Hit_z <- scale(MemoryExp$Hit) # z score
+mean(MemoryExp$Hit_z)
+sd(MemoryExp$Hit_z)
+
+mean(MemoryExp$Hit[MemoryExp$Delay == "Short"]) # what does this do?
+# next time we'll see a better, clearer way to do this...
 
 MemoryExp_clean <- na.omit(MemoryExp)
 MemoryExp_clean_long_only <- MemoryExp_clean[MemoryExp_clean$Delay == "Long", ]
-
-MemoryExp_clean$Hit_z <- scale(MemoryExp_clean$Hit)
-mean(MemoryExp_clean$Hit_z)
-sd(MemoryExp_clean$Hit_z)
-
 
 # The ***tidyverse***  ----------------------------------------------------
 
@@ -57,12 +57,12 @@ library(haven) # for read_spss & write_sav
 
 
 data_raw <- read.csv("emotional_2back.csv", stringsAsFactors = TRUE)   # data frame
-data_raw <- read_csv("emotional_2back.csv")   # tibble - but doesn't always like hebrew....
-data_raw <- read_spss("emotional_2back.sav") # for SPSS files
+data_raw <- read_csv("emotional_2back.csv")   # but doesn't always like hebrew....
+# data_raw <- read_spss("emotional_2back.sav") # for SPSS files
 # see also the readxl pkg for excel files.
 
 str(data_raw)
-glimpse(data_raw)
+glimpse(data_raw) # better!
 
 # emotional_1back:
 # Subject  - subject number
@@ -77,7 +77,7 @@ glimpse(data_raw)
 
 
 
-# Tidy Data & the Pipe ----------------------------------------------------
+# Tidying Data & the Pipe -------------------------------------------------
 # What is tidy data?
 
 
@@ -85,37 +85,74 @@ glimpse(data_raw)
 # the first argument in all these functions is the object name (e.g., data_raw)
 # for even more functions, see the dplyr cheatsheet:
 # https://www.rstudio.com/resources/cheatsheets/
+# However, for very large data-sets (say, more than 1,000,000 rows) you
+# might want to consider the `data.table` pkg (not covered here).
 
 # select clumuns
-data_clean <- select(data_raw, Subject, Group, Block, Emotion, RT)
+data_clean <- select(data_raw,
+                     Subject, Group, Block, Emotion, RT)
+
 
 # filter -- selects rows:
-data_clean <- filter(data_clean, RT < 4000)
+data_clean <- filter(data_clean,
+                     RT < 4000)
+
 
 # mutate -- makes a new variable, or change existing ones
 data_clean <- mutate(data_clean,
                      logRT = log10(RT),
                      RT = RT / 1000)
 
-# group_by -- group data by row value. Useful for use in combination with mutate
-data_clean <- group_by(data_clean, Emotion)
+
+# group_by -- group data by some variable.
+# Useful for use in combination with mutate
+data_clean <- group_by(data_clean,
+                       Emotion)
 group_keys(data_clean) # see what is grouped by
 
-data_clean <- mutate(data_clean, RT_z = scale(RT))
+data_clean <- mutate(data_clean,
+                     RT_z = scale(RT))
 
-data_clean <- ungroup(data_clean) # tip: always ungroup when you're done with grouping!
+data_clean <- ungroup(data_clean) # tip: ALWAYS ungroup when you're done with grouping!
 group_keys(data_clean)
+
+
 
 View(data_clean)
 
-# Piping with %>% (and then...)
 
-exp(mean(c(1,2,3,4,NA), na.rm = TRUE))
-c(1,2,3,4,NA) %>% mean(na.rm = TRUE) %>% exp()
-TRUE %>% mean(c(1,2,3,4,NA), na.rm = .) %>% exp()
 
-# pipe with dplyr:
 
+
+# Piping with %>% ("and then...")
+
+exp(mean(c(1,2,3,4,NA), na.rm = TRUE)) # not readable
+
+
+# better...
+exp(
+  mean(
+    c(1,2,3,4,NA),
+    na.rm = TRUE
+  )
+)
+
+
+# best!
+c(1,2,3,4,NA) %>%
+  mean(na.rm = TRUE) %>%
+  exp()
+
+
+# if not piped to the first argument, we pipe to the `.`
+TRUE %>%
+  mean(c(1,2,3,4,NA), na.rm = .) %>%
+  exp()
+
+
+
+
+# pipe with dplyr (everything we did above):
 data_clean_piped <- data_raw %>%
   select(Subject, Group, Block, Emotion, RT) %>%
   filter(RT < 4000) %>%
@@ -136,29 +173,6 @@ head(subject_info)
 data_clean_joined <- data_clean %>%
   full_join(subject_info, by = "Subject")
 head(data_clean_joined)
-
-# Outliers ----------------------------------------------------------------
-
-# drop?
-data_no_OL <- data_clean_joined %>%
-  mutate(RT_z_ol_2sd = abs(RT_z) > 2) %>%
-  filter(!RT_z_ol_2sd)
-
-data_no_OL <- data_clean_joined %>%
-  mutate(RT_z_ol_2sd = ifelse(abs(RT_z) > 2,NA,RT_z)) %>%
-  drop_na(RT_z_ol_2sd)
-
-# "fix"
-data_winzorize_OL <- data_clean_joined %>%
-  mutate(RT_clean = case_when(
-    RT_z >  2 ~ max(RT_z[RT_z <= 2]),
-    RT_z < -2 ~ min(RT_z[RT_z >= 2]),
-    TRUE      ~ RT_z
-  ))
-
-hist(data_winzorize_OL$RT_z)
-hist(data_winzorize_OL$RT_clean)
-
 
 # Long and Wide -----------------------------------------------------------
 
@@ -198,35 +212,62 @@ data_wide_again <- data_long_tidy %>%
   )
 head(data_wide_again)
 
+# Outliers ----------------------------------------------------------------
+
+# drop?
+data_no_OL <- data_clean_joined %>%
+  mutate(RT_z_ol_2sd = abs(RT_z) > 2) %>%
+  filter(!RT_z_ol_2sd)
+
+# or
+data_no_OL <- data_clean_joined %>%
+  filter(abs(RT_z) <= 2)
+
+# "fix"
+data_winzorize_OL <- data_clean_joined %>%
+  mutate(RT_clean = case_when(RT_z >  2 ~ max(RT_z[RT_z <= 2]),
+                              RT_z < -2 ~ min(RT_z[RT_z >= 2]),
+                              TRUE      ~ RT_z))
+
+hist(data_winzorize_OL$RT_z)
+hist(data_winzorize_OL$RT_clean)
+
+
 # Export data -------------------------------------------------------------
 
 # save
 write.csv(data_long, file = "data_long.csv") # read.csv() into object
-# or write_sav? BUT WHY????
 
-saveRDS(data_long,"data_long.Rds") # readRDS() into object (why do this?)
+# or write_sav? BUT WHY??????????? NOOOOOOOOOO
 
-save(data_long,data_wide_again,file = "selected_objects.rdata") # load() into environment
-save.image(file = "all_objects.rdata") # load() into environment
+saveRDS(data_long, file = "data_long.Rds") # load using readRDS() into object (why do this?)
+
+save(data_long, data_wide_again, file = "selected_objects.rdata") # load using load() into environment
+save.image(file = "all_objects.rdata") # load using load() into environment
 
 
 # Exercise ----------------------------------------------------------------
 
 
 # Prep data:
+# 1. Rewrite this ugly code using the pipe (%>%):
+diff(range(sample(head(iris$Sepal.Length, n = 10), size = 5, replace = TRUE)))
+
+# Using the following data:
 data_raw <- read_csv("emotional_2back.csv")
-# 1. recode the Group variable: Subject<=30 Group=1, Subject>30 Group=2.
+# 2. recode the Group variable: Subject<=30 Group=1, Subject>30 Group=2.
 #    (the RA forgot to do it...)
 #    TIP: use `ifelse`
-# 2. remove block=1 (practice block)
-# 3. remove error trials
+#    (see last `control_and_functions.R` from last lesson)
+# 3. remove the first, practice block (1)
 # 4. remove trials following an error
 #    TIP: use `lag`
-# 5. remove RTs that fall beyond +/- 2 SD from each participant's average
-#    in each (emotion*gender) condition
-# 6. create the variable `delay_minutes`, randomly sampled from
+# 5. remove error trials (codded as ACC is 0)
+# 6. remove RTs that fall beyond +/- 2 SD from *each participant's* average
+#    in *each* (emotion-by-gender) condition
+# 7. create the variable `delay_minutes`, randomly sampled from
 #    c(short = 5, long = 60)
-# 7. Save that data to an Rds file AND a csv file
+# 8. Save that data to an Rds file AND a csv file
 
 
 

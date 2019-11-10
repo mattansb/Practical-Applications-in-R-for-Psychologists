@@ -37,7 +37,7 @@ You will need:
 ```{r}
 pkgs <- c(
   # 02 data.frames
-  "tidyverse", # "reader", "dplyr", "tidyr",
+  "tidyverse", "haven", # "reader", "dplyr", "tidyr",
   # 03 missing data
   "finalfit", "Hmisc", "mice", 
   # 04 describing data
