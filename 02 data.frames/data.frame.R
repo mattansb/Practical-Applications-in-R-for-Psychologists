@@ -56,7 +56,7 @@ library(haven) # for read_spss & write_sav
 # Import data -------------------------------------------------------------
 
 
-data_raw <- read.csv("emotional_2back.csv", stringsAsFactors = TRUE)   # data frame
+data_raw <- read.csv("emotional_2back.csv", stringsAsFactors = FALSE)   # data frame
 data_raw <- read_csv("emotional_2back.csv")   # but doesn't always like hebrew....
 # data_raw <- read_spss("emotional_2back.sav") # for SPSS files
 # see also the readxl pkg for excel files.
@@ -184,7 +184,7 @@ head(data_wide)
 # Wide to Long
 data_long <- data_wide %>%
   pivot_longer(
-    neg_diff:pos_same,
+    cols = neg_diff:pos_same,
     names_to = "condition",
     values_to = "mRT"
   )
@@ -194,17 +194,13 @@ head(data_long) # but not TIDY
 data_long_tidy <- data_wide %>%
   pivot_longer(
     neg_diff:pos_same,
-    names_to = "Emotion","SameDiff",
+    names_to = "Emotion", "SameDiff",
     names_sep = "_",
     values_to = "mRT"
   )
-head(data_long_tidy)
+head(data_long_tidy) # is THIS tidy?
 
 # Long to Wide
-data_wide_again <- data_long_tidy %>%
-  unite(col = "condition",Emotion, SameDiff) %>%
-  spread(key = condition, value = mRT)
-
 data_wide_again <- data_long_tidy %>%
   pivot_wider(
     names_from = c("Emotion","SameDiff"),
