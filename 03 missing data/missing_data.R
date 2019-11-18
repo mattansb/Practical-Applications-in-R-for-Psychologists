@@ -25,19 +25,23 @@ tai_missing$calm_imp <- impute(tai_missing$calm, fun = mean)
 
 tai_missing$calm_imp # the `*` marks the imputated value...
 
-tai_missing$calm_imp <- impute(tai_missing$calm, fun = median)
-tai_missing$calm_imp <- impute(tai_missing$calm, fun = 1.2) # can also be a number
+(tai_missing$calm_imp <- impute(tai_missing$calm, fun = median))
+(tai_missing$calm_imp <- impute(tai_missing$calm, fun = 1.2)) # can also be a number
 
 # Multivariate Imputation (MICE) ------------------------------------------
 
 library(mice)
 
 imputed_Data <- mice(tai_missing, m = 5, maxit = 1, method = 'pmm', seed = 500)
-# (seed will guarantee you always get the same results)
 
-lapply(imputed_Data$imp, head) # see the first rows of
+#' `seed` will guarantee you always get the same results)
+#' This will imputate ALL missing data based on ALL variables. If you want
+#' more control over what is imputated how - read:
+?mice
+
+# see the first rows of some imputaed data
+head(imputed_Data$imp$pleasant) # numeric
+head(imputed_Data$imp$study)    # categorical
+
 
 tai_imp_full <- complete(imputed_Data, action = 2) # I chose the second imputation
-
-table(tai_imp_full$study,tai_missing$study, exclude = FALSE)
-
