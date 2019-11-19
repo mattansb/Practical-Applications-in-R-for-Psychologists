@@ -43,8 +43,8 @@ You will need:
 pkgs <- c(
   # 02 data.frames
   "tidyverse", "haven", # "reader", "dplyr", "tidyr",
-  # 03 missing data
-  "finalfit", "Hmisc", "mice", 
+  # 03 outliers & imissing data
+  "finalfit", "Hmisc", "mice", "dplyr", 
   # 04 describing data
   "dplyr", "parameters", "summarytools", "psych", "ggplot2",
   # 05 testing
@@ -83,6 +83,5 @@ install.packages(pkgs, dependencies = TRUE)
 
 ## To Do
 
-  - [ ] Equivalence testing (?)
   - [ ] Logistic Regression (?)
-  - [ ] Power analysis with `pwr`?
+  - [ ] Power analysis with `pwr` (?)

@@ -208,27 +208,6 @@ data_wide_again <- data_long_tidy %>%
   )
 head(data_wide_again)
 
-# Outliers ----------------------------------------------------------------
-
-# drop?
-data_no_OL <- data_clean_joined %>%
-  mutate(RT_z_ol_2sd = abs(RT_z) > 2) %>%
-  filter(!RT_z_ol_2sd)
-
-# or
-data_no_OL <- data_clean_joined %>%
-  filter(abs(RT_z) <= 2)
-
-# "fix"
-data_winzorize_OL <- data_clean_joined %>%
-  mutate(RT_clean = case_when(RT_z >  2 ~ max(RT_z[RT_z <= 2]),
-                              RT_z < -2 ~ min(RT_z[RT_z >= 2]),
-                              TRUE      ~ RT_z))
-
-hist(data_winzorize_OL$RT_z)
-hist(data_winzorize_OL$RT_clean)
-
-
 # Export data -------------------------------------------------------------
 
 # save
