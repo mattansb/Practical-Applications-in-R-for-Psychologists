@@ -2,21 +2,24 @@ library(dplyr)
 library(parameters) # for kurtosis & skewness
 library(summarytools) # for dfSummary
 
-data_raw <- read.csv("emotional_2back.csv")
-data_with_Group <- data_raw %>%
-  mutate(Group = ifelse(Subject <= 30, "A", "B"))
+e2b_data <- read.csv("emotional_2back_fixed.csv")
 
-glimpse(data_with_Group)
+glimpse(e2b_data)
 
 
 # Describe variables ------------------------------------------------------
 
-dfSummary(data_with_Group)
+# This gives a quick and dirty summary of the passed variables:
+(quick_sum <- dfSummary(e2b_data))
+view(quick_sum) # small "v"!
 
-data_with_Group %>%
+# You can also specify your own statistics / measures manually:
+e2b_data %>%
   summarise(mean(RT),
-            mRT_correct = mean(RT[ACC==1]),
-            mean(ACC),
+            # how is this different than the previous entry?
+            mean(RT[ACC == 1]),
+            # you can also name results
+            mACC = mean(ACC),
             median(RT),
             kurtosis(RT), skewness(RT),
             min(RT),
@@ -24,35 +27,56 @@ data_with_Group %>%
 
 # By Group ----------------------------------------------------------------
 
-data_with_Group %>%
+e2b_data %>%
   group_by(Gender) %>%
   summarise(mean(RT),
-            mRT_correct = mean(RT[ACC==1]),
-            mean(ACC),
+            mean(RT[ACC == 1]),
+            mACC = mean(ACC),
             median(RT),
             kurtosis(RT), skewness(RT),
-            min(RT))
-
-
-data_summed_by_subject <- data_with_Group %>%
-  group_by(Subject, Emotion, SameDiff) %>%
-  summarise(mRT = mean(RT[ACC==1]),
-            mACC = mean(ACC),
+            min(RT),
+            max(RT),
             RT_range = range(RT))
+
+
+data_summed_by_subject <- e2b_data %>%
+  group_by(Subject, Emotion, SameDiff) %>%
+  summarise(mRT = mean(RT[ACC == 1]),
+            mACC = mean(ACC)) %>%
+  ungroup()
+
+head(data_summed_by_subject)
+# This data frame is basically ready for a rm-ANOVA!
+# (see next semester...)
+
+# unfortunately we lost some columns (gender, groups) - but we can add them
+# back in:
+# 1. Make df with data we want to add:
+subject_data <- e2b_data %>%
+  select(Subject, Group, Gender) %>%
+  distinct()
+
+head(subject_data)
+
+# 2. Joint them:
+data_summed_by_subject <- e2b_data %>%
+  group_by(Subject, Emotion, SameDiff) %>%
+  summarise(mRT = mean(RT[ACC == 1]),
+            mACC = mean(ACC)) %>%
+  ungroup() %>%
+  full_join(subject_data, by = "Subject")
 
 head(data_summed_by_subject)
 
-data_with_Group %>%
-  select(Subject,Group,Gender) %>%
-  distinct() %>%
-  full_join(data_summed_by_subject, by = "Subject") %>%
-  group_by(Group,Gender,Emotion,SameDiff) %>%
-  summarise(mean_RT = mean(mRT),
-            sd_RT = sd(mRT))
+# We can now also summarise THIS summarised data further!
+data_summed_by_subject %>%
+  group_by(Gender, Group, Emotion, SameDiff) %>%
+  summarise(mRT_M = mean(mRT),
+            mRT_S = sd(mRT))
 
 
-# counting subjects
-data_with_Group %>%
+# counting subjects in each group
+e2b_data %>%
   group_by(Gender, Group) %>%
   summarise(N = n_distinct(Subject))
 
@@ -60,23 +84,20 @@ data_with_Group %>%
 # Reliability and sum scores ----------------------------------------------
 
 df_NPAS <- readRDS("NPAS-data_clean.Rds")
+glimpse(df_NPAS)
 
 df_NPAS %>%
   select(Q1:Q26) %>%
   psych::alpha()
 
-mutate_colsum <- function(.data, col_name = "sum", ..., .keep = TRUE){
-  tmp <- select_at(.data, vars(...))
-  if (isFALSE(.keep)) .data[,colnames(tmp)] <- NULL
-  .data[[col_name]] <- rowSums(tmp)
-  .data
-}
-
 df_NPAS_with_score <- df_NPAS %>%
-  mutate_colsum("Nerdy", Q1:Q26, .keep = FALSE)
+  # always use `rowSums` in a NEW call to mutate!
+  mutate(Nerdy = rowSums(select(., Q1:Q26))) %>%
+  select(-(Q1:Q26))
 head(df_NPAS_with_score)
 
-# GGPLOT2 -----------------------------------------------------------------
+
+# *** ggplot2 *** ---------------------------------------------------------
 
 library(ggplot2) # already attached as part of the tidyverse
 
@@ -96,16 +117,16 @@ ggplot(df_NPAS_with_score, aes(x = Nerdy, y = Knowlage, color = gender)) +
   geom_point() +
   geom_smooth()
 
-ggplot(df_NPAS_with_score,mapping = aes(x=ASD, y=Nerdy, color = urban)) +
+ggplot(df_NPAS_with_score, aes(x = ASD, y = Nerdy, color = urban)) +
   geom_boxplot()
 
-ggplot(df_NPAS_with_score,mapping = aes(x=ASD, y=Nerdy, color = urban)) +
+ggplot(df_NPAS_with_score, aes(x = ASD, y = Nerdy, color = urban)) +
   geom_boxplot() +
-  facet_grid(~gender)
+  facet_grid( ~ married)
 
-ggplot(df_NPAS_with_score,mapping = aes(x=ASD, y=Nerdy, color = urban)) +
+ggplot(df_NPAS_with_score, aes(x = ASD, y = Nerdy, color = urban)) +
   geom_point() +
-  facet_grid(gender~married)
+  facet_grid(gender ~ married)
 
 # and many many more...
 # https://ggplot2-book.org/
