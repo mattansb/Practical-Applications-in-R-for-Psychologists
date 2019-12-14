@@ -9,9 +9,12 @@ glimpse(e2b_data)
 
 # Describe variables ------------------------------------------------------
 
+summary(e2b_data)
+
 # This gives a quick and dirty summary of the passed variables:
 (quick_sum <- dfSummary(e2b_data))
 view(quick_sum) # small "v"!
+
 
 # You can also specify your own statistics / measures manually:
 e2b_data %>%
@@ -20,22 +23,18 @@ e2b_data %>%
             mean(RT[ACC == 1]),
             # you can also name results
             mACC = mean(ACC),
-            median(RT),
-            kurtosis(RT), skewness(RT),
-            min(RT),
-            max(RT))
+            RT_md = median(RT),
+            RT_kurt = kurtosis(RT),
+            RT_skew = skewness(RT))
 
 # By Group ----------------------------------------------------------------
 
 e2b_data %>%
   group_by(Gender) %>%
-  summarise(mean(RT),
+  summarise(mean(RT, na.rm = TRUE),
             mean(RT[ACC == 1]),
             mACC = mean(ACC),
-            median(RT),
-            kurtosis(RT), skewness(RT),
-            min(RT),
-            max(RT),
+            RT_md = median(RT),
             RT_range = range(RT))
 
 
@@ -92,7 +91,9 @@ df_NPAS %>%
 
 df_NPAS_with_score <- df_NPAS %>%
   # always use `rowSums` in a NEW call to mutate!
-  mutate(Nerdy = rowSums(select(., Q1:Q26))) %>%
+  mutate(
+    Nerdy = select(., Q1:Q26) %>% rowSums()
+  ) %>%
   select(-(Q1:Q26))
 head(df_NPAS_with_score)
 
@@ -113,7 +114,7 @@ ggplot(df_NPAS_with_score, aes(x = Nerdy, y = Knowlage)) +
 ggplot(df_NPAS_with_score, aes(x = Nerdy, y = Knowlage, color = gender)) +
   geom_point()
 
-ggplot(df_NPAS_with_score, aes(x = Nerdy, y = Knowlage, color = gender)) +
+ggplot(df_NPAS_with_score, aes(x = Nerdy, y = Knowlage, color = factor(gender))) +
   geom_point() +
   geom_smooth()
 
@@ -127,6 +128,12 @@ ggplot(df_NPAS_with_score, aes(x = ASD, y = Nerdy, color = urban)) +
 ggplot(df_NPAS_with_score, aes(x = ASD, y = Nerdy, color = urban)) +
   geom_point() +
   facet_grid(gender ~ married)
+
+## Exercise:
+# What data do we want to plot? (which variables)
+# What do we want to plot? (a scatter plot? A bar plot with error bars?)
+# How do variables map onto the plot (thinking about axes, separate plots / groups, colors)...
+
 
 # and many many more...
 # https://ggplot2-book.org/
@@ -160,6 +167,6 @@ ggplot(mapping = aes(x = 0)) +
 # 2. Repeat (1) but for EACH gender and ASD group.
 # 3. Using ggplot, try and answer the following question:
 #    a. What is the relationship between sexual orientation (`orientation`)
-#       and nerdiness (`Nerdy`). see `?geom_smooth`
+#       and nerdiness (`Nerdy`).
 #    b. Does it vary by ASD? education? Both?
 
