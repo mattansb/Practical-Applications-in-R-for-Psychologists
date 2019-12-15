@@ -43,14 +43,14 @@ You will need:
 pkgs <- c(
   # 02 data.frames
   "tidyverse", "haven", # "reader", "dplyr", "tidyr",
-  # 03 outliers & imissing data
+  # 03 outliers & missing data
   "finalfit", "Hmisc", "mice", "dplyr", 
   # 04 describing data
   "dplyr", "parameters", "summarytools", "psych", "ggplot2",
   # 05 testing
-  "psych", "apa", "ppcor", "BayesFactor", 
+  "psych", "effectsize", "ppcor", "BayesFactor", 
   # 06 regression
-  "dplyr", "parameters", "performance", "psych", "see",
+  "dplyr", "parameters", "effectsize", "performance", "psych", "see",
   # 07 hierarchical (and dummy)
   "dplyr", "emmeans", "car", "performance",
   # 08 moderation
@@ -71,10 +71,11 @@ You can install all the packages used by running:
     # in alphabetical order:
 
     pkgs <- c(
-      "apa", "BayesFactor", "bayestestR", "car", "dplyr", "emmeans",
-      "finalfit", "GGally", "ggplot2", "ggResidpanel", "haven", "Hmisc",
-      "interactions", "JSmediation", "mice", "parameters", "performance",
-      "permuco", "ppcor", "psych", "see", "summarytools", "tidyverse"
+      "BayesFactor", "bayestestR", "car", "dplyr", "effectsize",
+      "emmeans", "finalfit", "GGally", "ggplot2", "ggResidpanel", "haven",
+      "Hmisc", "interactions", "JSmediation", "mice", "parameters",
+      "performance", "permuco", "ppcor", "psych", "see", "summarytools",
+      "tidyverse"
     )
 
 ``` r
