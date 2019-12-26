@@ -2,13 +2,13 @@ library(dplyr)
 library(effectsize) # for parameters_standardize
 library(parameters) # for model_parameters
 library(performance) # for model_performance etc..
-# will also need `psych` for dataset
+# will also need `psychTools` for dataset
 # will also need `see` for plotting
 
 # load a data set
-data("sai", package = "psych")
+data("sai", package = "psychTools")
 head(sai)
-?psych::sai
+?psychTools::sai
 
 sai_AGES <- sai %>%
   filter(study == "AGES") %>%
@@ -30,7 +30,7 @@ residuals(fit)
 # what is the correlation between these ^ two?
 
 # beta
-standardize_parameters(fit)
+standardize_parameters(fit, method = "basic")
 
 # ci
 confint(fit)
@@ -48,7 +48,7 @@ r2(fit) # and more...
 
 # Multiple Regression -----------------------------------------------------
 
-fit2 <- lm(anxious ~ calm + tense + worrying, sai_AGES)
+fit2 <- lm(anxious ~ calm + tense + worrying, data = sai_AGES)
 summary(fit2)
 
 # how will this affect the results?
@@ -57,11 +57,11 @@ fit3 <- lm(anxious ~ calm + tense_100 + worrying, sai_AGES)
 summary(fit2)
 summary(fit3)
 
+model_parameters(fit2, standardize = "basic")
 
 # all variables in a data.frame (almost never useful)
 fit_all <- lm(anxious ~ ., sai_AGES)
 summary(fit_all)
-
 
 # Exercise ----------------------------------------------------------------
 
@@ -70,6 +70,8 @@ summary(fit_all)
 #    b. What is the 80% CI for the second predictor?
 #    c. What is the R^2 of the model?
 # 2. Plot (with ggplot) the tri-variate relationship.
-# 3. Add the predicted values to the data.frame. Plot them (with ggplot2,
-#    duh) the relation to the true values. Use `geom_smooth`.
+# 3. Add the predicted values to the data.frame.
+#    Plot them (with ggplot2, duh) the relation to the true values. Use `geom_smooth`.
+#    a. Why is the slope positive?
+#    b. What does the correlation between the two represent?
 # *. What does `update` do?

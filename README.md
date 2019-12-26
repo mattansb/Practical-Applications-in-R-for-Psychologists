@@ -50,7 +50,7 @@ pkgs <- c(
   # 05 testing
   "psych", "effectsize", "ppcor", "BayesFactor", 
   # 06 regression
-  "dplyr", "parameters", "effectsize", "performance", "psych", "see",
+  "dplyr", "parameters", "effectsize", "performance", "psychTools", "see",
   # 07 hierarchical (and dummy)
   "dplyr", "emmeans", "car", "performance",
   # 08 moderation
@@ -74,8 +74,8 @@ You can install all the packages used by running:
       "BayesFactor", "bayestestR", "car", "dplyr", "effectsize",
       "emmeans", "finalfit", "GGally", "ggplot2", "ggResidpanel", "haven",
       "Hmisc", "interactions", "JSmediation", "mice", "parameters",
-      "performance", "permuco", "ppcor", "psych", "see", "summarytools",
-      "tidyverse"
+      "performance", "permuco", "ppcor", "psych", "psychTools", "see",
+      "summarytools", "tidyverse"
     )
 
 ``` r
