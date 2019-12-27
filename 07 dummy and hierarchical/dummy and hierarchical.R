@@ -20,45 +20,51 @@ summary(fit_dummy)
 fit_factor <- lm(anxiety ~ treat_group,
                  data = anxiety_adhd)
 summary(fit_factor)
+summary(fit_dummy)
 
 # How are these determined?
 # 1. If the var is a character it is first converted into a factor (level
-#    alphabetically).
-# 2. By default, a treatment vs base coding is used, with the fist level
-#    is the base group.
+#    order is alphabetical).
+# 2. By default, dummy (treatment) coding is used, with the fist level
+#    as the base group.
 
-# see the dummy vars:
+# see the coding:
 contrasts(anxiety_adhd$treat_group)
+model.matrix(~ treat_group, data = anxiety_adhd)
 model.matrix(fit_factor)
 
 
 # Change contrast scheme --------------------------------------------------
 
-## 1. change base group
-contr.treatment(n = 3, base = 2)
+## 1. change base group in dummy coding
 contrasts(anxiety_adhd$treat_group) <- contr.treatment(n = 3, base = 2)
 contrasts(anxiety_adhd$treat_group)
 summary(lm(anxiety ~ treat_group, data = anxiety_adhd))
 
 # Or change fist level of the factor by re-leveling the factor...
+# (`forcats` is a good package for tidying factors)
 
-## 2. change to a different scheme:
+## 2. change to effects coding:
 contrasts(anxiety_adhd$treat_group) <- contr.sum
-summary(lm(anxiety ~ treat_group, data = anxiety_adhd))
+contrasts(anxiety_adhd$treat_group)
+fit_factor2 <- lm(anxiety ~ treat_group, data = anxiety_adhd)
+summary(fit_factor2)
 
 ?contr.treatment # even more types...
 
 # Or... make your own (google it / ?contrasts).
 
 
-## 3. Does the coding even matter?
+## 3. Does the coding even matter for describing the data? (no)
 
-library(emmeans)
-treamt_means <- emmeans(fit_factor, ~ treat_group)
-treamt_means
-emmip(treamt_means, ~treat_group, CIs = TRUE)
-confint(treamt_means)
-contrast(treamt_means, "pairwise") %>% summary(infer = TRUE)
+library(emmeans) # one of the best packages in R - for ANY follow-up analysis!!
+emmeans(fit_factor, ~ treat_group)
+emmeans(fit_factor2, ~ treat_group)
+
+emmeans(fit_factor, ~ treat_group) %>%
+  contrast("pairwise") %>%
+  summary(infer = TRUE)
+# More on this next semester (ANOVA)
 
 # Testing (omnibus test) --------------------------------------------------
 
@@ -67,7 +73,7 @@ anova(fit_factor)
 car::Anova(fit_factor, type = 3)
 
 # what do these actually test? And why is it important to understand?
-# Well see next time what happens...
+# More on this next semester (ANOVA)
 
 # Testing (hierarchical) --------------------------------------------------
 
@@ -78,7 +84,8 @@ fit3 <- lm(anxiety ~ sex + ADHD_symptoms + treat_group, data = anxiety_adhd)
 anova(fit1, fit2, fit3)
 performance::compare_performance(fit1, fit2, fit3)
 
-# For step-wise regression, see `drop1`, `add1` and `MASS::stepAIC`
+# For forward/backward step-wise regression, see:
+# `drop1`, `add1` and `MASS::stepAIC`
 
 # Exercise ----------------------------------------------------------------
 
@@ -95,7 +102,7 @@ performance::compare_performance(fit1, fit2, fit3)
 #' 4. Is there a difference between the TAs?
 #'    Who gave the highest grades?
 #'    Who gave the lowest?
-#'    Is the difference between them significant? (try using emmeans for this ^)
+#'    Is the difference between them significant? (try using emmeans for this)
 #' 5. Fit a second model, predicting final Report grade from the TA, in_couple & DOI.
 #' 6. Is this model better than the first? What is the R^2 change?
 
