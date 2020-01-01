@@ -2,6 +2,7 @@ library(dplyr)
 
 anxiety_adhd <- read.csv("anxiety_adhd.csv")
 head(anxiety_adhd)
+
 unique(anxiety_adhd$treat_group) # why is this a factor?
 
 
@@ -66,7 +67,8 @@ emmeans(fit_factor, ~ treat_group) %>%
   summary(infer = TRUE)
 # More on this next semester (ANOVA)
 
-# Testing (omnibus test) --------------------------------------------------
+
+# Testing (omnibus \ joint test) ------------------------------------------
 
 anova(fit_factor)
 
@@ -97,13 +99,13 @@ performance::compare_performance(fit1, fit2, fit3)
 #'    - OSF       - part of the grade
 #'    - Report    - final grade on the paper
 #'    - Test      - final grade on the test (averaged across the pair)
-#' 2. Recode the `TA` factor so that C is first.
+#' 2. Re-level the `TA` factor so that C is first.
 #' 3. Predict the final Report grade from the TA
 #' 4. Is there a difference between the TAs?
 #'    Who gave the highest grades?
 #'    Who gave the lowest?
-#'    Is the difference between them significant? (try using emmeans for this)
-#' 5. Fit a second model, predicting final Report grade from the TA, in_couple & DOI.
+#'    Is the difference between them significant? (try using `emmeans` for this)
+#' 5. Fit a second model, predicting final Report grade from the `TA`, `in_couple` & `DOI`.
 #' 6. Is this model better than the first? What is the R^2 change?
 
 
