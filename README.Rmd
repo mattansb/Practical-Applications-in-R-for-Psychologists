@@ -48,10 +48,10 @@ pkgs <- c(
   "dplyr", "parameters", "effectsize", "performance", "psychTools", "see",
   # 07 dummy and hierarchical
   "dplyr", "emmeans", "car", "performance",
-  # 08 moderation
-  "dplyr", "emmeans", "interactions",
-  # 09 mediation & curvilinear,
-  "ggplot2", "performance", "JSmediation",
+  # 08 moderation and curvilinear
+  "dplyr", "emmeans", "interactions", "performance", "parameters", "ggplot2", 
+  # 09 mediation
+  "JSmediation",
   # 10 beyond NHST
    "BayesFactor", "bayestestR", "see",
   # 11 assumption checks & non-parameteric inference
