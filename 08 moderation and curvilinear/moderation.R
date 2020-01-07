@@ -25,7 +25,8 @@ parental_iris_long_way <- parental_iris %>%
 m_additive <- lm(child_satisfaction ~ involvement_c + d_avoidant + d_anxious,
                  data = parental_iris_long_way)
 
-m_moderation <- lm(child_satisfaction ~ involvement_c + d_avoidant + d_anxious + avoidant_X_involvement + anxious_X_involvement,
+m_moderation <- lm(child_satisfaction ~ involvement_c + d_avoidant + d_anxious +
+                     avoidant_X_involvement + anxious_X_involvement,
                     data = parental_iris_long_way)
 
 anova(m_additive, m_moderation)
