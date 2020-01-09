@@ -68,7 +68,7 @@ print_pkgs <- vector("list", length = length(pkgs))
 
 for (i in seq_along(pkgs)) {
   if (length(pkgs[[i]]) > 0) {
-    link <- paste0("[",names(pkgs)[i],"](\\",names(pkgs)[i],")")
+    link <- paste0("[",names(pkgs)[i],"](/",names(pkgs)[i],")")
     ps <- paste0(paste0("`", pkgs[[i]], "`"), collapse = ", ")
     
     print_pkgs[[i]] <- paste0("    - *", link, "*: ", ps, "\n")
