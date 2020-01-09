@@ -71,18 +71,21 @@ for (i in seq_along(pkgs)) {
     link <- paste0("[",names(pkgs)[i],"](/",names(pkgs)[i],")")
     ps <- paste0(paste0("`", pkgs[[i]], "`"), collapse = ", ")
     
-    print_pkgs[[i]] <- paste0("    - *", link, "*: ", ps, "\n")
+    print_pkgs[[i]] <- paste0("|",link,"|", ps, "|\n")
+    # print_pkgs[[i]] <- paste0("    - *", link, "*: ", ps, "\n")
   } else {
     print_pkgs[[i]] <- ""
   }
 }
 
+print_pkgs <- c("|Lesson|Packages|\n|----|----|\n", print_pkgs)
+print_pkgs <- paste0(print_pkgs, collapse = "")
 
 pkgs <- unique(unlist(pkgs, recursive = TRUE))
 
 ```
 
-`r paste0(print_pkgs, collapse = "")`
+`r print_pkgs`
 
 You can install all the packages used by running:
 

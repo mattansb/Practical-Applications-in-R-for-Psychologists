@@ -35,39 +35,23 @@ You will need:
 
 1.  A fresh installation of [**`R`**](https://cran.r-project.org/)
     (preferably version 3.6 or above).
-
 2.  [RStudio](https://www.rstudio.com/products/rstudio/download/)
     (optional - but I recommend using an IDE).
-
 3.  The following packages, listed by lesson:
-    
-      - *[02 data.frames](/02%20data.frames)*: `tidyverse`, `haven`
-      - *[03 outliers & missing
-        data](/03%20outliers%20&%20missing%20data)*: `finalfit`,
-        `Hmisc`, `mice`, `dplyr`
-      - *[04 describing data](/04%20describing%20data)*: `dplyr`,
-        `parameters`, `summarytools`, `ggplot2`, `psych`
-      - *[05 testing](/05%20testing)*: `psych`, `effectsize`, `ppcor`,
-        `BayesFactor`
-      - *[06 regression](/06%20regression)*: `dplyr`, `effectsize`,
-        `parameters`, `performance`, `psychTools`
-      - *[07 dummy and hierarchical](/07%20dummy%20and%20hierarchical)*:
-        `dplyr`, `emmeans`, `car`, `performance`, `MASS`
-      - *[08 moderation and
-        curvilinear](/08%20moderation%20and%20curvilinear)*:
-        `performance`, `parameters`, `ggplot2`, `dplyr`, `interactions`,
-        `emmeans`
-      - *[09 mediation](/09%20mediation)*: `JSmediation`, `mediation`
-      - *[10 Bayesian model
-        selection](/10%20Bayesian%20model%20selection)*: `BayesFactor`,
-        `bayestestR`
-      - *[11 assumptions and non-parameteric
-        inference](/11%20assumptions%20and%20non-parameteric%20inference)*:
-        `dplyr`, `performance`, `ggplot2`, `GGally`, `ggResidpanel`,
-        `afex`, `permuco`, `parameters`
-      - *[12 generalized linear
-        models](/12%20generalized%20linear%20models)*: `parameters`,
-        `performance`, `ggplot2`
+
+| Lesson                                                                                                | Packages                                                                                     |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [02 data.frames](/02%20data.frames)                                                                   | `tidyverse`, `haven`                                                                         |
+| [03 outliers & missing data](/03%20outliers%20&%20missing%20data)                                     | `finalfit`, `Hmisc`, `mice`, `dplyr`                                                         |
+| [04 describing data](/04%20describing%20data)                                                         | `dplyr`, `parameters`, `summarytools`, `ggplot2`, `psych`                                    |
+| [05 testing](/05%20testing)                                                                           | `psych`, `effectsize`, `ppcor`, `BayesFactor`                                                |
+| [06 regression](/06%20regression)                                                                     | `dplyr`, `effectsize`, `parameters`, `performance`, `psychTools`                             |
+| [07 dummy and hierarchical](/07%20dummy%20and%20hierarchical)                                         | `dplyr`, `emmeans`, `car`, `performance`, `MASS`                                             |
+| [08 moderation and curvilinear](/08%20moderation%20and%20curvilinear)                                 | `performance`, `parameters`, `ggplot2`, `dplyr`, `interactions`, `emmeans`                   |
+| [09 mediation](/09%20mediation)                                                                       | `JSmediation`, `mediation`                                                                   |
+| [10 Bayesian model selection](/10%20Bayesian%20model%20selection)                                     | `BayesFactor`, `bayestestR`                                                                  |
+| [11 assumptions and non-parameteric inference](/11%20assumptions%20and%20non-parameteric%20inference) | `dplyr`, `performance`, `ggplot2`, `GGally`, `ggResidpanel`, `afex`, `permuco`, `parameters` |
+| [12 generalized linear models](/12%20generalized%20linear%20models)                                   | `parameters`, `performance`, `ggplot2`                                                       |
 
 You can install all the packages used by running:
 
