@@ -19,29 +19,33 @@ summary(mod1) # look at the F test! What does it mean?
 
 # compare models
 anova(mod1,mod2)
+# result is non-significant, as non-significant as can be!
+# But does this mean our results support H0?
 
 ## Bayesian testing:
 mod1B <- lmBF(teacher_asses ~ HW + class_attention, data = school_asses)
 mod2B <- lmBF(teacher_asses ~ HW + class_attention + SES, data = school_asses)
 
-mod1B
+c(mod1B,mod2B) # both models look good. Now what?
 
-# compare models
+# compare models by dividing BFs:
 mod2B / mod1B
+# ALWAYS remember - BFs are comparative! Who are you comparing to?
 
 # Inclusion BFs -----------------------------------------------------------
 
 # We can also produce a BF for each term using Bayesian model averaging:
-
 fit_all <- lm(teacher_asses ~ HW + class_attention + SES + partic, data = school_asses)
 summary(fit_all)
 
+# generalTestBF() makes BF for all combinations of effects in the model:
 fit_allB <- generalTestBF(teacher_asses ~ HW + class_attention + SES + partic, data = school_asses)
 fit_allB
 head(fit_allB) # best models
 
-fit_allB[8]
-fit_allB[9:10] / fit_allB[8]
+
+fit_allB[8] # select model BF
+fit_allB[9:10] / fit_allB[8] # new BFs
 # etc...
 
 plot(fit_allB)
@@ -57,16 +61,14 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 
 # Exercise ----------------------------------------------------------------
 
-# 1. Test the interacting effect of `sex` and `partic` on `teacher_asses`
-#    using both frequentist and Bayesian hierarchical testing.
-#    - Interpret the Bayesian results. Are you convinced there is or isn't
-#      an interaction?
-#    - How / Do the Bayesian and frequentist results differ?
-# 2. Given the following formula and data:
-data(attitude)
-rating ~ complaints + privileges + learning * raises
-#    - On average, which term is most supported?
-#    - On average, which term is least supported?
+# Test the interacting effect of `sex` and `partic` on `teacher_asses`
+# using both frequentist and Bayesian testing (use generalTestBF()).
+# 1. Interpret the Bayesian results.
 #    - which is the best model?
-#    - what is the BF when comparing these two models?
-#      complaints + privileges / learning * raises
+#    - Compare the main effects model to the model with the interaction
+#      using both frequentist and Bayesian testing.
+# 2. How / Do the Bayesian and frequentist results differ?
+#    Are you convinced there is or isn't an interaction?
+# 3. On average:
+#    - which term is most supported in the
+#    - which term is least supported?
