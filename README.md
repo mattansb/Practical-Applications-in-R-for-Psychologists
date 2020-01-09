@@ -39,26 +39,26 @@ You will need:
     (optional - but I recommend using an IDE).
 3.  The following packages, listed by lesson:
 
-| Lesson                                                                                                | Packages                                                                          |
-| ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [02 data.frames](/02%20data.frames)                                                                   | `tidyverse`, `haven`                                                              |
-| [03 outliers & missing data](/03%20outliers%20&%20missing%20data)                                     | `finalfit`, `Hmisc`, `mice`, `dplyr`                                              |
-| [04 describing data](/04%20describing%20data)                                                         | `dplyr`, `parameters`, `summarytools`, `ggplot2`, `psych`                         |
-| [05 testing](/05%20testing)                                                                           | `psych`, `effectsize`, `ppcor`, `BayesFactor`                                     |
-| [06 regression](/06%20regression)                                                                     | `dplyr`, `effectsize`, `parameters`, `performance`, `psychTools`                  |
-| [07 dummy and hierarchical](/07%20dummy%20and%20hierarchical)                                         | `dplyr`, `emmeans`, `car`, `performance`, `MASS`                                  |
-| [08 moderation and curvilinear](/08%20moderation%20and%20curvilinear)                                 | `performance`, `parameters`, `ggplot2`, `dplyr`, `interactions`, `emmeans`        |
-| [09 mediation](/09%20mediation)                                                                       | `JSmediation`, `mediation`                                                        |
-| [10 Bayesian model selection](/10%20Bayesian%20model%20selection)                                     | `BayesFactor`, `bayestestR`                                                       |
-| [11 assumptions and non-parameteric inference](/11%20assumptions%20and%20non-parameteric%20inference) | `performance`, `dplyr`, `GGally`, `ggResidpanel`, `permuco`, `parameters`, `boot` |
-| [12 generalized linear models](/12%20generalized%20linear%20models)                                   | `parameters`, `performance`, `ggplot2`                                            |
+| Lesson                                                                                                | Packages                                                                   |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [02 data.frames](/02%20data.frames)                                                                   | `tidyverse`, `haven`                                                       |
+| [03 outliers & missing data](/03%20outliers%20&%20missing%20data)                                     | `finalfit`, `Hmisc`, `mice`, `dplyr`                                       |
+| [04 describing data](/04%20describing%20data)                                                         | `dplyr`, `parameters`, `summarytools`, `ggplot2`, `psych`                  |
+| [05 testing](/05%20testing)                                                                           | `psych`, `effectsize`, `ppcor`, `BayesFactor`                              |
+| [06 regression](/06%20regression)                                                                     | `dplyr`, `effectsize`, `parameters`, `performance`, `psychTools`           |
+| [07 dummy and hierarchical](/07%20dummy%20and%20hierarchical)                                         | `dplyr`, `emmeans`, `car`, `performance`, `MASS`                           |
+| [08 moderation and curvilinear](/08%20moderation%20and%20curvilinear)                                 | `performance`, `parameters`, `ggplot2`, `dplyr`, `interactions`, `emmeans` |
+| [09 mediation](/09%20mediation)                                                                       | `JSmediation`, `mediation`                                                 |
+| [10 Bayesian model selection](/10%20Bayesian%20model%20selection)                                     | `BayesFactor`, `bayestestR`                                                |
+| [11 assumptions and non-parameteric inference](/11%20assumptions%20and%20non-parameteric%20inference) | `performance`, `dplyr`, `GGally`, `ggResidpanel`, `permuco`, `parameters`  |
+| [12 generalized linear models](/12%20generalized%20linear%20models)                                   | `parameters`, `performance`, `ggplot2`                                     |
 
 You can install all the packages used by running:
 
     # in alphabetical order:
 
     pkgs <- c(
-      "BayesFactor", "bayestestR", "boot", "car", "dplyr", "effectsize",
+      "BayesFactor", "bayestestR", "car", "dplyr", "effectsize",
       "emmeans", "finalfit", "GGally", "ggplot2", "ggResidpanel", "haven",
       "Hmisc", "interactions", "JSmediation", "MASS", "mediation",
       "mice", "parameters", "performance", "permuco", "ppcor", "psych",
@@ -79,8 +79,8 @@ The package versions used here:
     ##      "1.1.1"      "0.1.0"      "4.5.0"      "3.7.0"      "0.3.0"      "0.4.2" 
     ##      permuco        ppcor        psych   psychTools summarytools    tidyverse 
     ##      "1.1.0"        "1.1"     "1.9.12"   "1.9.5.26"      "0.9.4"      "1.3.0" 
-    ##         boot         MASS 
-    ##     "1.3-22"   "7.3-51.4"
+    ##         MASS 
+    ##   "7.3-51.4"
 
 ## To Do
 
