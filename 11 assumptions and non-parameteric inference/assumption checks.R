@@ -1,9 +1,7 @@
-library(dplyr)
-library(performance) # for check_*
-library(ggplot2)
-library(GGally) # for ggpairs
+library(performance)  # for check_*
+library(dplyr)        # for the %>%
+library(GGally)       # for ggpairs
 library(ggResidpanel) # for resid_panel
-
 
 exp_grades <- read.csv("Exp_Psych_Grades.csv")
 head(exp_grades)
@@ -19,11 +17,11 @@ summary(mod)
 
 check_collinearity(mod)
 
-model.matrix(mod) %>%
-  as.data.frame() %>%
+exp_grades %>%
+  select(Report, DOI, OSF, in_couple) %>%
   ggpairs()
 
-# Do the predictors look skewed?
+# Do the predictors look skewed? Do we care?
 
 # >>> What to do if violated? <<<
 
@@ -49,6 +47,10 @@ exp_grades$resid <- residuals(mod)
 ggplot(exp_grades, aes(pred,Report)) +
   geom_point()
 
+# or
+ggplot(exp_grades, aes(pred,resid)) +
+  geom_point()
+
 # >>> What to do if violated? <<<
 
 
@@ -57,7 +59,7 @@ ggplot(exp_grades, aes(pred,Report)) +
 ol_test <- check_outliers(mod)
 ol_test
 
-exp_grades$outliers <- ol_test$.outliers
+exp_grades$outliers <- factor(ol_test)
 
 ggplot(exp_grades, aes(pred,Report, color = outliers)) +
   geom_point() +
@@ -70,5 +72,6 @@ ggplot(exp_grades, aes(pred,Report, color = outliers)) +
 # Exercise ----------------------------------------------------------------
 
 # 1. What does `resid_xpanel()` do? What should it look like?
-# 2. Conduct a boostrap analysis (see lesson 06).
-#    - How does this effect the results?
+# 2. Fit the model:
+#    Report ~ Test + in_couple
+#    Conduct a boostrap / permutation analysis. How does this affect the results?
