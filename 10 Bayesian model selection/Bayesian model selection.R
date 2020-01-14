@@ -70,5 +70,5 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 # 2. How / Do the Bayesian and frequentist results differ?
 #    Are you convinced there is or isn't an interaction?
 # 3. On average:
-#    - which term is most supported in the
+#    - which term is most supported?
 #    - which term is least supported?
