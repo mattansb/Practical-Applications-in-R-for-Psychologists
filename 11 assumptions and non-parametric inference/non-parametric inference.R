@@ -16,7 +16,7 @@ summary(modp) # why so many p-values??
 
 # Bootstrap estimation ----------------------------------------------------
 
-parameters_bootstrap(mod)
+parameters_bootstrap(mod, iterations = 599, ci_method = "HDI")
 # how do the permutation results and the bootstrap results differ?
 
 

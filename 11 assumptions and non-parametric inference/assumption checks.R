@@ -44,10 +44,6 @@ check_heteroscedasticity(mod)
 exp_grades$pred <- predict(mod)
 exp_grades$resid <- residuals(mod)
 
-ggplot(exp_grades, aes(pred,Report)) +
-  geom_point()
-
-# or
 ggplot(exp_grades, aes(pred,resid)) +
   geom_point()
 
@@ -56,7 +52,7 @@ ggplot(exp_grades, aes(pred,resid)) +
 
 # (multivariate) Outliers -------------------------------------------------
 
-ol_test <- check_outliers(mod)
+ol_test <- check_outliers(mod, method = "cook") # or "mahalanobis"
 ol_test
 
 exp_grades$outliers <- factor(ol_test)
@@ -66,7 +62,7 @@ ggplot(exp_grades, aes(pred,Report, color = outliers)) +
   geom_label(aes(label = Group))
 
 # What does this actually do?
-?check_outliers
+?check_outliers # read about the methods
 
 
 # Exercise ----------------------------------------------------------------
