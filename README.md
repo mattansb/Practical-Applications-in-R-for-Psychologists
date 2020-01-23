@@ -3,7 +3,7 @@
 
 # Advanced Research Methods foR Psychologists
 
-<sub>*Last updated 2020-01-22.*</sub>
+<sub>*Last updated 2020-01-23.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -16,7 +16,8 @@ evaluate and compare statistical models (using both the frequentist and
 Bayesian approach), focusing mostly on linear regression modeling. This
 course will lay the foundation for the topic-focused courses:
 
-  - Structural equation modelling (*SEM*)
+  - [Structural equation modelling
+    (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
   - Analysis of factorial designs (*ANOVA*).
   - Machine Learning (*ML*).
   - Hierarchical linear models (*HLM*).
