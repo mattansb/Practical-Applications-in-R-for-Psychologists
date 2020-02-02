@@ -3,7 +3,7 @@
 
 # Advanced Research Methods foR Psychologists
 
-<sub>*Last updated 2020-01-23.*</sub>
+<sub>*Last updated 2020-02-02.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -18,7 +18,8 @@ course will lay the foundation for the topic-focused courses:
 
   - [Structural equation modelling
     (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
-  - Analysis of factorial designs (*ANOVA*).
+  - [Analysis of factorial designs
+    (*ANOVA*)](https://github.com/mattansb/Analysis-of-Variance-foR-Psychologists).
   - Machine Learning (*ML*).
   - Hierarchical linear models (*HLM*).
 
@@ -73,11 +74,11 @@ install.packages(pkgs, dependencies = TRUE)
 The package versions used here:
 
     ##  BayesFactor   bayestestR          car        dplyr   effectsize      emmeans 
-    ## "0.9.12-4.2"      "0.4.9"      "3.0-6"      "0.8.3"      "0.0.1"   "1.4.3.01" 
+    ## "0.9.12-4.2"      "0.5.1"      "3.0-6"      "0.8.4"      "0.1.1"      "1.4.4" 
     ##     finalfit       GGally      ggplot2 ggResidpanel        haven        Hmisc 
     ##      "0.9.7"      "1.4.0"      "3.2.1"      "0.3.0"      "2.2.0"      "4.3-0" 
     ## interactions  JSmediation    mediation         mice   parameters  performance 
-    ##      "1.1.1"      "0.1.0"      "4.5.0"      "3.7.0"      "0.3.0"      "0.4.2" 
+    ##      "1.1.1"      "0.1.1"      "4.5.0"      "3.7.0"      "0.4.1"      "0.4.3" 
     ##      permuco        ppcor        psych   psychTools summarytools    tidyverse 
     ##      "1.1.0"        "1.1"  "1.9.12.31"     "1.9.12"      "0.9.4"      "1.3.0" 
     ##         MASS 
