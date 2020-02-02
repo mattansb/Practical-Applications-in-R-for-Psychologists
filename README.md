@@ -19,7 +19,7 @@ course will lay the foundation for the topic-focused courses:
   - [Structural equation modelling
     (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
   - [Analysis of factorial designs
-    (*ANOVA*)](https://github.com/mattansb/Analysis-of-Variance-foR-Psychologists).
+    (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists).
   - Machine Learning (*ML*).
   - Hierarchical linear models (*HLM*).
 
