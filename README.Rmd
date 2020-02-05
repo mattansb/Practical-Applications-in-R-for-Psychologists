@@ -6,9 +6,10 @@ output: github_document
 
 ```{r setup, include=FALSE}
 library(knitr)
-opts_chunk$set(echo = TRUE)
-`%>%` <- dplyr::`%>%`
 
+opts_chunk$set(echo = TRUE)
+
+`%>%` <- dplyr::`%>%`
 ```
 
 # Advanced Research Methods foR Psychologists
@@ -17,7 +18,9 @@ opts_chunk$set(echo = TRUE)
 
 This Github repo contains all lesson files used in the graduate-level course: *Advanced Research Methods foR Psychologists - Practical Applications in R*, taught at Ben-Gurion University on the Negev (fall 2019 semester).
 
-The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and finally build, evaluate and compare statistical models (using both the frequentist and Bayesian approach), focusing mostly on linear regression modeling. This course will lay the foundation for the topic-focused courses:
+The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of building, evaluating and comparing statistical models in `R` focusing on linear regression modeling (using both frequentist and Bayesian approaches).
+
+This course will lay the foundation for the topic-focused courses:
 
 - [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
 - [Analysis of factorial designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists).
@@ -31,6 +34,50 @@ The goal is to impart students with the basic tools to process data, describe da
 
 ## Setup
 
+```{r, echo=FALSE}
+extract_pkgs <- function(fl) {
+  `%>%` <- dplyr::`%>%`
+  
+  if (length(fl) == 1) {
+    txt <- read.delim(fl, header = FALSE) %>% 
+      .[[1]] %>% 
+      paste0(collapse = "\n")
+    
+    pkg_lib <- stringr::str_extract_all(txt, pattern = "(?<=library\\().{1,}(?=\\))")
+    
+    pkg_req <- stringr::str_extract_all(txt, pattern = "(?<=require\\().{1,}(?=\\))")
+    
+    pkg_name <- stringr::str_extract_all(txt, pattern = "[a-z|A-Z|0-9]{1,}(?=\\:\\:)")
+    
+    pkgs <- c(pkg_lib, pkg_req, pkg_name)
+    
+  } else if (length(fl) > 1) {
+    pkgs <- sapply(fl, extract_pkgs)
+  }
+  
+  
+  pkgs %>%
+    unlist(recursive = TRUE) %>%
+    unique()
+}
+
+make_pkg_table <- function(pkgs) {
+  `%>%` <- dplyr::`%>%`
+  
+  pkgs <- pkgs[sapply(pkgs, function(x) length(x) > 0)]
+  
+  ps <- sapply(pkgs, function(x){
+    paste0(paste0("`", x, "`"), collapse = ", ")
+  })
+  
+  glue::glue("|[{folder}](/{folder})|{ps}|\n\n",
+             folder = names(pkgs)) %>% 
+    c("|Lesson|Packages|\n|----|----|\n", .) %>% # header
+    paste0(collapse = "")
+}
+```
+
+
 You will need:
 
 1. A fresh installation of [**`R`**](https://cran.r-project.org/) (preferably version 3.6 or above).
@@ -38,50 +85,16 @@ You will need:
 3. The following packages, listed by lesson:
 
 ```{r, echo=FALSE}
+r_list <- list.files(pattern = ".(R|r)$", recursive = TRUE, full.names = TRUE) %>% 
+  .[!stringr::str_detect(., pattern = "(SOLUTION|logo)")]
 
-r_list <- list.files(path = ".", pattern = ".(R|r)$", recursive = TRUE, full.names = TRUE)
-r_list <- r_list[!stringr::str_detect(r_list, pattern = "(SOLUTION|logo)")]
+lesson_names <- stringr::str_extract(r_list, pattern = "(?<=(/)).{1,}(?=(/))")
 
-r_names <- stringr::str_extract(r_list, pattern = "(?<=(/)).{1,}(?=(/))")
-
-r_list <- split(r_list, r_names)
-
-extract_pkgs <- function(fl) {
-  if (length(fl)>1) {
-    return(unique(unlist(sapply(fl, extract_pkgs), recursive = TRUE)))
-  }
-  
-  txt <- read.delim(fl, header = FALSE)
-  txt <- paste0(txt[[1]], collapse = "\n")
-  
-  pkg_lib <- stringr::str_extract_all(txt, pattern = "(?<=library\\().{1,}(?=\\))")
-  
-  pkg2 <- stringr::str_extract_all(txt, pattern = "[a-z|A-Z|0-9]{1,}(?=\\:\\:)")
-  
-  pkg <- unique(unlist(c(pkg_lib, pkg2), recursive = TRUE))
-}
+r_list <- split(r_list, lesson_names)
 
 pkgs <- lapply(r_list, extract_pkgs)
 
-
-print_pkgs <- vector("list", length = length(pkgs))
-
-for (i in seq_along(pkgs)) {
-  if (length(pkgs[[i]]) > 0) {
-    link <- paste0("[",names(pkgs)[i],"](/",names(pkgs)[i],")")
-    ps <- paste0(paste0("`", pkgs[[i]], "`"), collapse = ", ")
-    
-    print_pkgs[[i]] <- paste0("|",link,"|", ps, "|\n")
-    # print_pkgs[[i]] <- paste0("    - *", link, "*: ", ps, "\n")
-  } else {
-    print_pkgs[[i]] <- ""
-  }
-}
-
-print_pkgs <- c("|Lesson|Packages|\n|----|----|\n", print_pkgs)
-print_pkgs <- paste0(print_pkgs, collapse = "")
-
-pkgs <- unique(unlist(pkgs, recursive = TRUE))
+print_pkgs <- make_pkg_table(pkgs)
 
 ```
 
@@ -90,7 +103,10 @@ pkgs <- unique(unlist(pkgs, recursive = TRUE))
 You can install all the packages used by running:
 
 ```{r echo=FALSE, comment = "", warning=FALSE}
-pkgs <- pkgs %>% unique() %>% sort()
+
+pkgs <- pkgs %>% 
+  unlist(recursive = TRUE) %>% 
+  unique() %>% sort()
 
 cat("# in alphabetical order:")
 
@@ -101,10 +117,7 @@ pkgs %>% {
 } %>%
   styler::style_text()
 
-```
-
-```{r eval=FALSE}
-install.packages(pkgs, dependencies = TRUE)
+cat("install.packages(pkgs, dependencies = TRUE)")
 ```
 
 The package versions used here:

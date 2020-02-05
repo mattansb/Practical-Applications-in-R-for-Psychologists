@@ -3,7 +3,7 @@
 
 # Advanced Research Methods foR Psychologists
 
-<sub>*Last updated 2020-02-02.*</sub>
+<sub>*Last updated 2020-02-05.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -11,10 +11,12 @@ Applications in R*, taught at Ben-Gurion University on the Negev (fall
 2019 semester).
 
 The goal is to impart students with the basic tools to process data,
-describe data (w/ summary statistics and plots), and finally build,
-evaluate and compare statistical models (using both the frequentist and
-Bayesian approach), focusing mostly on linear regression modeling. This
-course will lay the foundation for the topic-focused courses:
+describe data (w/ summary statistics and plots), and the foundations of
+building, evaluating and comparing statistical models in `R` focusing on
+linear regression modeling (using both frequentist and Bayesian
+approaches).
+
+This course will lay the foundation for the topic-focused courses:
 
   - [Structural equation modelling
     (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
@@ -67,9 +69,7 @@ You can install all the packages used by running:
       "psychTools", "summarytools", "tidyverse"
     )
 
-``` r
-install.packages(pkgs, dependencies = TRUE)
-```
+    install.packages(pkgs, dependencies = TRUE)
 
 The package versions used here:
 
