@@ -24,8 +24,18 @@ e2b_data %>%
             # you can also name results
             mACC = mean(ACC),
             RT_md = median(RT),
-            RT_kurt = kurtosis(RT),
-            RT_skew = skewness(RT))
+            RT_kurt = as.numeric(kurtosis(RT)),
+            RT_skew = as.numeric(skewness(RT)))
+
+
+e2b_data %>%
+  select(RT, ACC) %>%
+  skewness()
+
+e2b_data %>%
+  select(RT, ACC) %>%
+  kurtosis()
+
 
 # By Group ----------------------------------------------------------------
 
