@@ -98,6 +98,7 @@ R can also be used for writing- writing:
   - **R for Psychological Science** | [psyr.org/](psyr.org/)  
 - ***Cheat sheets*** | [rstudio.com/resources/cheatsheets/](rstudio.com/resources/cheatsheets/)  
 - ***Getting-help Guide*** | [blog.rsquaredacademy.com/getting-help-in-r-updated/](blog.rsquaredacademy.com/getting-help-in-r-updated/)  
+  - ***R Search engine*** | [rseek.org/](https://rseek.org/)   
 - ***Stay up-to-date*** | [r-bloggers.com/](r-bloggers.com/)  
 
 
