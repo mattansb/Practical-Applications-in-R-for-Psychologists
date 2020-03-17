@@ -37,6 +37,9 @@ model_parameters(fit, standardize = "basic")
 #> (Intercept)  |        2.76 |               0.00 | 1.31 | [ 0.25,  5.43] |  2.10 | 198 | 0.036
 #> mean_valence |       -0.48 |              -0.33 | 0.22 | [-0.92, -0.06] | -2.21 | 198 | 0.027
 
+# Note that the standardization is only on the predictors, as the dependant variable is binary
+# and has no scale! (Yes... This is very tricky stuff)...
+
 model_performance(fit)
 #> # Indices of model performance
 #>
@@ -95,6 +98,17 @@ em_logit
 #> Results are given on the logit (not the response) scale.
 #> Confidence level used: 0.95
 
+# We can also get predicted probabilities with `type = "response"`:
+em_probs <- emmeans(fit, ~ mean_valence, at = list(mean_valence = c(5,4)),
+                    type = "response")
+em_probs
+#> mean_valence  prob     SE  df asymp.LCL asymp.UCL
+#>            5 0.591 0.0638 Inf     0.462     0.708
+#>            4 0.700 0.0969 Inf     0.485     0.852
+#>
+#> Confidence level used: 0.95
+#> Intervals are back-transformed from the logit scale
+
 # We can see the that difference between them is the same as the coefficiant we got:
 contrast(em_logit, "pairwise")
 #> contrast estimate    SE  df z.ratio p.value
@@ -109,16 +123,19 @@ contrast(em_logit, "pairwise", type = "response")
 #>
 #> Tests are performed on the log odds ratio scale
 
-# Finally, we can also get predicted probabilities with `type = "response"`:
-em_probs <- emmeans(fit, ~ mean_valence, at = list(mean_valence = c(5,4)),
-                    type = "response")
-em_probs
-#> mean_valence  prob     SE  df asymp.LCL asymp.UCL
-#>            5 0.591 0.0638 Inf     0.462     0.708
-#>            4 0.700 0.0969 Inf     0.485     0.852
+# Finally, here is how to get RR (risk ratios, an alternative to OR):
+# (read more about RR: doi.org/10.1097/SMJ.0b013e31817a7ee4)
+em_log_probs <- emmeans(fit, ~ mean_valence, at = list(mean_valence = c(5,4)),
+                        transform = "log")
+contrast(em_log_probs, "pairwise", type = "response")
+#> contrast ratio    SE  df z.ratio p.value
+#> 5 / 4    0.844 0.037 Inf -3.860  0.0001
 #>
-#> Confidence level used: 0.95
-#> Intervals are back-transformed from the logit scale
+#> Tests are performed on the log scale
+
+# Note that change in odds ratio are easier to interpret when the predictor is
+# categorical, where we can compare groups. But for continuous predictors, we
+# need to pick-a-point to see the change between the two points!
 
 
 # Other GLMs --------------------------------------------------------------
