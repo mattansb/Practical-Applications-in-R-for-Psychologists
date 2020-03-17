@@ -16,6 +16,7 @@
 library(parameters)
 library(performance)
 library(ggplot2)
+library(emmeans)
 
 depression_language <- read.csv("depression_language.csv")
 head(depression_language)
@@ -64,7 +65,6 @@ exp(coef(fit)) # get the odds-change
 #    mu = 2.76 + -0.48 * mean_valence = 2.76 + -0.48 * 6 = -0.12
 #    P(y==depressed) = 1 / (1 + exp(-mu)) = 1 / (1 + exp(--0.12)) = 0.47
 
-
 # predicted vs fitted values ----------------------------------------------
 
 # The function `predict` returns the result of the linear part of the model.
@@ -81,6 +81,44 @@ depression_language$pred <- fitted(fit)
 ggplot(depression_language, aes(mean_valence, is.depressed)) +
   geom_point() +
   geom_line(aes(y = pred))
+
+
+
+# We can also see this with emmeans:
+# These are expected means (predicted values) on the log-odds scale.
+em_logit <- emmeans(fit, ~ mean_valence, at = list(mean_valence = c(5,4)))
+em_logit
+#> mean_valence emmean    SE  df asymp.LCL asymp.UCL
+#>            5  0.367 0.264 Inf   -0.1505     0.884
+#>            4  0.846 0.461 Inf   -0.0584     1.750
+#>
+#> Results are given on the logit (not the response) scale.
+#> Confidence level used: 0.95
+
+# We can see the that difference between them is the same as the coefficiant we got:
+contrast(em_logit, "pairwise")
+#> contrast estimate    SE  df z.ratio p.value
+#> 5 - 4      -0.479 0.217 Inf -2.208  0.0272
+#>
+#> Results are given on the log odds ratio (not the response) scale.
+
+# But we can also get the difference as the odds-ratio with `type = "response"`:
+contrast(em_logit, "pairwise", type = "response")
+#> contrast odds.ratio    SE  df z.ratio p.value
+#> 5 / 4          0.62 0.134 Inf -2.208  0.0272
+#>
+#> Tests are performed on the log odds ratio scale
+
+# Finally, we can also get predicted probabilities with `type = "response"`:
+em_probs <- emmeans(fit, ~ mean_valence, at = list(mean_valence = c(5,4)),
+                    type = "response")
+em_probs
+#> mean_valence  prob     SE  df asymp.LCL asymp.UCL
+#>            5 0.591 0.0638 Inf     0.462     0.708
+#>            4 0.700 0.0969 Inf     0.485     0.852
+#>
+#> Confidence level used: 0.95
+#> Intervals are back-transformed from the logit scale
 
 
 # Other GLMs --------------------------------------------------------------
