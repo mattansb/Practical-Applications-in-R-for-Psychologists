@@ -6,7 +6,7 @@ library(performance) # for model_performance etc..
 # will also need `see` for plotting
 
 # load a data set
-data("sai", package = "psychTools")
+sai <- psychTools::sai
 head(sai)
 ?psychTools::sai
 
