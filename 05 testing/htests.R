@@ -84,13 +84,12 @@ proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 # chi-squared test --------------------------------------------------------
 
-res <- chisq.test(pdat$sex, pdat$Group, correct = FALSE)
-res
+cont_table <- table(pdat$sex, pdat$Group)
+cont_table
 
-chisq_to_cramers_v(chisq = res$statistic,
-                   n = sum(res$observed),
-                   nrow = nrow(res$observed),
-                   ncol = ncol(res$observed))
+chisq.test(cont_table, correct = FALSE)
+
+cramers_v(cont_table, correct = FALSE)
 
 
 contingencyTableBF(table(pdat$sex, pdat$Group), sampleType = "jointMulti")
