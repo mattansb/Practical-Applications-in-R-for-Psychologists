@@ -2,6 +2,11 @@
 tai_missing <- readRDS("tai_missing.Rds")
 head(tai_missing)
 
+# Learn about missing data:
+# https://stefvanbuuren.name/fimd/
+# http://doi.org/10.5334/irsp.289
+
+
 # Test Patterns of Missingness --------------------------------------------
 
 library(finalfit)
@@ -16,6 +21,10 @@ missing_plot(tai_missing)
 # using the `finalfit` package:
 # https://finalfit.org/articles/missing.html
 
+
+
+
+
 # Simple Imputation (Hmisc) -----------------------------------------------
 
 library(Hmisc)
@@ -26,11 +35,18 @@ tai_missing$calm_imp <- impute(tai_missing$calm, fun = mean)
 tai_missing$calm_imp # the `*` marks the imputated value...
 
 (tai_missing$calm_imp <- impute(tai_missing$calm, fun = median))
-(tai_missing$calm_imp <- impute(tai_missing$calm, fun = 1.2)) # can also be a number
+# can also be a number
+(tai_missing$calm_imp <- impute(tai_missing$calm, fun = 1.2))
+
+
+
+
 
 # Multivariate Imputation (MICE) ------------------------------------------
 
 library(mice)
+
+# Read more at https://stefvanbuuren.name/mice/
 
 imputed_Data <- mice(tai_missing, m = 5, maxit = 1, method = 'pmm', seed = 500)
 
@@ -45,3 +61,6 @@ head(imputed_Data$imp$study)    # categorical
 
 
 tai_imp_full <- complete(imputed_Data, action = 2) # I chose the second imputation
+
+
+

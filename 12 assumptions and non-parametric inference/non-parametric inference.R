@@ -8,13 +8,24 @@ head(exp_grades)
 mod <- lm(Report ~ DOI + OSF + in_couple, data = exp_grades)
 summary(mod)
 
+
+
+
+
+
 # Permutation tests -------------------------------------------------------
+
 
 modp <- lmperm(Report ~ DOI + OSF + in_couple, data = exp_grades)
 summary(modp) # why so many p-values??
 
 
+
+
+
+
 # Bootstrap estimation ----------------------------------------------------
+
 
 parameters_bootstrap(mod, iterations = 599, ci_method = "HDI")
 # how do the permutation results and the bootstrap results differ?

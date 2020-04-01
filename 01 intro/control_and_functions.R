@@ -24,7 +24,9 @@ if (salary < 5000) {
   worker <- "so so"
 }
 
-list(salary,worker)
+list(salary, worker)
+
+
 
 # note: if..else is a control flow function. Takes only one logical value.
 salary <- runif(3, min = 1000, max = 20000)
@@ -36,12 +38,18 @@ if (salary < 5000) {
   worker <- "so so"
 }
 
-list(salary,worker)
+list(salary, worker)
+
+
 
 # to use with a vector: use `ifelse()` (taking a vector as input).
-worker <-
-  ifelse(salary < 5000, "poor", ifelse(salary > 15000, "rich", "so so"))
+worker <- ifelse(salary < 5000, "poor",
+                 ifelse(salary > 15000, "rich", "so so"))
 list(salary,worker)
+
+
+
+
 
 # Loops -------------------------------------------------------------------
 
@@ -56,9 +64,13 @@ for (i in seq_along(test)) {
 }
 test
 
+
+
+
 # what does this code do?
 num <- rnorm(100)
 min_num <- 1000
+
 
 for (i in seq_along(num)) {
   if (num[i] < min_num) {
@@ -66,6 +78,9 @@ for (i in seq_along(num)) {
   }
 }
 min_num
+
+
+
 
 ## pre-allocate vectors.
 system.time({
@@ -101,7 +116,26 @@ system.time({
 # see apply-family / the `purrr` pkg (not covered in this course)
 
 
-# functions ---------------------------------------------------------------
+
+
+
+# Functions ---------------------------------------------------------------
+
+
+# functions are also R objects, just like any other...
+# So their values (function) can be assigned into new object
+shoe <- sqrt
+shoe(9)
+
+blahblah <- is.logical
+blahblah(FALSE)
+blahblah("a")
+
+
+# We can also make new function!
+
+
+
 
 # sum of two dice (from: "Hands-on programming with R")
 two_dice <- function() {
@@ -122,6 +156,8 @@ n_dice <- function(n) {
 }
 
 n_dice(5)
+
+
 
 # default values:
 n_dice <- function(n = 2) {

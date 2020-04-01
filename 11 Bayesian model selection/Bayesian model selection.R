@@ -1,19 +1,26 @@
 library(BayesFactor)
 library(bayestestR)
 
+
 school_asses <- read.csv("school_asses.csv")
 str(school_asses)
 head(school_asses)
+
+
+
 
 # Hierarchical testing ----------------------------------------------------
 
 # You would use this method in any situation you would use hierarchical
 # testing (model comparison).
 
+
 ## Frequenstist testing:
 
-mod1 <- lm(teacher_asses ~ HW + class_attention, data = school_asses)
-mod2 <- lm(teacher_asses ~ HW + class_attention + SES, data = school_asses)
+mod1 <- lm(teacher_asses ~ HW + class_attention,
+           data = school_asses)
+mod2 <- lm(teacher_asses ~ HW + class_attention + SES,
+           data = school_asses)
 
 summary(mod1) # look at the F test! What does it mean?
 
@@ -22,34 +29,61 @@ anova(mod1,mod2)
 # result is non-significant, as non-significant as can be!
 # But does this mean our results support H0?
 
+
+
+
+
 ## Bayesian testing:
-mod1B <- lmBF(teacher_asses ~ HW + class_attention, data = school_asses)
-mod2B <- lmBF(teacher_asses ~ HW + class_attention + SES, data = school_asses)
+mod1B <- lmBF(teacher_asses ~ HW + class_attention,
+              data = school_asses)
+mod2B <- lmBF(teacher_asses ~ HW + class_attention + SES,
+              data = school_asses)
 
 c(mod1B,mod2B) # both models look good. Now what?
 
-# compare models by dividing BFs:
+# compare models by dividing them:
 mod2B / mod1B
 # ALWAYS remember - BFs are comparative! Who are you comparing to?
+
+
+
+
+
+
 
 # Inclusion BFs -----------------------------------------------------------
 
 # We can also produce a BF for each term using Bayesian model averaging:
-fit_all <- lm(teacher_asses ~ HW + class_attention + SES + partic, data = school_asses)
+fit_all <- lm(teacher_asses ~ HW + class_attention + SES + partic,
+              data = school_asses)
 summary(fit_all)
 
+
+
 # generalTestBF() makes BF for all combinations of effects in the model:
-fit_allB <- generalTestBF(teacher_asses ~ HW + class_attention + SES + partic, data = school_asses)
+fit_allB <- generalTestBF(
+  teacher_asses ~ HW + class_attention + SES + partic,
+  data = school_asses
+)
 fit_allB
 head(fit_allB) # best models
+
+
+
 
 
 fit_allB[8] # select model BF
 fit_allB[9:10] / fit_allB[8] # new BFs
 # etc...
 
+
+
+
 plot(fit_allB)
 plot(bayesfactor_models(fit_allB))
+
+
+
 
 # which terms are most supported?
 # which terms are least supported?
@@ -57,6 +91,10 @@ plot(bayesfactor_models(fit_allB))
 bayesfactor_inclusion(fit_allB, match_models = TRUE)
 # read more about Bayesian model averaging:
 # https://easystats.github.io/bayestestR/articles/bayes_factors.html#inclusion-bayes-factors-via-bayesian-model-averaging
+
+
+
+
 
 
 # Exercise ----------------------------------------------------------------
