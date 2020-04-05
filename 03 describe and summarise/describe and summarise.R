@@ -2,7 +2,7 @@ library(dplyr)
 library(parameters) # for kurtosis & skewness
 library(summarytools) # for dfSummary
 
-e2b_data <- readr::read_csv("emotional_2back_fixed.csv")
+e2b_data <- read.csv("emotional_2back_fixed.csv")
 
 glimpse(e2b_data)
 
@@ -14,6 +14,8 @@ summary(e2b_data)
 # This gives a quick and dirty summary of the passed variables:
 (quick_sum <- dfSummary(e2b_data))
 view(quick_sum) # small "v"!
+
+
 
 
 # You can also specify your own statistics / measures manually using
@@ -35,7 +37,7 @@ e2b_data %>%
 
 
 
-# You can also summarise ACROSS several variables.
+# You can also summarise ACROSS several variables, with `across()`.
 #
 # We need to define what we want - these can be functions,
 # names of functions, or a lambda.
@@ -54,14 +56,27 @@ things_I_want <- list(
   skew = skewness
 )
 
-# Use the `across` function:
+# Use the `across()` function:
 e2b_data %>%
   summarise(across(.cols = c(RT, ACC),
                    .fns = things_I_want))
 
+# other ways to select variables.
+e2b_data %>%
+  summarise(across(is.factor | is.character, nlevels),
+            across(.cols = is.numeric,
+                   .fns = things_I_want))
+
+# Read more about using `across()`:
+# https://dplyr.tidyverse.org/articles/colwise.html
+
+
+
+
 
 
 # By Group ----------------------------------------------------------------
+
 
 # We might want to summarise seperatly for different groups.
 # We just add `group_by` (and `ungroup`!)
