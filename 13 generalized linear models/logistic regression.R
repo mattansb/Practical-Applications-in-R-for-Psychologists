@@ -34,10 +34,10 @@ fit <- glm(is.depressed ~ mean_valence,
            family = binomial()) # we need to specify the family!
 
 model_parameters(fit, standardize = "basic")
-#> Parameter    | Coefficient | Coefficient (std.) |   SE |         95% CI |     z |  df |     p
-#> ---------------------------------------------------------------------------------------------
-#> (Intercept)  |        2.76 |               0.00 | 1.31 | [ 0.25,  5.43] |  2.10 | 198 | 0.036
-#> mean_valence |       -0.48 |              -0.33 | 0.22 | [-0.92, -0.06] | -2.21 | 198 | 0.027
+#> Parameter    | Coefficient (std.) |   SE |         95% CI |     z |  df |     p
+#> -------------------------------------------------------------------------------
+#> (Intercept)  |               0.00 | 0.00 | [ 0.00,  0.00] |  2.10 | 198 | 0.036
+#> mean_valence |              -0.33 | 0.15 | [-0.62, -0.04] | -2.21 | 198 | 0.027
 
 # Note that the standardization is only on the predictors, as the dependant
 # variable is binary and has no scale! (Yes... This is very tricky
@@ -73,6 +73,11 @@ exp(coef(fit)) # get the odds-change
 #    with a valance of 6 (around the median) will have:
 #    mu = 2.76 + -0.48 * mean_valence = 2.76 + -0.48 * 6 = -0.12
 #    P(y==depressed) = 1 / (1 + exp(-mu)) = 1 / (1 + exp(--0.12)) = 0.47
+#
+# We can use the `plogis()` function to convert mu to P(y==1):
+plogis(2.76 + -0.48 * 6)
+# we can also use the `qlogis()` to convert P(y==1) to mu:
+qlogis(0.4700359)
 
 # predicted vs fitted values ----------------------------------------------
 
