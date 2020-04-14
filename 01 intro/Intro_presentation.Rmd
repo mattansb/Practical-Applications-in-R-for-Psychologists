@@ -77,11 +77,11 @@ R can also be used for writing- writing:
 
 ## What you will learn
 
-- How to import data  
-- How to prepare data  
+- How to import and prepare data  
 - Summary statistics  
-- Inferential statistics  
 - Plotting  
+- How to fit linear models  
+- Inferential statistics  
 
 ## What you will *NOT* learn
 
@@ -93,16 +93,21 @@ R can also be used for writing- writing:
 
 - ***Free online books and courses***  
   - **R for Data Science** | [r4ds.had.co.nz/](r4ds.had.co.nz/)  
-  - **Learning Statistics with R** | [learningstatisticswithr.com/](learningstatisticswithr.com/)  
-  - **Statistical Thinking for the 21st Century** | [statsthinking21.org/](statsthinking21.org/)  
-  - **R for Psychological Science** | [psyr.org/](psyr.org/)  
-- ***Cheat sheets*** | [rstudio.com/resources/cheatsheets/](rstudio.com/resources/cheatsheets/)  
-- ***Getting-help Guide*** | [blog.rsquaredacademy.com/getting-help-in-r-updated/](blog.rsquaredacademy.com/getting-help-in-r-updated/)  
-  - ***R Search engine*** | [rseek.org/](https://rseek.org/)   
-- ***Stay up-to-date*** | [r-bloggers.com/](r-bloggers.com/)  
+  - **Learning Statistics with R** | [learningstatisticswithr.com](learningstatisticswithr.com/)  
+  - **Statistical Thinking for the 21st Century** | [statsthinking21.org](statsthinking21.org/)  
+  - **R for Psychological Science** | [psyr.org](psyr.org/)  
+- ***Videos***  
+  - **Yoav Kessler** | [Intro to `R` (Hebrew)](youtube.com/watch?v=SCle_ER6iYc&list=PLzByNWH2VRoppRnTrJfes0DMz3aeoAhXy)  
+  - **Danielle Navarro** | [`R` Playlists](youtube.com/channel/UCfNGzUFfsy_3udMY8UyaqBA/playlists)  
+  
+- ***Cheat sheets*** | [rstudio.com/resources/cheatsheets](rstudio.com/resources/cheatsheets/)  
+- ***Stay up-to-date*** 
+  - **R-bloggers** | [r-bloggers.com](r-bloggers.com/)  
+  - **Twitter** | [#rstats](twitter.com/search?q=%23rstats)
 
 
-##
+## {.smaller}
+
 
 <div style="float: left; width: 70%;">
 ![](img/pollard1.png){width=100%}  
@@ -111,3 +116,8 @@ R can also be used for writing- writing:
 <div style="float: right; width: 30%;">
 ![](img/hope.png){width=100%}  
 </div>
+
+   
+   
+- [Getting-help Guide >>](blog.rsquaredacademy.com/getting-help-in-r-updated/)  
+- [`R` Search engine >>](rseek.org/)  
