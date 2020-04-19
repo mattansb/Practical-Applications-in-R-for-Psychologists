@@ -49,9 +49,6 @@ things_I_want <- list(
   # a lambda
   mean_no_na = ~ mean(.x, na.rm = TRUE),
   # Some more functions
-  md = median,
-  min = min,
-  max = max,
   kurt = kurtosis,
   skew = skewness
 )
@@ -67,6 +64,12 @@ e2b_data %>%
             across(.cols = is.numeric,
                    .fns = things_I_want))
 
+# For numeric variables, you can use `parameters::describe_distribution()`
+e2b_data %>%
+  summarise(
+    describe_distribution(across(is.numeric))
+  )
+
 # Read more about using `across()`:
 # https://dplyr.tidyverse.org/articles/colwise.html
 
@@ -79,7 +82,9 @@ e2b_data %>%
 
 
 # We might want to summarise seperatly for different groups.
-# We just add `group_by` (and `ungroup`!)
+# We just add `group_by()` (and `ungroup()`!).
+
+
 e2b_data %>%
   group_by(Gender) %>%
   summarise(
@@ -146,8 +151,19 @@ e2b_data %>%
 
 
 
+# NOTE: Not all functions respect the `group_by` action - tidyverse
+# functions do, and some others from other packages, but don't assume that
+# all functions do!
+# For example:
+e2b_data %>%
+  group_by(Gender, Group) %>%
+  nrow()
 
-
+e2b_data %>%
+  group_by(Gender, Group) %>%
+  summary()
+# Here `nrow()` (returns the number of rows) and `summary()` didn't react
+# to `group_by(Gender, Group)`!!!
 
 
 
@@ -186,4 +202,6 @@ head(df_NPAS_with_score)
 #    variable `Nerdy2` - mean, sd, and at least 2 other measures you
 #    can think of.
 # 2. Repeat (1) but for EACH gender AND EACH ASD group.
+# *. All of the examples in "Describe variables" support `group_by()` -
+#    try them grouped by `Gender`.
 
