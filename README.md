@@ -3,7 +3,7 @@
 
 # Advanced Research Methods foR Psychologists
 
-<sub>*Last updated 2020-04-01.*</sub>
+<sub>*Last updated 2020-05-03.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -46,9 +46,9 @@ You will need:
 | Lesson                                                                                              | Packages                                                                                                                                                                                                                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [02 data.frames](/02%20data.frames)                                                                 | [`tidyverse`](https://CRAN.R-project.org/package=tidyverse), [`haven`](https://CRAN.R-project.org/package=haven)                                                                                                                                                                                                                                                         |
-| [03 describe and summarise](/03%20describe%20and%20summarise)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [`summarytools`](https://CRAN.R-project.org/package=summarytools), [`readr`](https://CRAN.R-project.org/package=readr), [`psych`](https://CRAN.R-project.org/package=psych)                                                                          |
+| [03 describe and summarise](/03%20describe%20and%20summarise)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [`summarytools`](https://CRAN.R-project.org/package=summarytools), [`psych`](https://CRAN.R-project.org/package=psych)                                                                                                                               |
 | [04 plotting](/04%20plotting)                                                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)                                                                                                                                                                                                                                                             |
-| [05 testing](/05%20testing)                                                                         | [`psych`](https://CRAN.R-project.org/package=psych), [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`ppcor`](https://CRAN.R-project.org/package=ppcor), [`BayesFactor`](https://CRAN.R-project.org/package=BayesFactor)                                                                                                                                 |
+| [05 testing & power](/05%20testing%20&%20power)                                                     | [`psych`](https://CRAN.R-project.org/package=psych), [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`ppcor`](https://CRAN.R-project.org/package=ppcor), [`BayesFactor`](https://CRAN.R-project.org/package=BayesFactor), [`pwr`](https://CRAN.R-project.org/package=pwr)                                                                                |
 | [06 outliers & missing data](/06%20outliers%20&%20missing%20data)                                   | [`finalfit`](https://CRAN.R-project.org/package=finalfit), [`Hmisc`](https://CRAN.R-project.org/package=Hmisc), [`mice`](https://CRAN.R-project.org/package=mice), [`dplyr`](https://CRAN.R-project.org/package=dplyr)                                                                                                                                                   |
 | [07 regression](/07%20regression)                                                                   | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`psychTools`](https://CRAN.R-project.org/package=psychTools)                                                        |
 | [08 dummy and hierarchical](/08%20dummy%20and%20hierarchical)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`performance`](https://CRAN.R-project.org/package=performance)                                                                                                                                                                                            |
@@ -66,8 +66,8 @@ You can install all the packages used by running:
       "BayesFactor", "bayestestR", "dplyr", "effectsize", "emmeans",
       "finalfit", "GGally", "ggplot2", "ggResidpanel", "haven", "Hmisc",
       "interactions", "JSmediation", "mice", "parameters", "performance",
-      "permuco", "ppcor", "psych", "psychTools", "purrr", "readr",
-      "summarytools", "tidyverse"
+      "permuco", "ppcor", "psych", "psychTools", "purrr", "pwr", "summarytools",
+      "tidyverse"
     )
 
     install.packages(pkgs, dependencies = TRUE)
@@ -75,16 +75,12 @@ You can install all the packages used by running:
 The package versions used here:
 
     ##   BayesFactor    bayestestR         dplyr    effectsize       emmeans 
-    ##  "0.9.12-4.2"       "0.5.3" "0.8.99.9002"       "0.3.0"       "1.4.5" 
+    ##  "0.9.12-4.2"     "0.6.0.1" "0.8.99.9002"     "0.3.0.1"       "1.4.5" 
     ##      finalfit        GGally       ggplot2  ggResidpanel         haven 
     ##       "1.0.0"       "1.5.0"       "3.3.0"       "0.3.0"       "2.2.0" 
     ##         Hmisc  interactions   JSmediation          mice    parameters 
-    ##       "4.4-0"       "1.1.1"       "0.1.1"       "3.8.0"     "0.6.0.1" 
+    ##       "4.4-0"       "1.1.3"       "0.1.1"       "3.8.0"     "0.6.1.1" 
     ##   performance       permuco         ppcor         psych    psychTools 
     ##       "0.4.5"       "1.1.0"         "1.1"   "1.9.12.31"      "1.9.12" 
-    ##         purrr         readr  summarytools     tidyverse 
-    ##       "0.3.3"       "1.3.1"       "0.9.6"       "1.3.0"
-
-## To Do
-
-  - [ ] Power analysis with `pwr` (?)
+    ##         purrr           pwr  summarytools     tidyverse 
+    ##       "0.3.4"       "1.3-0"       "0.9.6"       "1.3.0"

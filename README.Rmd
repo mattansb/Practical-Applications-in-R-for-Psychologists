@@ -128,7 +128,3 @@ The package versions used here:
 packinfo <- installed.packages(fields = c("Package", "Version"))
 packinfo[packinfo[,"Package"] %in% pkgs,"Version"]
 ```
-
-## To Do
-
-- [ ] Power analysis with `pwr` (?)
