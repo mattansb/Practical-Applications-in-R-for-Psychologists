@@ -63,6 +63,7 @@ summary(fit_all)
 # generalTestBF() makes BF for all combinations of effects in the model:
 fit_allB <- generalTestBF(
   teacher_asses ~ HW + class_attention + SES + partic,
+  # method = "laplace", # for large sample sizes
   data = school_asses
 )
 fit_allB
@@ -90,7 +91,7 @@ plot(bayesfactor_models(fit_allB))
 
 bayesfactor_inclusion(fit_allB, match_models = TRUE)
 # read more about Bayesian model averaging:
-# https://easystats.github.io/bayestestR/articles/bayes_factors.html#inclusion-bayes-factors-via-bayesian-model-averaging
+# https://easystats.github.io/bayestestR/articles/bayes_factors.html
 
 
 
