@@ -34,9 +34,13 @@ summary(fit) # see df, sig and more...
 
 
 
-predict(fit)
 residuals(fit)
+predict(fit)
 # what is the correlation between these ^ two?
+
+# We can also predict new data:
+predict(fit, newdata = data.frame(calm = c(-3, 3000)))
+
 
 
 ## CIs

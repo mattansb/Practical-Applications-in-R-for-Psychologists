@@ -85,15 +85,15 @@ qlogis(0.4700359)
 # the two points!
 
 
-# predicted vs fitted values ----------------------------------------------
+
+# predicted values: on the link vs response scale -------------------------
 
 # The function `predict` returns the result of the linear part of the
 # model. That is, it returns the values of the logit mu:
 predict(fit)
 
-# The function `fitted` returns the transformed mu values, that it the
-# P(y==1):
-fitted(fit) # or
+# For predictions on the response scale - the transformed mu values - that it
+# the P(y==1):
 predict(fit, type = "response")
 
 
