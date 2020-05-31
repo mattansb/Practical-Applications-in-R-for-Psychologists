@@ -94,11 +94,11 @@ R can also be used for writing- writing:
 - ***Free online books and courses***  
   - **R for Data Science** | [r4ds.had.co.nz/](r4ds.had.co.nz/)  
   - **Learning Statistics with R** | [learningstatisticswithr.com](learningstatisticswithr.com/)  
-  - **Statistical Thinking for the 21st Century** | [statsthinking21.org](statsthinking21.org/)  
   - **R for Psychological Science** | [psyr.org](psyr.org/)  
-- ***Videos***  
+    - And other courses / video lectures by [*Danielle Navarro*](http://djnavarro.net/teaching/).
+  - **Statistical Thinking for the 21st Century** | [statsthinking21.org](statsthinking21.org/)  
+  
   - **Yoav Kessler** | [Intro to `R` (Hebrew)](youtube.com/watch?v=SCle_ER6iYc&list=PLzByNWH2VRoppRnTrJfes0DMz3aeoAhXy)  
-  - **Danielle Navarro** | [`R` Playlists](youtube.com/channel/UCfNGzUFfsy_3udMY8UyaqBA/playlists)  
   
 - ***Cheat sheets*** | [rstudio.com/resources/cheatsheets](rstudio.com/resources/cheatsheets/)  
 - ***Stay up-to-date*** 
