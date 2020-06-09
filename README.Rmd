@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-<img src='BGUHex.png' align="right" height="139" />
+<img src='ARMPHex.png' align="right" height="139" />
 
 ```{r setup, include=FALSE}
 library(knitr)
