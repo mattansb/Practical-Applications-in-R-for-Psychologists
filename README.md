@@ -1,9 +1,9 @@
 
-<img src='logo/BGUHex.png' align="right" height="139" />
+<img src='BGUHex.png' align="right" height="139" />
 
 # Advanced Research Methods foR Psychologists
 
-<sub>*Last updated 2020-05-03.*</sub>
+<sub>*Last updated 2020-06-09.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -74,13 +74,11 @@ You can install all the packages used by running:
 
 The package versions used here:
 
-    ##   BayesFactor    bayestestR         dplyr    effectsize       emmeans 
-    ##  "0.9.12-4.2"     "0.6.0.1" "0.8.99.9002"     "0.3.0.1"       "1.4.5" 
-    ##      finalfit        GGally       ggplot2  ggResidpanel         haven 
-    ##       "1.0.0"       "1.5.0"       "3.3.0"       "0.3.0"       "2.2.0" 
-    ##         Hmisc  interactions   JSmediation          mice    parameters 
-    ##       "4.4-0"       "1.1.3"       "0.1.1"       "3.8.0"     "0.6.1.1" 
-    ##   performance       permuco         ppcor         psych    psychTools 
-    ##       "0.4.5"       "1.1.0"         "1.1"   "1.9.12.31"      "1.9.12" 
-    ##         purrr           pwr  summarytools     tidyverse 
-    ##       "0.3.4"       "1.3-0"       "0.9.6"       "1.3.0"
+    ##  BayesFactor   bayestestR        dplyr   effectsize      emmeans     finalfit 
+    ## "0.9.12-4.2"    "0.6.0.1"      "1.0.0"    "0.3.1.1"      "1.4.7"      "1.0.1" 
+    ##       GGally      ggplot2 ggResidpanel        haven        Hmisc interactions 
+    ##      "1.5.0"      "3.3.1"      "0.3.0"      "2.3.0"      "4.4-0"      "1.1.3" 
+    ##  JSmediation         mice   parameters  performance      permuco        ppcor 
+    ##      "0.1.1"      "3.9.0"      "0.7.0"      "0.4.6"      "1.1.0"        "1.1" 
+    ##        psych   psychTools        purrr          pwr summarytools    tidyverse 
+    ##  "1.9.12.31"     "1.9.12"      "0.3.4"      "1.3-0"      "0.9.6"      "1.3.0"
