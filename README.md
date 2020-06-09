@@ -1,5 +1,5 @@
 
-<img src='ARMPHex.png' align="right" height="139" />
+<img src='BGUHex.png' align="right" height="139" />
 
 # Advanced Research Methods foR Psychologists
 
