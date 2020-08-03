@@ -2,7 +2,7 @@
 
 # if, else if, else -------------------------------------------------------
 
-# ifelse:
+# if/else:
 #
 # if (condition) {
 #   do something
@@ -28,6 +28,10 @@ list(salary, worker)
 
 
 
+
+
+
+
 # note: if..else is a control flow function. Takes only one logical value.
 salary <- runif(3, min = 1000, max = 20000)
 if (salary < 5000) {
@@ -42,10 +46,23 @@ list(salary, worker)
 
 
 
+
+
+
+
 # to use with a vector: use `ifelse()` (taking a vector as input).
 worker <- ifelse(salary < 5000, "poor",
-                 ifelse(salary > 15000, "rich", "so so"))
+                 ifelse(salary > 15000, "rich",
+                        "so so"))
 list(salary,worker)
+
+
+
+
+
+
+
+
 
 
 
@@ -107,6 +124,7 @@ system.time({
   }
 })
 
+
 system.time({
   a <- rnorm(1e5)
 })
@@ -119,13 +137,24 @@ system.time({
 
 
 
+
+
+
+
+
+
 # Functions ---------------------------------------------------------------
 
 
-# functions are also R objects, just like any other...
+# Functions are also R objects, just like any other!
+sqrt
+
 # So their values (function) can be assigned into new object
 shoe <- sqrt
 shoe(9)
+shoe(81)
+shoe(shoe(81))
+
 
 blahblah <- is.logical
 blahblah(FALSE)
@@ -169,6 +198,15 @@ n_dice <- function(n = 2) {
 n_dice()
 n_dice(5)
 
+
+
+
+
+
+
+
+
+
 # a new measure of distribution symmetry: mean/median.
 symmetry <- function(x) {
   return(mean(x) / median(x))
@@ -176,11 +214,6 @@ symmetry <- function(x) {
 
 a <- c(1, 2, 3, 4, 5, 6, 7, 7, 7, 9, 9, 9, 9, 9)
 symmetry(a)
-
-# although this will also work (without "return"):
-symmetry <- function(x) {
-  mean(x) / median(x)
-}
 
 
 # many inputs:
@@ -190,10 +223,13 @@ symmetry <- function(x, top = "mean") {
   } else if (top == "median") {
     return(median(x) / mean(x))
   } else {
-    print("error")
+    stop("top can only be 'mean' or 'median'")
   }
 }
 
 symmetry(a)
 symmetry(a, top = "mean")
 symmetry(a, top = "median")
+symmetry(a, top = "mode")
+
+

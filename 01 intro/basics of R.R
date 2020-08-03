@@ -1,15 +1,19 @@
-# Intro -------------------------------------------------------------------
+
 
 3 + 4 # execute a line with Ctrl + Enter
+# Results of any command will appear in the CONSOLE
 
-# Assign a value to a variable with   <-
-# (will appear as an object in the environment)
+# Anything after a "#" symbol is ignored by R, so we can use it to write
+# comments.
+
+# ASSIGN a value to a variable with <-
+# (it will now appear as an object in the ENVIRONMENT)
 a <- 3
 
-# You can "print" the contents of an object by calling it:
+# You can "print" the contents of an object to the CONSOLE by calling it:
 a
 
-# You can use the object just as you would its contents:
+# You can use the object just as you would its value:
 a + 4
 
 b <- 4
@@ -23,8 +27,19 @@ c <- a * b
 c <- b - a
 c <- B - A # Your first ERROR. Why?
 
+
 c <- a + b
+c
+# OR
 (c <- a + b)
+
+
+
+
+# Code is all about mixing different type of information to make new
+# information.
+
+
 
 # Operators ---------------------------------------------------------------
 
@@ -54,6 +69,13 @@ a + (b / 2)
 #   round(x)    round to the nearest integer
 #   trunc(x)    get rid of decimal digits
 
+sqrt(a)
+# Because we didn't assign the result into a variable, it is lost forever. So if
+# you want to use a result, DON'T FORGET: assign (<-) it!
+a_sqrt <- sqrt(a)
+
+
+
 # Get help on a function
 ?exp
 
@@ -61,7 +83,12 @@ a + (b / 2)
 
 
 
+
+
+
 # Other types of variables ------------------------------------------------
+
+
 
 # character
 Group1 <- "control"
@@ -71,14 +98,21 @@ Group1 / a
 
 
 
-# logical
-x <- a > b
-y <- b > a
-z <- a == 7
-z <- a != 7
-z <- a = 7
-z <- a <- 7
 
+
+
+# logical
+a > b
+b > a
+a = 7
+a == 7
+a != 7
+
+
+
+
+
+# `is.*()` functions can test if an object is of a certain type:
 is.logical(a)
 is.logical("TRUE")
 is.logical(TRUE)
@@ -93,8 +127,9 @@ is.character(a)
 
 
 # Vectors -----------------------------------------------------------------
-# a vector is a "chain" of values
-# You can "chain" values together with the `c` function
+
+# A vector is a "chain" of values
+# You can "chain" values together with the `c()` function
 
 math.grades <- c(93, 30, 84, 88, 100, 67)
 english.grades <- c(100, 45, 90, 77, 88, 90)
@@ -103,7 +138,7 @@ english.grades <- c(100, 45, 90, 77, 88, 90)
 
 
 
-# Some function work on the whole vector
+# Some function work on or summarize the whole vector:
 is.numeric(math.grades)
 length(math.grades)
 mean(math.grades)
@@ -114,12 +149,16 @@ median(math.grades)
 hist(math.grades)
 
 
+
+
 # some accept more than 1 ARGUMENT - in this case: two numeric vectors
 cor(math.grades, english.grades)
 plot(math.grades, english.grades)
 
 
-# What will these make?
+
+
+# QUIZ: What will these make?
 pass.english <- english.grades >= 56
 pass.english
 sum(pass.english)
@@ -128,18 +167,29 @@ TRUE + 4
 
 
 
+
+
 hebrew.grades <- c(100, NA, 99, 100, 80, 75)
+# NA is "not available" - it is a way to mark missing data
 is.na(hebrew.grades)
 mean(hebrew.grades)
-mean(hebrew.grades, na.rm = TRUE)
-# You can directly name the arguments,
+mean(hebrew.grades, na.rm = TRUE) # (na.rm = NA remove)
+# here we used a second, named, argument.
+# You can see all the arguments with:
+?mean
+
+
+# You can directly name all the arguments,
 mean(x = hebrew.grades, na.rm = TRUE)
 # But don't have to if they're in order
-# (use ? to see the arguments a function takes)
 mean(hebrew.grades, 0, TRUE)
 # If you name the arguments, they can be in any order
 mean(na.rm = TRUE, x = hebrew.grades)
 mean(na.rm = TRUE, hebrew.grades)
+
+
+
+
 
 
 # Statistical distributions
@@ -159,9 +209,14 @@ x <- rexp(1000)
 hist(x)
 
 
-qnorm(.05) # input is probability
-pnorm(-1.96) # input is random variable value
-qt(.95,df = 12)
+qnorm(.05) # input is probability - turns into a Quantile.
+pnorm(-1.96) # input is random variable value - returns a Probability
+qt(.95, df = 12)
+
+
+
+
+
 
 
 # Working with vectors ----------------------------------------------------
@@ -250,25 +305,31 @@ english.grades["shira"]
 english.grades[4]
 english.grades[9 %% 5]
 
-french.grades <- c("nirit" = 90,
+french.grades <- c("anat" = 90,
                    "yoav" = 100,
-                   "mattan" = 56)
+                   "mattan" = 56) # Je ne parle pas bien francais :(
 mean(french.grades)
-french.grades["yossi"] + 2
+french.grades["anat"] + 2
+
+
+
+
+
 
 
 
 
 # Factors -----------------------------------------------------------------
 
-# A factor is a vector of categories.
+# A factor is a vector of CATEGORIES.
 # Unlike a character vector, factors usually represent "levels".
 
 sex <- sample(c("F", "M"), size = 10, replace = TRUE)
+
 x <- factor(sex)
 # x[4] <- "G"
 factor(sex, levels = c("M", "F")) # who cares about the order?
-factor(sex, levels = c("m", "f")) # be carful...
+factor(sex, levels = c("m", "f")) # be careful...
 factor(sex, levels = c("M"))
 
 # change the labels
@@ -340,8 +401,7 @@ list3[["c"]][[5]]
 
 list3[["b"]] <- list3[["b"]] + 2
 
-# what will this do?
-tail(head(c(2,3,4)[2:3][1:2][1][1])) # (don't ever do this)
+
 
 
 
@@ -352,10 +412,13 @@ tail(head(c(2,3,4)[2:3][1:2][1][1])) # (don't ever do this)
 
 
 
+
+
+
 # Exercise ----------------------------------------------------------------
 
 # 1. What does this do?
-# TIP: try and break it down to its componants.
+# TIP: try and break it down to its components.
 set.seed(4)
 x <- sample(seq(1, 8, length.out = 25), 10000, replace = TRUE) %% 7
 
@@ -370,7 +433,13 @@ x <- sample(seq(1, 8, length.out = 25), 10000, replace = TRUE) %% 7
 
 
 
-# 4. create a new object of type list with the following elemtns:
-#    a. your name
-#    b. how many cousins you have
-#    c. the names of the people to the left and right of you (as a vector).
+# 4. create a new object of type list with the following elements:
+#   a. your name
+#   b. how many cousins you have
+#   c. the names of the people to the left and right of you (as a vector).
+
+
+
+# 5. What will this do?
+# (TIP: work outwards)
+tail(head(c(2,3,4,5,6,7)[2:6][1:4], n = 3), n = 2)[1] # (don't ever do this)
