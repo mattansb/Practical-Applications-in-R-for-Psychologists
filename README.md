@@ -3,7 +3,11 @@
 
 # Advanced Research Methods foR Psychologists
 
-<sub>*Last updated 2020-05-03.*</sub>
+[![](https://img.shields.io/badge/Open%20Educational%20Resources-Compatable-brightgreen)](https://creativecommons.org/about/program-areas/education-oer/)
+[![](https://img.shields.io/badge/CC-BY--NC--SA%204.0-lightgray)](http://creativecommons.org/licenses/by-nc-sa/4.0/)  
+[![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
+
+<sub>*Last updated 2020-07-30.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -74,13 +78,11 @@ You can install all the packages used by running:
 
 The package versions used here:
 
-    ##   BayesFactor    bayestestR         dplyr    effectsize       emmeans 
-    ##  "0.9.12-4.2"     "0.6.0.1" "0.8.99.9002"     "0.3.0.1"       "1.4.5" 
-    ##      finalfit        GGally       ggplot2  ggResidpanel         haven 
-    ##       "1.0.0"       "1.5.0"       "3.3.0"       "0.3.0"       "2.2.0" 
-    ##         Hmisc  interactions   JSmediation          mice    parameters 
-    ##       "4.4-0"       "1.1.3"       "0.1.1"       "3.8.0"     "0.6.1.1" 
-    ##   performance       permuco         ppcor         psych    psychTools 
-    ##       "0.4.5"       "1.1.0"         "1.1"   "1.9.12.31"      "1.9.12" 
-    ##         purrr           pwr  summarytools     tidyverse 
-    ##       "0.3.4"       "1.3-0"       "0.9.6"       "1.3.0"
+    ##  BayesFactor   bayestestR        dplyr   effectsize      emmeans       GGally 
+    ## "0.9.12-4.2"      "0.7.2"      "1.0.0"      "0.3.2"      "1.4.8"      "2.0.0" 
+    ##      ggplot2 ggResidpanel        haven        Hmisc interactions  JSmediation 
+    ##      "3.3.2"      "0.3.0"      "2.3.1"      "4.4-0"      "1.1.3"      "0.1.1" 
+    ##         mice   parameters  performance      permuco        ppcor        psych 
+    ##     "3.10.0"      "0.8.2"      "0.4.8"      "1.1.0"        "1.1"  "1.9.12.31" 
+    ##   psychTools        purrr          pwr summarytools    tidyverse 
+    ##     "1.9.12"      "0.3.4"      "1.3-0"      "0.9.6"      "1.3.0"
