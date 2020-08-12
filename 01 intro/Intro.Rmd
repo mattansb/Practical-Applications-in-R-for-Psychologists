@@ -80,7 +80,7 @@ R can also be used for writing- writing:
 - How to import and prepare data  
 - Summary statistics  
 - Plotting  
-- How to fit linear models  
+- How to fit and explore (generalized) linear models  
 - Inferential statistics  
 
 ## What you will *NOT* learn
@@ -95,16 +95,15 @@ R can also be used for writing- writing:
   - **R for Data Science** | [r4ds.had.co.nz/](r4ds.had.co.nz/)  
   - **Learning Statistics with R** | [learningstatisticswithr.com](learningstatisticswithr.com/)  
   - **R for Psychological Science** | [psyr.org](psyr.org/)  
-    - And other courses / video lectures by [*Danielle Navarro*](http://djnavarro.net/teaching/).
   - **Statistical Thinking for the 21st Century** | [statsthinking21.org](statsthinking21.org/)  
   
-  - **Yoav Kessler** | [Intro to `R` (Hebrew)](youtube.com/watch?v=SCle_ER6iYc&list=PLzByNWH2VRoppRnTrJfes0DMz3aeoAhXy)  
   
 - ***Cheat sheets*** | [rstudio.com/resources/cheatsheets](rstudio.com/resources/cheatsheets/)  
 - ***Stay up-to-date*** 
   - **R-bloggers** | [r-bloggers.com](r-bloggers.com/)  
   - **Twitter** | [#rstats](twitter.com/search?q=%23rstats)
 
+Even more [here>>](https://github.com/mattansb/Advanced-Research-Methods-foR-Psychologists/wiki/Resources)
 
 ## {.smaller}
 
