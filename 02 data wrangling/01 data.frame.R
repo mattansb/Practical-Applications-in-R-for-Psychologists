@@ -106,7 +106,7 @@ school_grades_clean
 library(tidyverse)
 
 # You only need to install packages once, but you need to load them (with
-# `library()`) every time you open R.
+# `library`) every time you open R.
 
 
 
