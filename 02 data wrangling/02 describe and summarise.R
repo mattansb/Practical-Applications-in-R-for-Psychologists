@@ -2,7 +2,12 @@ library(dplyr)
 library(parameters) # for kurtosis & skewness
 library(summarytools) # for dfSummary
 
-e2b_data <- read.csv("emotional_2back_fixed.csv")
+e2b_data <- read.csv("emotional_2back.csv") %>%
+  mutate(Group = ifelse(Subject<=30,1,2) %>% factor(),
+         Subject = factor(Subject),
+         Emotion = factor(Emotion),
+         SameDiff = factor(SameDiff),
+         Gender = factor(SameDiff))
 
 glimpse(e2b_data)
 
@@ -13,14 +18,13 @@ summary(e2b_data)
 
 # This gives a quick and dirty summary of the passed variables:
 (quick_sum <- dfSummary(e2b_data))
-view(quick_sum) # small "v"!
+view(quick_sum) # lowercase "v"!
 
 
 
 
-# You can also specify your own statistics / measures manually using
-# `summarise` - the `summarise` is like `mutate`, but it summarises
-# data into a single row.
+# You can also specify your own statistics / measures manually using `summarize`
+# - the `summarise` is like `mutate`, but it summarieses data into a single row.
 e2b_data %>%
   summarise(
     mean(RT),
@@ -36,12 +40,11 @@ e2b_data %>%
 
 
 
-
 # You can also summarise ACROSS several variables, with `across()`.
 #
-# We need to define what we want - these can be functions,
-# names of functions, or a lambda.
-things_I_want <- list(
+# We need to define what we want - these can be functions, names of functions,
+# or a lambda function.
+suff_i_wanna_know <- list(
   # a function
   mean = mean,
   # name of a function
@@ -56,13 +59,13 @@ things_I_want <- list(
 # Use the `across()` function:
 e2b_data %>%
   summarise(across(.cols = c(RT, ACC),
-                   .fns = things_I_want))
+                   .fns = suff_i_wanna_know))
 
 # other ways to select variables.
 e2b_data %>%
-  summarise(across(is.factor | is.character, nlevels),
-            across(.cols = is.numeric,
-                   .fns = things_I_want))
+  summarise(across(.cols = where(is.factor), nlevels),
+            across(.cols = c(RT, ACC),
+                   .fns = suff_i_wanna_know))
 
 # For numeric variables, you can use `parameters::describe_distribution()`
 e2b_data %>%
@@ -110,13 +113,13 @@ head(e2b_subj_data, n = 12)
 # (see next semester...)
 
 
-# unfortunately we lost some columns (gender, groups) - but we can
-# add them
-# back in:
-# 1. Make df with data we want to add:
+# unfortunately we lost some columns (gender, groups) -
+# but we can add them back in:
+#
+# 1. Make a data.frame with data we want to add:
 subject_data <- e2b_data %>%
   select(Subject, Group, Gender) %>%
-  distinct() # keep only unique rows
+  distinct() # keep only unique rows!
 
 head(subject_data)
 
@@ -126,7 +129,7 @@ e2b_subj_data <- e2b_data %>%
   summarise(mRT = mean(RT[ACC == 1]),
             mACC = mean(ACC)) %>%
   ungroup() %>%
-  full_join(subject_data, by = "Subject")
+  full_join(subject_data, by = "Subject") # JOIN!
 
 head(e2b_subj_data)
 
@@ -151,10 +154,9 @@ e2b_data %>%
 
 
 
-# NOTE: Not all functions respect the `group_by` action - tidyverse
-# functions do, and some others from other packages, but don't assume that
-# all functions do!
-# For example:
+# NOTE: Not all functions respect the `group_by` action - tidyverse functions
+# do, and some others from other packages, but don't assume that all functions
+# do! For example:
 e2b_data %>%
   group_by(Gender, Group) %>%
   nrow()
@@ -162,8 +164,9 @@ e2b_data %>%
 e2b_data %>%
   group_by(Gender, Group) %>%
   summary()
-# Here `nrow()` (returns the number of rows) and `summary()` didn't react
-# to `group_by(Gender, Group)`!!!
+# Here `nrow()` (returns the number of rows) and `summary()` didn't react to
+# `group_by(Gender, Group)`!!!
+
 
 
 
@@ -183,8 +186,8 @@ df_NPAS %>%
 # Use `across` to compute sum / mean scores
 df_NPAS_with_score <- df_NPAS %>%
   mutate(
-    Nerdy1 = rowSums(across(Q1:Q26)),
-    Nerdy2 = rowMeans(across(Q1:Q26)) # better for missing data
+    Nerdy1 = rowSums(across(Q1:Q26), na.rm = TRUE),
+    Nerdy2 = rowMeans(across(Q1:Q26), na.rm = TRUE) # better for missing data
   ) %>%
   select(-(Q1:Q26))
 
@@ -198,10 +201,9 @@ head(df_NPAS_with_score)
 
 # Exercise ----------------------------------------------------------------
 
-# 1. Summarize the data in `df_NPAS_with_score` by describing the
-#    variable `Nerdy2` - mean, sd, and at least 2 other measures you
-#    can think of.
+# 1. Summarize the data in `df_NPAS_with_score` by describing the variable
+#   `Nerdy2` - mean, sd, and at least 2 other measures you can think of.
 # 2. Repeat (1) but for EACH gender AND EACH ASD group.
-# *. All of the examples in "Describe variables" support `group_by()` -
-#    try them grouped by `Gender`.
+# *. All of the examples in "Describe variables" section support `group_by()` -
+#   try them grouped by `Gender`.
 
