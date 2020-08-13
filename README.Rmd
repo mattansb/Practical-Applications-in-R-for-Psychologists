@@ -7,7 +7,7 @@ output: github_document
 ```{r setup, include=FALSE}
 library(knitr)
 
-opts_chunk$set(echo = TRUE)
+opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 `%>%` <- dplyr::`%>%`
 ```
