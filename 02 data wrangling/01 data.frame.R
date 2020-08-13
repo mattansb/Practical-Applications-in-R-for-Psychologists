@@ -102,9 +102,9 @@ school_grades_clean
 
 
 
-# install.packages("tidyverse")
+# install.packages(c("tidyverse", "haven))
 library(tidyverse)
-
+library(haven)
 # You only need to install packages once, but you need to load them (with
 # `library`) every time you open R.
 
@@ -133,7 +133,7 @@ data_raw <- read.csv("emotional_2back.csv")
 data_raw <- read_csv("emotional_2back.csv")
 
 # for SPSS files
-data_raw <- haven::read_spss("emotional_2back.sav")
+data_raw <- read_spss("emotional_2back.sav")
 
 # see also the `readxl` pkg for excel files.
 
@@ -376,7 +376,7 @@ write.csv(data_long, file = "data_long.csv") # read.csv() into object
 
 
 # save to a `.sav` file
-# haven::write_sav(data_long, path = "data_long.sav")
+write_sav(data_long, path = "data_long.sav")
 # BUT WHY??????????? NOOOOOOOOOO
 
 
@@ -385,6 +385,8 @@ saveRDS(data_long, file = "data_long.Rds")
 # load using readRDS() into object.
 #
 # why would you want to do this? (e.g., factors...)
+
+
 
 
 

@@ -63,14 +63,14 @@ e2b_data %>%
 
 # other ways to select variables.
 e2b_data %>%
-  summarise(across(.cols = where(is.factor), nlevels),
+  summarise(across(.cols = c(Subject,Group), nlevels),
             across(.cols = c(RT, ACC),
                    .fns = suff_i_wanna_know))
 
 # For numeric variables, you can use `parameters::describe_distribution()`
 e2b_data %>%
   summarise(
-    describe_distribution(across(is.numeric))
+    describe_distribution(across(.cols = where(is.numeric)))
   )
 
 # Read more about using `across()`:
@@ -186,8 +186,8 @@ df_NPAS %>%
 # Use `across` to compute sum / mean scores
 df_NPAS_with_score <- df_NPAS %>%
   mutate(
-    Nerdy1 = rowSums(across(Q1:Q26), na.rm = TRUE),
-    Nerdy2 = rowMeans(across(Q1:Q26), na.rm = TRUE) # better for missing data
+    Nerdy1 = rowSums(across(.cols = Q1:Q26), na.rm = TRUE),
+    Nerdy2 = rowMeans(across(.cols = Q1:Q26), na.rm = TRUE) # better for missing data
   ) %>%
   select(-(Q1:Q26))
 
