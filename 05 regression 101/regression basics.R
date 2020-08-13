@@ -76,7 +76,7 @@ predict(fit, newdata = data.frame(xtra_hours = c(-3, 30)))
 ## Plot
 plot(ggemmeans(fit, "xtra_hours"))
 plot(ggemmeans(fit, "xtra_hours"), add.data = TRUE)
-
+# see more: https://strengejacke.github.io/ggeffects
 
 
 

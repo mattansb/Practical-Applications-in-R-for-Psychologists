@@ -89,7 +89,7 @@ m_moderation <- lm(child_satisfaction ~ involvement_c * strictness_c,
 anova(m_additive, m_moderation)
 compare_performance(m_additive, m_moderation)
 
-summary(m_moderation_short)
+summary(m_moderation)
 
 
 
@@ -103,6 +103,8 @@ summary(m_moderation_short)
 
 emtrends(m_moderation, ~strictness_c, "involvement_c",
          cov.reduce = list(strictness_c = values_at)) %>%
+  # `cov.reduce = list(strictness_c = values_at)` tells `emtrends()` to get the
+  # mean +-sd of `strictness_c`.
   summary(infer = TRUE)
 # (we can also use contrasts here to COMPARE slopes)
 
