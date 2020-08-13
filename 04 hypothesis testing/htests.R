@@ -7,18 +7,26 @@ pdat <- readRDS("pdat.Rds")
 
 head(pdat)
 
-# This exercise will demo how to conduct the "classic" (NHST) statistical
+# This exercise will demo how to conduct the "classic" statistical hypothesis
 # tests, along with their accompanying:
 #   - Bayesian counterparts.
-#   - Confidence interval.
-#   - Standerdized effect size.
+#   - Confidence intervals.
+#   - Standardized effect sizes.
+#
+# It is important to note that each of these so-called "tests" are actually a
+# (simple) statistical model.
 
 
 # t-test ------------------------------------------------------------------
 
+
+# What is the model?
+
+
 ## between
 t.test(pdat$Depression[pdat$Group == "a"],
        pdat$Depression[pdat$Group == "b"], var.equal = TRUE)
+# Note, the default is `var.equal = FALSE` which gives a Welch test.
 
 ttestBF(pdat$Depression[pdat$Group == "a"],
         pdat$Depression[pdat$Group == "b"])
@@ -30,7 +38,7 @@ cohens_d(pdat$Depression[pdat$Group == "a"],
 
 
 ## within
-# order of values is crutial! TAKE CARE WHEN USING LONG DATA!
+# order of values is crucial! TAKE CARE WHEN USING LONG DATA!
 t.test(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 
 ttestBF(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
@@ -50,6 +58,7 @@ cohens_d(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 ## single correlation
 
 # Pearson
+# What is the model?
 cor.test(pdat$Depression, pdat$Joy)
 
 correlationBF(pdat$Depression, pdat$Joy)
@@ -57,14 +66,14 @@ correlationBF(pdat$Depression, pdat$Joy)
 
 
 # Spearman correlation
+# What is the model?
 cor.test(pdat$Depression, pdat$Joy, method = "spearman")
 
 
 
 
 ## many at once (`corr.test` is NOT `cor.test`!)
-res <- corr.test(pdat[,c("Depression","Anxiety","Joy")])
-res
+(res <- corr.test(pdat[,c("Depression","Anxiety","Joy")]))
 res$ci
 
 
@@ -76,15 +85,18 @@ corr.test(pdat[,c("Depression","Anxiety","Joy")],
 
 
 
-# the `psych` package has a lot more correlation-related thing...
-# you might also find the `correlation` and `corrr` packages interesting
-# for quick (and tidy) exploration and visualization of correlations.
+# The `psych` package has a lot more correlation-related things... We will meet
+# some of them next semester.
+# You might also find the `correlation` package interesting for quick (and tidy)
+# exploration and visualization of correlations.
 
 
 
 
 
 # partial and part (semi-partial) correlations ----------------------------
+
+# What is the model?
 
 ## partial correlation
 pcor(pdat[,c("Depression","Anxiety","Joy")])
@@ -102,6 +114,9 @@ spcor(pdat[,c("Depression","Anxiety","Joy")])
 
 # proportion test ---------------------------------------------------------
 
+# What is the model?
+
+
 prop.test(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
@@ -115,8 +130,9 @@ proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 # chi-squared test --------------------------------------------------------
 
-cont_table <- table(pdat$sex, pdat$Group)
-cont_table
+# What is the model?
+
+(cont_table <- table(pdat$sex, pdat$Group))
 
 chisq.test(cont_table, correct = FALSE)
 
@@ -131,8 +147,10 @@ cramers_v(cont_table, correct = FALSE)
 # Exercise ----------------------------------------------------------------
 
 
-# Both frequentist and bayesian tests support one sided tests...
+# Both frequentist and Bayesian tests support one sided tests...
 # Conduct a one sided:
 #  - t test
 #  - correlation test
 # How do these affect the results?
+
+
