@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC--SA%204.0-lightgray)](http://creativecommons.org/licenses/by-nc-sa/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2020-08-13.*</sub>
+<sub>*Last updated 2020-08-14.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -54,6 +54,7 @@ You will need:
 | [05 regression 101](/05%20regression%20101)                                                                 | [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`psychTools`](https://CRAN.R-project.org/package=psychTools)                                                                                                                                                                                                                                                                    |
 | [06 categorical predictors and model comparison](/06%20categorical%20predictors%20and%20model%20comparison) | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`BayesFactor`](https://CRAN.R-project.org/package=BayesFactor), [`bayestestR`](https://CRAN.R-project.org/package=bayestestR), [`performance`](https://CRAN.R-project.org/package=performance)                                                                                                                                                    |
 | [07 moderation and curvilinear](/07%20moderation%20and%20curvilinear)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`performance`](https://CRAN.R-project.org/package=performance), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`interactions`](https://CRAN.R-project.org/package=interactions), [`parameters`](https://CRAN.R-project.org/package=parameters), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)                                                                                                                                                        |
+| [08 ANOVA](/08%20ANOVA)                                                                                     | [`afex`](https://CRAN.R-project.org/package=afex), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`tidyr`](https://CRAN.R-project.org/package=tidyr)                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | [09 assumptions and non-parametric inference](/09%20assumptions%20and%20non-parametric%20inference)         | [`performance`](https://CRAN.R-project.org/package=performance), [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`GGally`](https://CRAN.R-project.org/package=GGally), [`ggResidpanel`](https://CRAN.R-project.org/package=ggResidpanel), [`permuco`](https://CRAN.R-project.org/package=permuco), [`parameters`](https://CRAN.R-project.org/package=parameters)                                                                                                                                                                                                                       |
 | [10 generalized linear models](/10%20generalized%20linear%20models)                                         | [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2), [`emmeans`](https://CRAN.R-project.org/package=emmeans)                                                                                                                                                                                                                                                                                                                                             |
 | [mediation](/mediation)                                                                                     | [`JSmediation`](https://CRAN.R-project.org/package=JSmediation), [`purrr`](https://CRAN.R-project.org/package=purrr), [`parameters`](https://CRAN.R-project.org/package=parameters)                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -64,24 +65,24 @@ You can install all the packages used by running:
     # in alphabetical order:
 
     pkgs <- c(
-      "BayesFactor", "bayestestR", "DescTools", "dplyr", "effectsize",
-      "emmeans", "finalfit", "GGally", "ggeffects", "ggplot2", "ggResidpanel",
-      "haven", "Hmisc", "interactions", "JSmediation", "mice", "parameters",
-      "performance", "permuco", "ppcor", "psych", "psychTools", "purrr",
-      "pwr", "summarytools", "tidyverse"
+      "afex", "BayesFactor", "bayestestR", "DescTools", "dplyr",
+      "effectsize", "emmeans", "finalfit", "GGally", "ggeffects", "ggplot2",
+      "ggResidpanel", "haven", "Hmisc", "interactions", "JSmediation",
+      "mice", "parameters", "performance", "permuco", "ppcor", "psych",
+      "psychTools", "purrr", "pwr", "summarytools", "tidyr", "tidyverse"
     )
 
     install.packages(pkgs, dependencies = TRUE)
 
 The package versions used here:
 
-    ##  BayesFactor   bayestestR    DescTools        dplyr   effectsize      emmeans 
-    ## "0.9.12-4.2"    "0.7.2.1"    "0.99.37"      "1.0.1"      "0.3.2"      "1.4.8" 
-    ##     finalfit       GGally    ggeffects      ggplot2 ggResidpanel        haven 
-    ##      "1.0.2"      "2.0.0"     "0.15.1"      "3.3.2"      "0.3.0"      "2.3.1" 
-    ##        Hmisc interactions  JSmediation         mice   parameters  performance 
-    ##      "4.4-1"      "1.1.3"      "0.1.1"     "3.11.0"      "0.8.2"      "0.4.8" 
-    ##      permuco        ppcor        psych   psychTools        purrr          pwr 
-    ##      "1.1.0"        "1.1"      "2.0.7"      "2.0.8"      "0.3.4"      "1.3-0" 
-    ## summarytools    tidyverse 
-    ##      "0.9.6"      "1.3.0"
+    ##         afex  BayesFactor   bayestestR    DescTools        dplyr   effectsize 
+    ##     "0.27-2" "0.9.12-4.2"    "0.7.2.1"    "0.99.37"      "1.0.1"      "0.3.2" 
+    ##      emmeans     finalfit       GGally    ggeffects      ggplot2 ggResidpanel 
+    ##      "1.4.8"      "1.0.2"      "2.0.0"     "0.15.1"      "3.3.2"      "0.3.0" 
+    ##        haven        Hmisc interactions  JSmediation         mice   parameters 
+    ##      "2.3.1"      "4.4-1"      "1.1.3"      "0.1.1"     "3.11.0"      "0.8.2" 
+    ##  performance      permuco        ppcor        psych   psychTools        purrr 
+    ##      "0.4.8"      "1.1.0"        "1.1"      "2.0.7"      "2.0.8"      "0.3.4" 
+    ##          pwr summarytools        tidyr    tidyverse 
+    ##      "1.3-0"      "0.9.6"      "1.1.1"      "1.3.0"
