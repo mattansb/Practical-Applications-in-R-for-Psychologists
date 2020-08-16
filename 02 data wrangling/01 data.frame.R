@@ -37,6 +37,8 @@ school_grades[1,]   # first row
 school_grades[, 1]  # first column
 school_grades[3, 5] # 3rd row, 5th column
 
+# What will this do?
+school_grades[c(1, 2, 3, 1, 1, 1), ]
 
 
 # many ways to do the same thing...

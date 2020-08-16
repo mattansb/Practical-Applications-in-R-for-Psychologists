@@ -267,10 +267,17 @@ v10 <- sample(v9, 100, replace = TRUE)
 # by index
 v9[1]
 v9[20:30]
-i <- c(1, 3, 4)
+i <- c(1, 3, 5)
 v9[i]
-v9[c(1, 3, 4)] # same
+v9[c(1, 3, 5)] # same
 
+
+# order matters!
+v9[c(1, 2, 3, 4)]
+v9[c(4, 3, 1, 2)]
+
+# What will this do?
+v9[c(1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
 
 
 v9[1]
