@@ -185,17 +185,15 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 
 
 
-# and many many more... https://ggplot2-book.org/
-#
-# Explore options + cheat sheet here: https://ggplot2.tidyverse.org/
-#
+# and many many more... 
+# - The basics: https://ggplot2-book.org/
+# - Explore options + cheat sheet here: https://ggplot2.tidyverse.org/
+# - How to get the plot you want: https://www.r-graph-gallery.com/index.html
+# - Learn how to better visualize your data: https://serialmentor.com/dataviz/visualizing-amounts.html
 #
 # ggplot is a powerful tool - with many other packages interfacing or expanding
 # on it. We will see some of them later on.
-#
-#
-# Learn how to better visualize your data:
-# https://serialmentor.com/dataviz/visualizing-amounts.html
+
 
 
 
