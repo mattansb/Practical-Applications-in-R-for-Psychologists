@@ -107,7 +107,7 @@ ol_test
 
 
 
-insight::get_data(mod)[as.logical(ol_test), ]
+insight::get_data(mod)[ol_test, ]
 # What makes these so extreme?
 
 
