@@ -1,0 +1,219 @@
+library(effects)      # for residual regression plots
+library(performance)  # for check_*
+library(ggResidpanel) # for resid_panel
+
+
+exp_grades <- read.csv("Exp_Psych_Grades.csv")
+exp_grades$in_couple <- factor(exp_grades$in_couple)
+
+head(exp_grades)
+
+
+
+
+mod <- lm(Report ~ DOI + OSF + in_couple, data = exp_grades)
+
+summary(mod)
+
+
+# When we talk about assumption checks, these are often 2 types of assumptions
+# that get mixed together:
+# - Assumptions of the Model
+# - Assumptions of the Significant tests
+# (Read more here: https://shouldbewriting.netlify.com/posts/2018-08-30-linear-regression-assumptions/)
+
+
+
+
+
+
+# Assumptions of the Model ------------------------------------------------
+
+# These assumptions are related to the *fit* of your model. But before these,
+# these is one assumption that cannot be checked - that you are fitting the
+# right KIND of model!
+# Are you fitting a linear model to binary data? Are you fitting an ordinal
+# regression to a scale outcome? This will necessarily be a bad fit...
+
+
+# 1. "Linearity" ----------------------------------------------------------
+
+# This states that predictors are linearly related to the outcome. But we can
+# also have non-linear predictors - we've seen polynomial predictors. More
+# generally, this assumption states that our model is correctly specified: no
+# missing interactions, or complex relationships not modeled.
+
+# We can do this visually, using *partial regression plots*:
+plot(Effect("OSF", mod, residuals = TRUE))
+
+plot(Effect("in_couple", mod, residuals = TRUE))
+
+plot(Effect(c("in_couple","OSF"), mod, residuals = TRUE))
+
+# etc...
+
+
+
+# >>> What to do if violated? <<<
+# Fix your model? (Warning: this is post-hoc model fitting...)
+
+
+
+
+
+# 2. (Low) Collinearity ---------------------------------------------------
+
+# Collinearity states that some predictors are related to each other. Why is
+# collinearity bad? Two main reasons:
+# 1. It reduces power (by increasing SEs).
+# 2. It makes interpretation of results harder.
+
+# To measure collinearity we will compute the VIF:
+check_collinearity(mod)
+
+# NOTE: when the model includes interactions, centering will prevent spurious
+# results (inflated VIFs).
+
+
+
+# >>> What to do if violated? <<<
+# - Remove a term, OR
+# - Combine the collinear terms
+# But this might reduce the explanatory power of your model...
+
+
+
+
+
+
+# 3. Leverage and (multivariate) Outliers ---------------------------------
+
+# These terms are similar - both relate to observations who are far from all
+# other observations, in the *multivariate* space. This can be a problem as it
+# can mean that This can be a problem if these "extreme" observation are
+# influencing our model in such a way that the model over-represents them, and
+# under-represents the other observations.
+
+## Leverage
+resid_panel(mod, plots = "lev", smoother = TRUE)
+
+
+
+## (multivariate) Outliers
+ol_test <- check_outliers(mod, method = "cook") # or "mahalanobis"
+ol_test
+
+?check_outliers # read about the methods
+
+
+
+insight::get_data(mod)[as.logical(ol_test), ]
+# What makes these so extreme?
+
+
+
+
+
+# >>> What to do if violated? <<<
+# - Check for errors in data
+# - Use robust methods that are less sensitive to such outliers
+
+
+
+
+
+
+
+
+# Assumptions of the Significant tests ------------------------------------
+
+# Generally speaking, these assumptions are what allows us to convert Z, t, F,
+# Chi values into probabilities. So any violation of these assumptions reduces
+# the validty of our sig-tests. (However, not of the model as a whole!)
+#
+# Whereas the previous assumptions are the same for ALL TYPES OF MODELS,
+# assumptions relating to sig-testing are slightly different for different types
+# of models - linear models have different assumptions than logistic models,
+# than Poisson models, than mixed models, than SEM... etc.
+#
+# One assumption that all models have in common it that the prediction errors /
+# residuals are independence of one another. When this assumption is violated it
+# is sometimes called "autocorrelation". This assumption is hard to test, and it
+# is usually easier to use knowledge about the data - for example, if we have a
+# repeated measures design, or a nested design, then there is some dependency
+# between the observations (and we would therefor want to account for this by
+# using a mixed model, or something of the sort).
+
+
+# Here I will be looking at assumption of linear models, as these are more
+# common and are easier to test...
+
+
+
+# 1. Normality (of residuals) ---------------------------------------------
+
+# The true normality assumption is about the normality of the residuals!
+
+
+# Shapiro-Wilk test for the normality (of THE RESIDUALS!!!)
+check_normality(mod)
+
+
+# but...
+# https://notstatschat.rbind.io/2019/02/09/what-have-i-got-against-the-shapiro-wilk-test/
+
+# So you should really LOOK at the residuals:
+resid_panel(mod, plots = c("hist", "qq"), qqbands = TRUE)
+# There are other plot options - these are the one I recommend.
+?resid_panel
+
+
+
+
+# >>> What to do if violated? <<<
+
+
+
+
+
+
+
+# 2. Homoscedasticity (of residuals) --------------------------------------
+
+
+check_heteroscedasticity(mod)
+
+# Let's take a look.
+resid_panel(mod,
+            plots = c("resid", "ls", "yvp"),
+            smoother = TRUE)
+# How do we want there to look?
+
+# We can also compare the residuals to each predictor
+resid_xpanel(mod, smoother = TRUE)
+# How do we want there to look?
+
+
+# looks like the same outliers from before :(
+
+
+
+
+# >>> What to do if violated? <<<
+# Use a non parametric TEST!
+
+
+
+
+
+
+
+
+
+
+# Exercise ----------------------------------------------------------------
+
+# Fit the model: Report ~ Test + in_couple
+# 1. Test 3 of the assumptions and interpret the results.
+# 2. Conduct a bootstrap or permutation analysis. How does this affect the
+#   results?

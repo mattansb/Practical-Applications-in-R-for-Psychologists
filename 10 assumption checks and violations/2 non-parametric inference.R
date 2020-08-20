@@ -1,8 +1,10 @@
 library(permuco)    # for permutation tests
 library(parameters) # for model_bootstrap
 
+
 exp_grades <- read.csv("Exp_Psych_Grades.csv")
-head(exp_grades)
+exp_grades$in_couple <- factor(exp_grades$in_couple)
+
 
 # "regular" model
 mod <- lm(Report ~ DOI + OSF + in_couple, data = exp_grades)
@@ -31,5 +33,11 @@ parameters_bootstrap(mod, iterations = 599, ci_method = "HDI")
 # how do the permutation results and the bootstrap results differ?
 
 
-# For more complex models more complex methods are required for
-# bootstrapping (e.g., the `boot` package) and premutation tests...
+# For more complex models more complex methods are required for premutation
+# tests and bootstrapping (e.g., the `boot` package, which allows for
+# bootstrapping estimates, e.g., from `emmeans`, and not just the model
+# parameters).
+
+
+
+
