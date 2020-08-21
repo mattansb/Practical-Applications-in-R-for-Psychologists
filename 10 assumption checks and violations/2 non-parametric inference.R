@@ -28,12 +28,11 @@ summary(modp) # why so many p-values??
 
 # Bootstrap estimation ----------------------------------------------------
 
-
-parameters_bootstrap(mod, iterations = 599, ci_method = "HDI")
+bootstrap_parameters(mod, iterations = 599) # uses quantile CIs
 # how do the permutation results and the bootstrap results differ?
 
 
-# For more complex models more complex methods are required for premutation
+# For more complex models more complex methods are required for permutation
 # tests and bootstrapping (e.g., the `boot` package, which allows for
 # bootstrapping estimates, e.g., from `emmeans`, and not just the model
 # parameters).

@@ -21,8 +21,24 @@ summary(mod)
 # - Assumptions of the Model
 # - Assumptions of the Significant tests
 # (Read more here: https://shouldbewriting.netlify.com/posts/2018-08-30-linear-regression-assumptions/)
+#
+#
+# These checks are only meant to validate our pre-existing assumptions about our
+# data and our model - optimally, we shouldn't be surprised by the results of
+# these checks. For example, if we have an orthogonal design, we already know
+# that collinearity is low or non existent; if we have reaction time data, we
+# already know our data is at least somewhat not homoscedastic, etc. In other
+# words, we shouldn't be using these checks to determine whether it's "okay" to
+# use some model, but rather to validate what we (should) already know about the
+# model. Models should ideally be selected based on prior knowledge about our
+# data and on our hypotheses - not in a trial-and-error fashion.
 
 
+
+
+# If you approach these checks without an a-priori belief about the check's
+# result, you should take a step back and consider why you decided to fit THIS
+# type of model THIS way with THESE predictors to begin with.
 
 
 
@@ -30,7 +46,7 @@ summary(mod)
 # Assumptions of the Model ------------------------------------------------
 
 # These assumptions are related to the *fit* of your model. But before these,
-# these is one assumption that cannot be checked - that you are fitting the
+# there is one assumption that cannot be checked - that you are fitting the
 # right KIND of model!
 # Are you fitting a linear model to binary data? Are you fitting an ordinal
 # regression to a scale outcome? This will necessarily be a bad fit...
@@ -88,11 +104,10 @@ check_collinearity(mod)
 
 # 3. Leverage and (multivariate) Outliers ---------------------------------
 
-# These terms are similar - both relate to observations who are far from all
-# other observations, in the *multivariate* space. This can be a problem as it
-# can mean that This can be a problem if these "extreme" observation are
-# influencing our model in such a way that the model over-represents them, and
-# under-represents the other observations.
+# These two terms are similar - both relate to observations who are far from all
+# other observations, in the *multivariate* space. This can be a problem if
+# these "extreme" observation are influencing our model in such a way that the
+# model over-represents them, and under-represents the other observations.
 
 ## Leverage
 resid_panel(mod, plots = "lev", smoother = TRUE)
@@ -125,16 +140,16 @@ insight::get_data(mod)[ol_test, ]
 
 
 
-# Assumptions of the Significant tests ------------------------------------
+# Assumptions of the Significance tests -----------------------------------
 
 # Generally speaking, these assumptions are what allows us to convert Z, t, F,
-# Chi values into probabilities. So any violation of these assumptions reduces
-# the validty of our sig-tests. (However, not of the model as a whole!)
+# and Chi values into probabilities. So any violation of these assumptions
+# reduces the validity of our sig-tests. (However, not of the model as a whole!)
 #
-# Whereas the previous assumptions are the same for ALL TYPES OF MODELS,
+# Whereas the previous model-assumptions are the same for ALL TYPES OF MODELS,
 # assumptions relating to sig-testing are slightly different for different types
-# of models - linear models have different assumptions than logistic models,
-# than Poisson models, than mixed models, than SEM... etc.
+# of models - sig-testing in linear models have different assumptions than
+# logistic models, than Poisson models, than mixed models, than SEM... etc.
 #
 # One assumption that all models have in common it that the prediction errors /
 # residuals are independence of one another. When this assumption is violated it
@@ -164,6 +179,8 @@ check_normality(mod)
 
 # So you should really LOOK at the residuals:
 resid_panel(mod, plots = c("hist", "qq"), qqbands = TRUE)
+parameters::describe_distribution(residuals(mod)) # Skewness & Kurtosis
+
 # There are other plot options - these are the one I recommend.
 ?resid_panel
 
@@ -171,7 +188,11 @@ resid_panel(mod, plots = c("hist", "qq"), qqbands = TRUE)
 
 
 # >>> What to do if violated? <<<
-
+# This means that we shouldn't have used a Gaussian likelihood function (the
+# normal distribution) in our model - so we can:
+# 1. Try using a better one... A skewed or heavy tailed likelihood function, or
+#   a completely different model family. Or...
+# 2. Switch to non-parametric tests!
 
 
 
@@ -200,7 +221,9 @@ resid_xpanel(mod, smoother = TRUE)
 
 
 # >>> What to do if violated? <<<
-# Use a non parametric TEST!
+# 1. Re-fit the model with a heteroscedasticity consistent estimators (See
+#   the `sandwich` package).
+# 2. Switch to non-parametric tests!
 
 
 
