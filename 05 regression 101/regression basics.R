@@ -13,7 +13,8 @@ head(salary)
 # - salary:     Shekels per month
 # - xtra_hours: Hours over (weekly) over time worked
 # - n_comps:    Number of compliments given to the boss
-
+# - age:        Age in years.
+# - seniority:  Number of years working in the company
 
 
 
@@ -118,13 +119,19 @@ predict(fit2, newdata = newdata)
 plot(ggemmeans(fit2, "xtra_hours"), add.data = TRUE)
 plot(ggemmeans(fit2, "n_comps"), add.data = TRUE)
 plot(ggemmeans(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
+# The lines are exactly parallel - why?
+
+
+# More Syntax -------------------------------------------------------------
+
+# If we have non-linear relationships, we can specify any transformations in the
+# formula:
+fit_seniority <- lm(salary ~ log(seniority), data = salary)
+plot(ggemmeans(fit_seniority, "seniority [exp]"))
 
 
 
-
-
-
-# Predict from all variables in a data.frame (almost never useful):
+# Predict from all variables in the data.frame with a `.` (almost never useful):
 fit_all <- lm(salary ~ ., data = salary)
 summary(fit_all)
 
