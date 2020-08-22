@@ -1,3 +1,4 @@
+
 library(pwr)
 library(effectsize)
 
@@ -5,10 +6,11 @@ pdat <- readRDS("pdat.Rds")
 
 head(pdat)
 
-# In all of the `pwr.*.test()` function you need to leave one of the arguments
-# blank, and `pwr` will find THAT parameter for you.
+# The `pwr` package has some functions for all the basic sig-tests. In all of
+# the `pwr.*.test()` function you need to leave one of the arguments blank, and
+# `pwr` will find THAT parameter for you.
 #
-# Note that in post of the post-hoc example the power is awful. oh well...
+# Note that in most of the post-hoc examples the power is awful. oh well...
 
 
 # t test ------------------------------------------------------------------
@@ -71,7 +73,7 @@ pwr.p.test(h = ES.h(0.565, 0.5), n = 46, sig.level = .05) # what power?
 
 
 
-# chi-squared test --------------------------------------------------------
+# Chi-squared test --------------------------------------------------------
 # For association (but also possible for goodness of fit)
 
 
@@ -116,4 +118,17 @@ summary(fit1)
 t_to_f(0.603, 41) # for Joy
 pwr.f2.test(f2 = 0.09^2, v = 41, u = 1, sig.level = .05) # what power?
 
+
+
+
+# MORE POWER --------------------------------------------------------------
+
+# Simple analytical solutions are usually not available for more complex designs
+# and tests, and instead power analysis is based on simulations: you specify
+# what you expect your data will look like, what tests you're going to conduct,
+# and calculate power based on simulated data. You can simulate data on your
+# own, but there are some useful packages that can help you out:
+# - `simr` for (G)LMMs.
+# - `Superpower` for Factorial designs (within, between, or mixed).
+# - `simsem` (https://simsem.org/) for SEMs.
 
