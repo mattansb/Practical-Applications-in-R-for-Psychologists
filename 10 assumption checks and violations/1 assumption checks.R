@@ -156,8 +156,8 @@ insight::get_data(mod)[ol_test, ]
 # is sometimes called "autocorrelation". This assumption is hard to test, and it
 # is usually easier to use knowledge about the data - for example, if we have a
 # repeated measures design, or a nested design, then there is some dependency
-# between the observations (and we would therefor want to account for this by
-# using a mixed model, or something of the sort).
+# between the observations and we would therefor want to account for this by
+# using a mixed model (see HLM/LMM next semester), or something of the sort.
 
 
 # Here I will be looking at assumption of linear models, as these are more
