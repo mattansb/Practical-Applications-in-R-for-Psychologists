@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC--SA%204.0-lightgray)](http://creativecommons.org/licenses/by-nc-sa/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2020-08-22.*</sub>
+<sub>*Last updated 2020-08-23.*</sub>
 
 This Github repo contains all lesson files used in the graduate-level
 course: *Advanced Research Methods foR Psychologists - Practical
@@ -58,7 +58,7 @@ You will need:
 | [09 generalized linear models](/09%20generalized%20linear%20models)                                         | [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`emmeans`](https://CRAN.R-project.org/package=emmeans)                                                                                                                                                                                                                                                                                                                                         |
 | [10 assumption checks and violations](/10%20assumption%20checks%20and%20violations)                         | [`effects`](https://CRAN.R-project.org/package=effects), [`performance`](https://CRAN.R-project.org/package=performance), [`ggResidpanel`](https://CRAN.R-project.org/package=ggResidpanel), [`insight`](https://CRAN.R-project.org/package=insight), [`parameters`](https://CRAN.R-project.org/package=parameters), [`permuco`](https://CRAN.R-project.org/package=permuco)                                                                                                                                                                                                                 |
 | [factor analysis](/factor%20analysis)                                                                       | [`parameters`](https://CRAN.R-project.org/package=parameters), [`psych`](https://CRAN.R-project.org/package=psych), [`psychTools`](https://CRAN.R-project.org/package=psychTools), [`nFactors`](https://CRAN.R-project.org/package=nFactors)                                                                                                                                                                                                                                                                                                                                                 |
-| [mediation](/mediation)                                                                                     | [`JSmediation`](https://CRAN.R-project.org/package=JSmediation), [`purrr`](https://CRAN.R-project.org/package=purrr), [`parameters`](https://CRAN.R-project.org/package=parameters)                                                                                                                                                                                                                                                                                                                                                                                                          |
+| [mediation](/mediation)                                                                                     | [`mediation`](https://CRAN.R-project.org/package=mediation)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
 You can install all the packages used by running:
 
@@ -68,8 +68,8 @@ You can install all the packages used by running:
       "afex", "BayesFactor", "bayestestR", "DescTools", "dplyr",
       "effects", "effectsize", "emmeans", "finalfit", "ggeffects",
       "ggplot2", "ggResidpanel", "haven", "Hmisc", "insight", "interactions",
-      "JSmediation", "mice", "nFactors", "parameters", "performance",
-      "permuco", "ppcor", "psych", "psychTools", "purrr", "pwr", "summarytools",
+      "mediation", "mice", "nFactors", "parameters", "performance",
+      "permuco", "ppcor", "psych", "psychTools", "pwr", "summarytools",
       "tidyr", "tidyverse"
     )
 
@@ -81,9 +81,9 @@ The package versions used here:
     ##     "0.27-2" "0.9.12-4.2"    "0.7.2.1"    "0.99.37"      "1.0.1"      "4.2-0" 
     ##   effectsize      emmeans     finalfit    ggeffects      ggplot2 ggResidpanel 
     ##      "0.3.2"      "1.4.8"      "1.0.2"     "0.15.1"      "3.3.2"      "0.3.0" 
-    ##        haven        Hmisc      insight interactions  JSmediation         mice 
-    ##      "2.3.1"      "4.4-1"      "0.9.0"      "1.1.3"      "0.1.1"     "3.11.0" 
+    ##        haven        Hmisc      insight interactions    mediation         mice 
+    ##      "2.3.1"      "4.4-1"      "0.9.0"      "1.1.3"      "4.5.0"     "3.11.0" 
     ##     nFactors   parameters  performance      permuco        ppcor        psych 
     ##      "2.4.1"      "0.8.2"    "0.4.8.1"      "1.1.0"        "1.1"      "2.0.7" 
-    ##   psychTools        purrr          pwr summarytools        tidyr    tidyverse 
-    ##      "2.0.8"      "0.3.4"      "1.3-0"      "0.9.6"      "1.1.1"      "1.3.0"
+    ##   psychTools          pwr summarytools        tidyr    tidyverse 
+    ##      "2.0.8"      "1.3-0"      "0.9.6"      "1.1.1"      "1.3.0"
