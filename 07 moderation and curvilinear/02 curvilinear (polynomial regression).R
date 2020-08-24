@@ -84,3 +84,10 @@ ggplot(parental_iris, aes(parental_strictness,child_satisfaction)) +
 
 
 
+# Even More ---------------------------------------------------------------
+
+# We can fit even more complex associations with GAMs (generalized additive
+# models) or even more complex models all together with machine learning
+# techniques (see next semester).
+
+

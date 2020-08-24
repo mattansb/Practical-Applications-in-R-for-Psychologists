@@ -92,13 +92,17 @@ efa_rel$omega.group
 
 
 
-# Confirmatory Factor Analysis --------------------------------------------
+# Even More ---------------------------------------------------------------
 
 # We really could have conducted a confirmatory factor analysis (CFA) instead of
 # an exploratory factor analysis (EFA), as we were using a validated tool (the
 # big-5-inventory), and we should know here which items correspond to which
-# factors.
-# We will learn how to conduct CFA next semester.
+# factors. We will learn how to conduct CFA next semester in the SEM module.
+#
+# There are also other methods of dimension reduction, such as variable
+# clustering, that will be taught in the Machine Learning module.
+
+
 
 
 

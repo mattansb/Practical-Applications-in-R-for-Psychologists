@@ -116,6 +116,9 @@ predict(fit)
 # For predictions on the response scale - the transformed mu values - that it
 # the P(y==1):
 predict(fit, type = "response")
+# We will see many more examples of predicting and categorization next semester
+# in the Machine Learning module.
+
 
 
 plot(ggemmeans(fit, "mean_valence [all]"), add.data = TRUE)

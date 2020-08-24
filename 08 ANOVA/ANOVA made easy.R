@@ -17,8 +17,8 @@ library(emmeans)
 # This lesson is a shortened version of a full ANOVA course (RIP), which you can
 # find here:
 # https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists
-# I highly recommend this for anyone working with factorial designs, complex
-# contrasts analyses, and the like.
+# I highly recommend this for anyone working with factorial designs, or who need
+# to perform complex contrasts analyses, and the like.
 
 
 
@@ -113,20 +113,18 @@ fit_mfs <- aov_ez("id", "work_stress", mindful_work_stress_long,
                   anova_table = list(es = "pes"))
 fit_mfs
 
-
-# Exercise ----------------------------------------------------------------
-
-# 1. Explore the `fit_mfs` model:
-#   A. Plot the model with `afex_plot()`.
-#   B. Did the treatment *significantly* affect all groups?
-# 2. Go back to the phobia example:
-#   A. Add `Gender` as a predictor (3-way ANOVA).
-#   B. What is the effect size of the Gender:Phobia interaction?
-#   C. Explore the new model in any way you see fit (at least one plot + one
-#     contrast)
+# Repeated measures are really just one way of saying that there are multiple
+# levels in our data. Although rm-ANOVA can deal with simple cases like the ones
+# presented here, for more complex data structures (more nesting, more than one
+# random effects factor, modeling of a continuous predictor, etc.) HLM/LMM are
+# required (which you can learn next semester).
+# see `vignette("afex_mixed_example", package = "afex")` for an example of how
+# to run HLM/LMM ANOVAs.
 
 
 
+
+# More --------------------------------------------------------------------
 
 # This lesson is a shortened version of a full ANOVA course (RIP), which you can
 # find here:
@@ -139,4 +137,20 @@ fit_mfs
 # If any of these topics is useful to you, feel free to use these materials and
 # schedule a meeting during my office hours to discuss how you might learn more
 # about these methods.
+
+
+
+
+
+# Exercise ----------------------------------------------------------------
+
+# 1. Explore the `fit_mfs` model:
+#   A. Plot the model with `afex_plot()`.
+#   B. Did the treatment *significantly* affect all groups?
+# 2. Go back to the phobia example:
+#   A. Add `Gender` as a predictor (3-way ANOVA).
+#   B. What is the effect size of the Gender:Phobia interaction?
+#   C. Explore the new model in any way you see fit (at least one plot + one
+#     contrast)
+
 

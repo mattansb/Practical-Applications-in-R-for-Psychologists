@@ -71,7 +71,8 @@ predict(fit)
 
 # We can also predict new data:
 predict(fit, newdata = data.frame(xtra_hours = c(-3, 30)))
-
+# We will see many more examples of these next semester in the Machine Learning
+# module.
 
 
 ## Plot
