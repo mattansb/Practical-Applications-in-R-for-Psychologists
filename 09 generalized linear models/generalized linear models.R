@@ -12,7 +12,7 @@
 
 # Thess link function can make interpretation of the models a bit less
 # straightforward, but we will demonstrate how to do just this in the two most
-# common GLMs: logistic regression and Poisson regression.
+# common GLMs: binomial (logistic) regression and Poisson regression.
 
 
 library(parameters)
@@ -32,11 +32,13 @@ head(depression_language)
 
 
 
-# 1. Logistic Regression --------------------------------------------------
 
-# In this example we will explore a logistic regression model. This model is
-# suited for binary outcomes, and the link function is the logit function,
-# where:
+# 1. Binomial Regression --------------------------------------------------
+
+# In this example we will explore a binomial regression model, which is suitable
+# for binary outcomes. The most common link function for modeling such data is
+# the logit function, which is why most often people just call this type of
+# model "logistic regression", where:
 #
 # mu ~ a + b * X
 #
@@ -58,14 +60,17 @@ fit <- glm(is.depressed ~ mean_valence,
 
 model_parameters(fit, standardize = "basic")
 # Note that the standardization is only on the predictors, as the outcome
-# variable is binary and has no scale! (Yes... This is very tricky stuff)...
+# variable is binary and has no scale! (Yes... This is very tricky stuff) - so
+# the standardized coefficient represents the change in the *logit* variable
+# after a change in 1 SD of X. This has a different interpretation than the
+# classic "beta", but still allows for comparing between predictors.
 
 
 model_performance(fit)
 # These are slightly different indices than from linear models...
 # For example, since the predictor has not variance, `R2_Tjur` isn't really a
 # measure of variance explained. You can read more about these in the function's
-# documnetation.
+# documentation.
 
 
 
@@ -73,13 +78,9 @@ model_performance(fit)
 
 # Making sense of coefficients --------------------------------------------
 
-# 1. The Y in the model has no variance, to the standardized coefficient
-#   represents the change in the *logit* variable after a change in 1 SD of X.
-#   This has a different interpretation than the classic "beta", but still
-#   allows for comparing between predictors.
-# 2. The coefficients are the log of the change in odds (change in odds is also
-#   called the odds ratio: OR). To get the change in odds ratio (that is
-#   P(y==1) / (1 - P(y==1))), we can:
+# The coefficients are the log of the change in odds (change in odds is also
+# called the odds ratio: OR). To get the change in odds ratio (that is
+# P(y==1) / (1 - P(y==1))), we can:
 exp(coef(fit)) # get the odds-change
 
 
