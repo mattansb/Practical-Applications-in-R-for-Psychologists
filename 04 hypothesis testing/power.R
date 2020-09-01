@@ -127,8 +127,8 @@ pwr.f2.test(f2 = 0.09^2, v = 41, u = 1, sig.level = .05) # what power?
 # and tests, and instead power analysis is based on simulations: you specify
 # what you expect your data will look like, what tests you're going to conduct,
 # and calculate power based on simulated data. You can simulate data on your
-# own, but there are some useful packages that can help you out:
+# own, but there are some useful packages that can help you out, for example:
 # - `simr` for (G)LMMs.
 # - `Superpower` for Factorial designs (within, between, or mixed).
 # - `simsem` (https://simsem.org/) for SEMs.
-
+# - `simstudy` - a general purpose package for data simulation.
