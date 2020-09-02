@@ -82,11 +82,9 @@ head(fit_allB) # best models
 
 # 2) Compare them:
 fit_allB[2] # select model BF
-fit_allB[c(3,6,7)] / fit_allB[2] # new BFs
+fit_allB[3] / fit_allB[2] # new BFs comparing the two models
 # etc...
 
-
-plot(bayesfactor_models(fit_allB))
 
 
 
@@ -107,6 +105,10 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 # For more Bayesian modeling, check out brms, rstanarm or BAS.
 
 
+
+
+
+
 # Exercise ----------------------------------------------------------------
 
 # 1. import the "Exp_Psych_Grades.csv" dataset
@@ -118,13 +120,12 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 #   - Report    - final grade on the paper
 #   - Test      - final grade on the test (averaged across the pair)
 # 2. Predict `Report` grade from `Test` grade.
-# 3. Re-level the `TA` factor so that C is first.
-# 4. Predict the final Report grade from the `Test` and `TA`.
-# 5. Is there a difference between the TAs? (compare the two models)
-# 6. Explore the model:
-#   - Who gave the highest grades?
-#   - Who gave the lowest?
+# 3. Predict the final Report grade from the `Test` and `TA`.
+# 4. Is there a difference between the TAs? (compare the two models)
+# 5. Explore the model:
+#   - Who gave the highest grades? (what was it?)
+#   - Who gave the lowest? (what was it?)
 #   - Is the difference between them significant?
-# 5. Fit a second model, predicting `Report` grade from the `TA`, `Test` and
+# 6. Fit a second model, predicting `Report` grade from the `TA`, `Test` and
 #    `in_couple`. Is it better to do the project alone or in a couple?
-# 6. Compare all 3 models - which has the biggest adjusted R2?
+# 7. Compare all 3 models - which has the biggest adjusted R2?

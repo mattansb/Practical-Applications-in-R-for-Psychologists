@@ -94,15 +94,11 @@ contrasts(anxiety_adhd$treat_group) <- contr.sum
 contrasts(anxiety_adhd$treat_group)
 
 fit_factor3 <- lm(anxiety ~ treat_group, data = anxiety_adhd)
-model_parameters(fit_factor3) # what do there mean?
+model_parameters(fit_factor3) # what do there mean???
 
 
 
 ?contr.treatment # even more types...
-
-
-
-# Or... make your own (google it / ?contrasts).
 
 
 
@@ -112,8 +108,8 @@ model_parameters(fit_factor3) # what do there mean?
 # 2) Model exploration (inference) ----------------------------------------
 
 # Looking at the parameters from the last two models, it is hard to see what the
-# "no treat" and "treat" groups is... And even if we could fish it out, is it
-# significant?
+# difference between "no treat" and "treat" groups is... And even if we could
+# fish it out, is it significant?
 model_parameters(fit_factor2)
 model_parameters(fit_factor3)
 
@@ -137,10 +133,10 @@ plot(ggemmeans(fit_factor2, "treat_group"))
 
 
 
-# This is the time to note that in R, model fitting and hypothesis testing are
-# not as closely knit as they are in SPSS. Whereas in SPSS we can fit several
-# models with different dummy coding or variable centering, in R we work in 2
-# stages:
+# This is the time to note that in R, model ~fitting~ and ~hypothesis testing~
+# are not as closely knit as they are in SPSS. Whereas in SPSS we can fit
+# several models with different dummy coding or variable centering, in R we work
+# in 2 stages:
 # 1) fit a model
 # 2) Ask the model questions - test contrasts / effects of interest, get
 #   predictions...

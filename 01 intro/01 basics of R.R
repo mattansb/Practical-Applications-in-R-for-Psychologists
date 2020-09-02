@@ -209,7 +209,7 @@ x <- rexp(1000)
 hist(x)
 
 
-qnorm(.05) # input is probability - turns into a Quantile.
+qnorm(.05) # input is probability - turns into a quantile.
 pnorm(-1.96) # input is random variable value - returns a Probability
 qt(.95, df = 12)
 
@@ -447,6 +447,6 @@ x <- sample(seq(1, 8, length.out = 25), 10000, replace = TRUE) %% 7
 
 
 
-# 5. What will this do?
+# *. What will this do?
 # (TIP: work outwards)
 tail(head(c(2,3,4,5,6,7)[2:6][1:4], n = 3), n = 2)[1] # (don't ever do this)

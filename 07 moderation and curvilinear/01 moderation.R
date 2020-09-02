@@ -58,8 +58,10 @@ summary(m_moderation) # for comparison
 
 emtrends(m_moderation, ~attachment, "involvement_c") %>%
   summary(infer = TRUE)
-# (we can also use contrasts here to COMPARE slopes)
 
+# we can also use contrasts here to COMPARE slopes:
+emtrends(m_moderation, ~attachment, "involvement_c") %>%
+  contrast(method = "pairwise")
 
 
 plot(ggemmeans(m_moderation, c("involvement_c","attachment")), add.data = TRUE)
@@ -106,7 +108,6 @@ emtrends(m_moderation, ~strictness_c, "involvement_c",
   # `cov.reduce = list(strictness_c = values_at)` tells `emtrends()` to get the
   # mean +-sd of `strictness_c`.
   summary(infer = TRUE)
-# (we can also use contrasts here to COMPARE slopes)
 
 
 plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")), add.data = TRUE)
@@ -120,6 +121,13 @@ plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")), add.da
 
 
 
+
+
+# Categorical by Categorical ----------------------------------------------
+
+# What about a categorical variable moderating the effect of another categorical
+# variable? We can do that just the same! We will see more of this next week,
+# when we talk about ANOVAs/
 
 
 

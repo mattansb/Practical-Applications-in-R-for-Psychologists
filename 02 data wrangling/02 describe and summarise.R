@@ -23,6 +23,14 @@ view(quick_sum) # lowercase "v"!
 
 
 
+# For numeric variables, you can use `parameters::describe_distribution()`
+e2b_data %>%
+  select(ACC, RT) %>%
+  describe_distribution()
+
+
+
+
 # You can also specify your own statistics / measures manually using `summarize`
 # - the `summarise` is like `mutate`, but it summarieses data into a single row.
 e2b_data %>%
@@ -38,47 +46,8 @@ e2b_data %>%
   )
 
 
-
-
-# You can also summarise ACROSS several variables, with `across()`.
-#
-# We need to define what we want - these can be functions, names of functions,
-# or a lambda function.
-suff_i_wanna_know <- list(
-  # a function
-  mean = mean,
-  # name of a function
-  sd = "sd",
-  # a lambda
-  mean_no_na = ~ mean(.x, na.rm = TRUE),
-  # Some more functions
-  kurt = kurtosis,
-  skew = skewness
-)
-
-# Use the `across()` function:
-e2b_data %>%
-  summarise(across(.cols = c(RT, ACC),
-                   .fns = suff_i_wanna_know))
-
-# other ways to select variables.
-e2b_data %>%
-  summarise(across(.cols = c(Subject,Group), nlevels),
-            across(.cols = c(RT, ACC),
-                   .fns = suff_i_wanna_know))
-
-# For numeric variables, you can use `parameters::describe_distribution()`
-e2b_data %>%
-  summarise(
-    describe_distribution(across(.cols = where(is.numeric)))
-  )
-
-# Read more about using `across()`:
-# https://dplyr.tidyverse.org/articles/colwise.html
-
-
-
-
+## (See Appendix 01 for even more options.)
+## (See Appendix 02 for computing scale scores and their reliability.)
 
 
 # By Group ----------------------------------------------------------------
@@ -170,40 +139,18 @@ e2b_data %>%
 
 
 
-# Reliability and sum / mean scores ---------------------------------------
-
-
-
-df_NPAS <- readRDS("NPAS-data_clean.Rds")
-glimpse(df_NPAS)
-
-# Use `psych::alpha` to compute reliability
-df_NPAS %>%
-  select(Q1:Q26) %>%
-  psych::alpha()
-
-
-# Use `across` to compute sum / mean scores
-df_NPAS_with_score <- df_NPAS %>%
-  mutate(
-    Nerdy1 = rowSums(across(.cols = Q1:Q26), na.rm = TRUE),
-    Nerdy2 = rowMeans(across(.cols = Q1:Q26), na.rm = TRUE) # better for missing data
-  ) %>%
-  select(-(Q1:Q26))
-
-head(df_NPAS_with_score)
-
-
-
 
 
 
 
 # Exercise ----------------------------------------------------------------
 
-# 1. Summarize the data in `df_NPAS_with_score` by describing the variable
-#   `Nerdy2` - mean, sd, and at least 2 other measures you can think of.
+df_NPAS <- readRDS("NPAS-data_clean.Rds")
+glimpse(df_NPAS)
+
+# 1. Summarize the data in `df_NPAS` by describing the variable `Knowlage` -
+#   mean, sd, and at least 2 other measures you can think of.
 # 2. Repeat (1) but for EACH gender AND EACH ASD group.
-# *. All of the examples in "Describe variables" section support `group_by()` -
-#   try them grouped by `Gender`.
+# *. The examples in "Describe variables" section support `group_by()` - try
+#   them grouped by `Gender`.
 

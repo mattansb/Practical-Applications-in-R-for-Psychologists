@@ -122,75 +122,43 @@ predict(fit, type = "response")
 
 
 
+
+
+
+# Follow-up analyses: on the link vs response scale -----------------------
+
+# We have the same link/response problem when conducting follow-up analyses (contrasts,
+# simple slopes, simple effects, etc.). We will usually prefer to look at the response scale,
+# as this is usually what we're interested in (who cares about the log of the odds??).
+
+# `ggeffects` plots the response scale by default:
 plot(ggemmeans(fit, "mean_valence [all]"), add.data = TRUE)
 
 
 
-# latent vs outcome analysis ----------------------------------------------
 
-# Although the latent (logit) and the outcome (probability) are transformations
-# of one another (but not a linear transformation!), analyses on the different
-# levels can yield different results!
+# For `emmeans`, we need only add `type = "response"` to get the estimates on
+# the response scale.
 
-# We will use `emmeans` for this demonstration, where we will analyze the SAME
-# effect in 3 different ways.
-
-## ---------------------- ##
-## 1. On the latent level ##
-## ---------------------- ##
-
-# These are expected means (predicted values) on the log-odds scale.
-em_logit <- emmeans(fit, ~ mean_valence,
-                    at = list(mean_valence = c(5,4)))
-em_logit
-
-# We can see the that difference between them is the same as the coefficient we
-# got:
-pairs(em_logit, type = "response")
-
-
-
-
-
-## ------------------------------------- ##
-## 2. On the response level: differences ##
-## ------------------------------------- ##
-
-
-em_prob <- emmeans(fit, ~ mean_valence,
-                   at = list(mean_valence = c(5,4)),
-                   trans = "response")
-em_prob
-
-
-# The difference between them:
-pairs(em_prob, type = "response")
-
-
-
-
-
-## -------------------------------- ##
-## 3. On the response level: ratios ##
-## -------------------------------- ##
-
-# Finally, here is how to get RR (risk ratios, an alternative to OR):
-# (read more about RR: doi.org/10.1097/SMJ.0b013e31817a7ee4)
-
-
-em_prob2 <- emmeans(fit, ~ mean_valence,
+(em_resp <- emmeans(fit, ~ mean_valence,
                     at = list(mean_valence = c(5,4)),
-                    trans = "log")
-em_prob2
+                    type = "response"))
 
-
-# The difference between the logs = the ratio of the probs:
-pairs(em_prob2, type = "response")
+contrast(em_resp, method = "pairwise")
 
 
 
+# Compare to the log-odds link - very hard to interpret:
+(em_logit <- emmeans(fit, ~ mean_valence,
+                     at = list(mean_valence = c(5,4))))
+contrast(em_logit, method = "pairwise")
 
-# This section is based on:
+
+
+
+
+# Of course, things are always more complicated... You can read more about
+# different types of follow-up analyses of GLMs here:
 # https://shouldbewriting.netlify.com/posts/2020-04-13-estimating-and-testing-glms-with-emmeans/
 
 
