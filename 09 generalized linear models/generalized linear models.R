@@ -14,6 +14,9 @@
 # straightforward, but we will demonstrate how to do just this in the two most
 # common GLMs: binomial (logistic) regression and Poisson regression.
 
+# Suggested reading: Chapter 15 in Fox, J. (2015). Applied regression analysis
+# and generalized linear models. Sage Publications.
+
 
 library(parameters)
 library(performance)
