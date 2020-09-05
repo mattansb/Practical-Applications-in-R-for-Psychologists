@@ -1,16 +1,15 @@
 
-# A mediation model seeks to explain the *mechanism* that underlies a
-# relationship between a two variables, by including a third hypothetical
-# variable, known as *the mediator*. Rather than a direct causal relationship
-# between the independent variable and the dependent variable, a mediation model
-# proposes that the independent variable influences the mediator variable, which
-# in turn influences the dependent variable. Thus, the mediator variable serves
-# to clarify the nature of the relationship between the independent and
-# dependent variables.
+# A mediation model seeks to estimate the effect of an independent variable on
+# the dependent variable, by including a third hypothetical variable, known as
+# *the mediator*. Rather than a direct causal relationship between the
+# independent variable and the dependent variable, a mediation model proposes
+# that the independent variable influences the mediator variable, which in turn
+# influences the dependent variable. Thus, the mediator variable serves to
+# clarify the nature of the effect of the independent variable on the dependent
+# variable.
 #
-# Note, however, that a mediation analysis is NOT enough to properly demonstrate
-# causation - like correlation, mediation too does not suffice to infer a fully
-# causal relationship.
+# Note, however, that a mediation analysis ASSUMES that the causal relationship
+# is true - that is, it can NOT be used to demonstrate causation!
 # Suggested reading: http://www.the100.ci/2019/10/03/indirect-effect-ex-machina/
 
 
