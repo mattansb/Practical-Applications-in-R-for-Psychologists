@@ -116,8 +116,12 @@ plot(med)
 
 # Exercise ----------------------------------------------------------------
 
-# 1. Fit the reverse moderation models: ave_sweets mediates the effect of
-#    parental_strictness on child_satisfaction.
-# 2. Is the direct effect significant?
-# 3. Is the indirect effect significant?
-# 4. How would you interpret these results?
+# 1. Estimate the direct and indirect effects in the following causal model:
+#
+#          >     parental_strictness       \
+#         /                                 \
+#    (a) /                               (b) \
+#       /                    (c)              >
+#   parental_involvement ----------- > child_satisfaction
+#
+# 2. Interpret the results.
