@@ -1,4 +1,4 @@
-library(effects)      # for residual regression plots
+library(ggeffects)    # for partial residual plots
 library(performance)  # for check_*
 library(ggResidpanel) # for resid_panel
 
@@ -55,17 +55,17 @@ summary(mod)
 # 1. "Linearity" ----------------------------------------------------------
 
 # This states that predictors are linearly related to the outcome. But we can
-# also have non-linear predictors - we've seen polynomial predictors. More
-# generally, this assumption states that our model is correctly specified: no
-# missing interactions, or complex relationships not modeled.
+# also have non-linear predictors (e.g., polynomial predictors, etc...). More
+# generally, this assumption states that our model is correctly specified: there
+# are no interactions or any other complex relationship that is missing from our
+# model.
 
-# We can do this visually, using *partial regression plots*:
-plot(Effect("OSF", mod, residuals = TRUE))
+# We can do this visually, using *partial residual plots*:
+plot(ggemmeans(mod, "OSF"), residuals = TRUE, residuals.line = TRUE)
 
-plot(Effect("in_couple", mod, residuals = TRUE))
+plot(ggemmeans(mod, "in_couple"), residuals = TRUE, residuals.line = TRUE)
 
-plot(Effect(c("in_couple","OSF"), mod, residuals = TRUE))
-
+plot(ggemmeans(mod, c("OSF","in_couple")), residuals = TRUE, residuals.line = TRUE)
 # etc...
 
 
