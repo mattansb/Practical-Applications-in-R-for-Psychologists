@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC--SA%204.0-lightgray)](http://creativecommons.org/licenses/by-nc-sa/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2020-09-02.*</sub>
+<sub>*Last updated 2020-09-08.*</sub>
 
 This Github repo contains all lesson files for the *Practical
 Applications in R* portion of the graduate-level course: ***Advanced
@@ -58,7 +58,7 @@ You will need:
 | [07 moderation and curvilinear](/07%20moderation%20and%20curvilinear)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`performance`](https://CRAN.R-project.org/package=performance), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`interactions`](https://CRAN.R-project.org/package=interactions), [`parameters`](https://CRAN.R-project.org/package=parameters), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)                                                                                                                                                        |
 | [08 ANOVA](/08%20ANOVA)                                                                                     | [`afex`](https://CRAN.R-project.org/package=afex), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`tidyr`](https://CRAN.R-project.org/package=tidyr)                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | [09 generalized linear models](/09%20generalized%20linear%20models)                                         | [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`emmeans`](https://CRAN.R-project.org/package=emmeans)                                                                                                                                                                                                                                                                                                                                         |
-| [10 assumption checks and violations](/10%20assumption%20checks%20and%20violations)                         | [`effects`](https://CRAN.R-project.org/package=effects), [`performance`](https://CRAN.R-project.org/package=performance), [`ggResidpanel`](https://CRAN.R-project.org/package=ggResidpanel), [`parameters`](https://CRAN.R-project.org/package=parameters), [`permuco`](https://CRAN.R-project.org/package=permuco), [`insight`](https://CRAN.R-project.org/package=insight)                                                                                                                                                                                                                 |
+| [10 assumption checks and violations](/10%20assumption%20checks%20and%20violations)                         | [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`performance`](https://CRAN.R-project.org/package=performance), [`ggResidpanel`](https://CRAN.R-project.org/package=ggResidpanel), [`parameters`](https://CRAN.R-project.org/package=parameters), [`permuco`](https://CRAN.R-project.org/package=permuco), [`insight`](https://CRAN.R-project.org/package=insight)                                                                                                                                                                                                             |
 | [11 mediation](/11%20mediation)                                                                             | [`mediation`](https://CRAN.R-project.org/package=mediation)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
 You can install all the packages used by running:
@@ -67,8 +67,8 @@ You can install all the packages used by running:
 
     pkgs <- c(
       "afex", "BayesFactor", "bayestestR", "DescTools", "dplyr",
-      "effects", "effectsize", "emmeans", "finalfit", "ggeffects",
-      "ggplot2", "ggResidpanel", "haven", "Hmisc", "insight", "interactions",
+      "effectsize", "emmeans", "finalfit", "ggeffects", "ggplot2",
+      "ggResidpanel", "haven", "Hmisc", "insight", "interactions",
       "mediation", "mice", "parameters", "performance", "permuco",
       "ppcor", "psych", "psychTools", "pwr", "summarytools", "tidyr", "tidyverse"
     )
@@ -77,13 +77,13 @@ You can install all the packages used by running:
 
 The package versions used here:
 
-    ##         afex  BayesFactor   bayestestR    DescTools        dplyr      effects 
-    ##     "0.27-2" "0.9.12-4.2"    "0.7.2.1"    "0.99.37"      "1.0.1"      "4.2-0" 
-    ##   effectsize      emmeans     finalfit    ggeffects      ggplot2 ggResidpanel 
-    ##      "0.3.2"      "1.4.8"      "1.0.2"     "0.15.1"      "3.3.2"      "0.3.0" 
-    ##        haven        Hmisc      insight interactions    mediation         mice 
-    ##      "2.3.1"      "4.4-1"    "0.9.1.1"      "1.1.3"      "4.5.0"     "3.11.0" 
-    ##   parameters  performance      permuco        ppcor        psych   psychTools 
-    ##      "0.8.3"    "0.4.8.1"      "1.1.0"        "1.1"      "2.0.7"      "2.0.8" 
-    ##          pwr summarytools        tidyr    tidyverse 
-    ##      "1.3-0"      "0.9.6"      "1.1.1"      "1.3.0"
+    ##         afex  BayesFactor   bayestestR    DescTools        dplyr   effectsize 
+    ##     "0.27-2" "0.9.12-4.2"      "0.7.2"    "0.99.37"      "1.0.1"      "0.3.2" 
+    ##      emmeans     finalfit    ggeffects      ggplot2 ggResidpanel        haven 
+    ##      "1.4.8"      "1.0.2"     "0.15.1"      "3.3.2"      "0.3.0"      "2.3.1" 
+    ##        Hmisc      insight interactions    mediation         mice   parameters 
+    ##      "4.4-1"      "0.9.5"      "1.1.3"      "4.5.0"     "3.11.0"      "0.8.3" 
+    ##  performance      permuco        ppcor        psych   psychTools          pwr 
+    ##    "0.4.8.1"      "1.1.0"        "1.1"      "2.0.7"      "2.0.8"      "1.3-0" 
+    ## summarytools        tidyr    tidyverse 
+    ##      "0.9.6"      "1.1.1"      "1.3.0"
