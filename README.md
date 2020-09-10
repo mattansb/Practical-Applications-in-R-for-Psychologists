@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC--SA%204.0-lightgray)](http://creativecommons.org/licenses/by-nc-sa/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2020-09-08.*</sub>
+<sub>*Last updated 2020-09-10.*</sub>
 
 This Github repo contains all lesson files for the *Practical
 Applications in R* portion of the graduate-level course: ***Advanced
@@ -80,7 +80,7 @@ The package versions used here:
     ##         afex  BayesFactor   bayestestR    DescTools        dplyr   effectsize 
     ##     "0.27-2" "0.9.12-4.2"      "0.7.2"    "0.99.37"      "1.0.1"      "0.3.2" 
     ##      emmeans     finalfit    ggeffects      ggplot2 ggResidpanel        haven 
-    ##      "1.4.8"      "1.0.2"     "0.15.1"      "3.3.2"      "0.3.0"      "2.3.1" 
+    ##      "1.4.8"      "1.0.2"   "0.15.1.9"      "3.3.2"      "0.3.0"      "2.3.1" 
     ##        Hmisc      insight interactions    mediation         mice   parameters 
     ##      "4.4-1"      "0.9.5"      "1.1.3"      "4.5.0"     "3.11.0"      "0.8.3" 
     ##  performance      permuco        ppcor        psych   psychTools          pwr 
