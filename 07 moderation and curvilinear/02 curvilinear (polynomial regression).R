@@ -77,9 +77,9 @@ ggplot(parental_iris, aes(parental_strictness,child_satisfaction)) +
   geom_line(aes(y = Y_pred_lin, color = "Linear"), size = 1) +
   geom_line(aes(y = Y_pred_curvlin, color = "Poly"), size = 1) +
   geom_segment(aes(xend = parental_strictness, yend = Y_pred_lin, color = "Linear"),
-               size = 1) +
+               size = 1, position = position_nudge(.02)) +
   geom_segment(aes(xend = parental_strictness, yend = Y_pred_curvlin, color = "Poly"),
-               size = 1) +
+               size = 1, position = position_nudge(-.02)) +
   geom_point()
 
 

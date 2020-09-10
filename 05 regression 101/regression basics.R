@@ -1,9 +1,9 @@
 
 
-library(effectsize) # for parameters_standardize
-library(parameters) # for model_parameters
-library(performance) # for model_performance etc..
-library(ggeffects) # for plotting models
+library(effectsize)   # for parameters_standardize
+library(parameters)   # for model_parameters
+library(performance)  # for model_performance etc..
+library(ggeffects)    # for plotting models
 
 
 
@@ -58,15 +58,16 @@ model_parameters(fit, standardize = "basic")
 
 
 ## Model indices
-model_performance(fit)
 rmse(fit)
 r2(fit) # and more...
+model_performance(fit)
+
 
 
 
 ## Prediction and residuals
-residuals(fit)
 predict(fit)
+residuals(fit)
 # what is the correlation between these ^ two?
 
 # We can also predict new data:
@@ -76,8 +77,8 @@ predict(fit, newdata = data.frame(xtra_hours = c(-3, 30)))
 
 
 ## Plot
-plot(ggemmeans(fit, "xtra_hours"))
-plot(ggemmeans(fit, "xtra_hours"), add.data = TRUE)
+plot(ggpredict(fit, "xtra_hours"))
+plot(ggpredict(fit, "xtra_hours"), add.data = TRUE)
 # see more: https://strengejacke.github.io/ggeffects
 
 
@@ -117,10 +118,15 @@ predict(fit2, newdata = newdata)
 
 
 ## Plot
-plot(ggemmeans(fit2, "xtra_hours"), add.data = TRUE)
-plot(ggemmeans(fit2, "n_comps"), add.data = TRUE)
-plot(ggemmeans(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
-# The lines are exactly parallel - why?
+plot(ggpredict(fit2, "xtra_hours"), add.data = TRUE)
+plot(ggpredict(fit2, "n_comps"), add.data = TRUE)
+plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
+
+# The lines in the last are exactly parallel - why?
+
+# for multiple regression, you might want to use partial residuals instead of
+# the raw data, by setting `residuals = TRUE`. See:
+# https://strengejacke.github.io/ggeffects/articles/introduction_partial_residuals.html
 
 
 # More Syntax -------------------------------------------------------------
@@ -128,7 +134,7 @@ plot(ggemmeans(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
 # If we have non-linear relationships, we can specify any transformations in the
 # formula:
 fit_seniority <- lm(salary ~ log(seniority), data = salary)
-plot(ggemmeans(fit_seniority, "seniority [exp]"))
+plot(ggpredict(fit_seniority, "seniority"))
 
 
 

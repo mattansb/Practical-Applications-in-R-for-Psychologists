@@ -65,7 +65,7 @@ plot(ggemmeans(mod, "OSF"), residuals = TRUE, residuals.line = TRUE)
 
 plot(ggemmeans(mod, "in_couple"), residuals = TRUE, residuals.line = TRUE)
 
-plot(ggemmeans(mod, c("OSF","in_couple")), residuals = TRUE, residuals.line = TRUE)
+plot(ggemmeans(mod, c("OSF","in_couple")), residuals = TRUE, residuals.line = TRUE, facets = TRUE)
 # etc...
 
 

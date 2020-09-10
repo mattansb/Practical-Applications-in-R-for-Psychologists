@@ -128,8 +128,7 @@ emmeans(fit_factor3, ~ treat_group)
 
 ## Plot
 library(ggeffects)
-plot(ggemmeans(fit_factor2, "treat_group"))
-
+plot(ggemmeans(fit_factor2, "treat_group"), add.data = TRUE)
 
 
 
