@@ -7,7 +7,7 @@ output: github_document
 ```{r setup, include=FALSE}
 library(knitr)
 
-opts_chunk$set(echo = TRUE)
+opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 `%>%` <- dplyr::`%>%`
 ```
@@ -20,21 +20,20 @@ opts_chunk$set(echo = TRUE)
 
 <sub>*Last updated `r Sys.Date()`.*</sub>
 
-This Github repo contains all lesson files used in the graduate-level course: *Advanced Research Methods foR Psychologists - Practical Applications in R*, taught at Ben-Gurion University on the Negev (fall 2019 semester).
+This Github repo contains all lesson files for the *Practical Applications in R* portion of the graduate-level course: ***Advanced Research Methods for Psychologists***, taught at Ben-Gurion University on the Negev (*Fall semester, 2020*).
 
-The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of building, evaluating and comparing statistical models in `R` focusing on linear regression modeling (using both frequentist and Bayesian approaches).
+The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of **building, evaluating and comparing statistical models in `R`**, focusing on linear regression modeling (using both frequentist and Bayesian approaches).
 
-This course will lay the foundation for the topic-focused courses:
+This course will lay the foundation for the topic-focused courses (*Spring semester*):
 
 - [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
-- [Analysis of factorial designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists).
 - Machine Learning (*ML*).
 - Hierarchical linear models (*HLM*).
 
 **Notes:**  
 
-- This repo contains only materials relating to *Practical Applications in R*, and does not contain any theoretical or introductory materials.  
-- Please note that some code does not work *on purpose*, to force students to learn to debug.
+- This repo contains only materials relating to *Practical Applications in R*. Though statistics are naturally discussed in many lessons, the focus is generally on the application and not on the theory.  
+- Please note that some code does not work *on purpose* and without warning, to force students to learn to debug.
 
 ## Setup
 
@@ -47,9 +46,9 @@ extract_pkgs <- function(fl) {
       .[[1]] %>% 
       paste0(collapse = "\n")
     
-    pkg_lib <- stringr::str_extract_all(txt, pattern = "(?<=library\\().{1,}(?=\\))")
+    pkg_lib <- stringr::str_extract_all(txt, pattern = "(?<=library\\().{1,}?(?=\\))")
     
-    pkg_req <- stringr::str_extract_all(txt, pattern = "(?<=require\\().{1,}(?=\\))")
+    pkg_req <- stringr::str_extract_all(txt, pattern = "(?<=require\\().{1,}?(?=\\))")
     
     pkg_name <- stringr::str_extract_all(txt, pattern = "[a-z|A-Z|0-9]{1,}(?=\\:\\:)")
     
@@ -68,7 +67,7 @@ extract_pkgs <- function(fl) {
 make_pkg_table <- function(pkgs) {
   `%>%` <- dplyr::`%>%`
   
-  pkgs <- pkgs[sapply(pkgs, function(x) length(x) > 0)]
+  # pkgs <- pkgs[sapply(pkgs, function(x) length(x) > 0)]
   
   ps <- sapply(pkgs, function(x){
     paste0(
@@ -87,7 +86,7 @@ make_pkg_table <- function(pkgs) {
 
 You will need:
 
-1. A fresh installation of [**`R`**](https://cran.r-project.org/) (preferably version 3.6 or above).
+1. A fresh installation of [**`R`**](https://cran.r-project.org/) (preferably version 4.0 or above).
 2. [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) (optional, but recommended).
 3. The following packages, listed by lesson:
 
