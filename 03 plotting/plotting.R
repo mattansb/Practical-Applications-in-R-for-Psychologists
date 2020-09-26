@@ -204,6 +204,12 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 
 
 
+# Hebrew / Arabic plots ---------------------------------------------------
+
+# ggplot2 for the most part supports right-to-left (RTL) scripts, but not always
+# the use of mixed texts. There are some work arounds, and there are those
+# working to improve it. E.g.:
+# https://gist.github.com/adisarid/b2ab5ec3dd225579bd4ad069ec111d83
 
 
 # Exercise ----------------------------------------------------------------
