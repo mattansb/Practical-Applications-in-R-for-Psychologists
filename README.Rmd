@@ -133,8 +133,11 @@ The package versions used here:
 packinfo <- installed.packages(fields = c("Package", "Version"))
 
 get_src <- function(pkg) {
-  if (is.null(src <- packageDescription(pkg)$Repository)) {
-    if (is.null(src <- packageDescription(pkg)$GithubRepo)) {
+  pd <- packageDescription(pkg)
+  if (is.null(src <- pd$Repository)) {
+    if (!is.null(src <- pd$GithubRepo)) {
+      src <- paste0("Github: ",pd$GithubUsername,"/",src)
+    } else {
       src <- "Dev"
     }
   }
