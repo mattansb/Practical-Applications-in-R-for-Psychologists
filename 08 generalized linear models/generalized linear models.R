@@ -68,6 +68,10 @@ model_parameters(fit, standardize = "basic")
 # after a change in 1 SD of X. This has a different interpretation than the
 # classic "beta", but still allows for comparing between predictors.
 
+# we can exponentiate (with `exp()`) these results, or we can directly ask
+# `model_parameters()` to do that for us:
+model_parameters(fit, standardize = "basic", exponentiate = TRUE)
+
 
 model_performance(fit)
 # These are slightly different indices than from linear models...
@@ -186,6 +190,7 @@ fit2 <- glm(neg_emotion_words_count ~ is.depressed,
             family = poisson())
 
 model_parameters(fit2, standardize = "basic")
+model_parameters(fit2, standardize = "basic", exponentiate = TRUE)
 # (these results make no sense).
 
 
