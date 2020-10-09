@@ -1,18 +1,22 @@
 
 
 # We've already seen how to deal with categorical predictors, and categorical
-# mediators. When all of our predictors are categorical and we model all of the
+# moderators. When all of our predictors are categorical and we model all of the
 # possible interactions, our regression model is equivalent to an ANOVA.
 #
 # Although ANOVA is just a type of regression model, researchers working with
-# factorial designs often prefer to build a single ANOVA model with all the
-# interactions instead of building a series of models and comparing them. In
-# theory this can be done with the `aov()` function but DO NOT DO THIS - this
-# function will not give you the results you want! instead we will use the
-# `afex` package.
+# factorial data often prefer to build a single ANOVA model with all the
+# interactions (instead of building a series of models and comparing them
+# hierarchically). Although R has a built-in function for conducting ANOVAs -
+# `aov()` - you should NOT USE IT as it will not give you the results you want!
+# Instead you should use the `afex` package.
+# (Read more about why this matters so much here:
+# https://easystats.github.io/effectsize/articles/anovaES.html)
 
-library(afex)
-library(emmeans)
+
+library(afex) # for ANOVA
+library(emmeans) # for follow up analysis
+library(effectsize) # for effect sizes
 
 # This lesson is a shortened version of a full ANOVA course (RIP), which you can
 # find here:
@@ -37,28 +41,40 @@ m_aov <- aov_ez(id = "ID", dv = "BehavioralAvoidance", data = Phobia,
 
 # We get all effects, their sig and effect size (partial eta square)
 m_aov
-# We have a main effect for Phobia and an Interaction with Condition. Let's
-# explore!
+
+# We can use functions from `effectsize` to get confidence intervals for various
+# effect sizes:
+eta_squared(m_aov, partial = TRUE)
+?eta_squared # see more types
 
 
 
 ## 2. Explore the model
 afex_plot(m_aov, ~ Condition, ~ Phobia)
 
-# Simple effects:
-joint_tests(m_aov, by = "Condition")
 
-# Contrast for main effect
+
+# We only have a significant main effect for Phobia. Let's conduct a contrast on
+# the main effect:
+# Step 1. Get estimated means:
 (em_Phobia <- emmeans(m_aov, ~ Phobia))
+
+# Step 2. Estimate the contrast:
 contrast(em_Phobia, method = "consec")
 
-# Contrast for simple effects
-(em_int <- emmeans(m_aov, ~ Phobia + Condition))
-contrast(em_int, method = "pairwise", by = "Condition")
+?`emmc-functions` # see for different types of built-in contrast weights.
+# But we can also build custom contrast weights!
 
 
-# We can also conduct interaction contrasts... See much much more:
-# https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists
+w <- data.frame(
+  Mild_vs_Other = c(-2,1,1)/2,
+  Moderate_vs_Severe = c(0,-1,1)
+)
+
+contrast(em_Phobia, method = w)
+
+
+
 
 
 
@@ -74,6 +90,7 @@ contrast(em_int, method = "pairwise", by = "Condition")
 #   the data to a single value per subject / condition. This can be done with:
 #    - `dplyr`'s `summarise()`
 #    - `prepdat`'s `prep()`
+#    - etc...
 # 2. The data must be in the LONG format.
 
 
@@ -122,6 +139,25 @@ fit_mfs
 # to run HLM/LMM ANOVAs.
 
 
+## 2. Explore the model
+afex_plot(fit_mfs, ~Time, ~Family_status)
+
+
+# We had a significant interaction, so we can:
+
+# A. Look as simple effects:
+joint_tests(fit_mfs, by = "Time")
+
+
+# B. Look at simple effects contrasts:
+(em_int <- emmeans(fit_mfs, ~ Family_status + Time))
+contrast(em_int, method = "pairwise", by = "Time")
+
+
+# C. Look at interaction contrasts (diffs of diffs):
+contrast(em_int, interaction = list(Family_status = "pairwise",
+                                    Time = "pairwise"))
+
 
 
 # More --------------------------------------------------------------------
@@ -129,11 +165,14 @@ fit_mfs
 # This lesson is a shortened version of a full ANOVA course (RIP), which you can
 # find here:
 # https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists
+#
 # This course covered:
 # - ANCOVA
-# - Custom contrasts
-# - Interaction contrasts
-# - GLMMs for factorial designs
+# - Simple effect / contrast effect sizes
+# - Bayesian ANOVA
+# - More custom contrasts and interaction contrasts
+# - HLM for factorial designs
+#
 # If any of these topics is useful to you, feel free to use these materials and
 # schedule a meeting during my office hours to discuss how you might learn more
 # about these methods.
@@ -144,13 +183,10 @@ fit_mfs
 
 # Exercise ----------------------------------------------------------------
 
-# 1. Explore the `fit_mfs` model:
-#   A. Plot the model with `afex_plot()`.
-#   B. Did the treatment *significantly* affect all groups?
-# 2. Go back to the phobia example:
-#   A. Add `Gender` as a predictor (3-way ANOVA).
-#   B. What is the effect size of the Gender:Phobia interaction?
-#   C. Explore the new model in any way you see fit (at least one plot + one
-#     contrast)
+# Go back to the phobia example:
+# A. Add `Gender` as a predictor (3-way ANOVA).
+# B. What is the effect size of the Gender:Phobia interaction?
+# C. Explore the new model in any way you see fit (at least one plot + one
+#   contrast)
 
 
