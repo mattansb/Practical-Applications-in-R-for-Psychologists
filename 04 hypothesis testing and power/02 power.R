@@ -52,7 +52,7 @@ pwr.r.test(r = 0.04, n = 46, sig.level = .05) # what power?
 
 ## Ad-hoc power analysis:
 pwr.p.test(h = ES.h(0.3, 0.5), sig.level = .05, power = .8) # what n?
-pwr.p.test(n = 30, sig.level = .05, power = .8) # what p?
+pwr.p.test(n = 30, sig.level = .05, power = .8) # what h?
 # convert h to p... somehow?
 
 
@@ -85,7 +85,7 @@ pwr.chisq.test(N = 20, df = 1, sig.level = .05, power = .8) # what phi?
 
 ## Post-hoc power analysis:
 cont_table <- table(pdat$sex, pdat$Group)
-phi(cont_table, correct = FALSE)
+phi(cont_table, correct = FALSE) # Phi is equivalent to Cohen's w
 
 pwr.chisq.test(w = 0.09, N = 46, df = 1, sig.level = .05) # what power?
 
@@ -109,14 +109,13 @@ pwr.f2.test(v = 35, u = 1, sig.level = .05, power = .8) # what f2?
 pdat <- na.omit(pdat)
 fit0 <- lm(Depression ~ sex, data = pdat)
 fit1 <- lm(Depression ~ sex + Anxiety + Joy, data = pdat)
-anova(fit0, fit1)
-F_to_f(6.63, 2, 41)
-pwr.f2.test(f2 = 0.57^2, v = 42, u = 2, sig.level = .05) # what power?
+cohens_f2(fit0, model2 = fit1)
+pwr.f2.test(f2 = 0.32, v = 42, u = 2, sig.level = .05) # what power?
 
 # 2. single coefficient regression
 summary(fit1)
-t_to_f(0.603, 41) # for Joy
-pwr.f2.test(f2 = 0.09^2, v = 41, u = 1, sig.level = .05) # what power?
+t_to_f2(3.567, 41) # for Joy
+pwr.f2.test(f2 = 0.31, v = 41, u = 1, sig.level = .05) # what power?
 
 
 
