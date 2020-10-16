@@ -382,11 +382,17 @@ write_sav(data_long, path = "data_long.sav")
 # BUT WHY??????????? NOOOOOOOOOO
 
 
-# save to a `.rds` file (not only data frames)
+# save to a `.rds` file
 saveRDS(data_long, file = "data_long.Rds")
 # load using readRDS() into object.
-#
+same_data <- readRDS("data_long.Rds")
 # why would you want to do this? (e.g., factors...)
+
+# not only data frames:
+xlist <- list(a = 1, b = list(b1 = c(1,2,3), bx = "a"))
+saveRDS(xlist, file = "some list I made.Rds")
+
+
 
 
 
