@@ -107,6 +107,8 @@ b > a
 a = 7
 a == 7
 a != 7
+a < 10 & b > 8
+a < 10 | b > 8
 
 
 
@@ -239,7 +241,7 @@ v5
 v6 <- rep(c(1, 2, 5), each = 10)
 v7 <- rep(c(1, 2, 5), times = 10)
 
-# combind
+# combine
 c(v6, v7) # same as
 c(rep(c(1, 2, 5), each = 10), rep(c(1, 2, 5), times = 10))
 
@@ -250,7 +252,7 @@ c(rep(c(1, 2, 5), each = 10), rep(c(1, 2, 5), times = 10))
 v8 <- v1 * 5
 v9 <- v6 + v7
 c(1, 2, 3, 4) + c(1, 2)
-
+c(1, 2, 3, 4) + c(1, 2, 3)
 
 
 
@@ -260,7 +262,7 @@ v10
 
 set.seed(1)
 v10 <- sample(v9, 100, replace = TRUE)
-
+v10
 
 
 ## Extract and replace
@@ -271,7 +273,6 @@ i <- c(1, 3, 5)
 v9[i]
 v9[c(1, 3, 5)] # same
 
-
 # order matters!
 v9[c(1, 2, 3, 4)]
 v9[c(4, 3, 1, 2)]
@@ -280,19 +281,17 @@ v9[c(4, 3, 1, 2)]
 v9[c(1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
 
 
+head(v9,  3)
+tail(v9,  3)
+
+
+
+
 v9[1]
 v9[1] <- 100
 v9[c(2, 4, 6)] <- -99
 v9
 
-
-head(v9, 3)
-tail(v9, 3)
-head(v9,-3)
-tail(v9,-3)
-
-v10 <- c(v9, 5)
-v16 <- c(v1, v8)
 
 # with a logical vector
 v9[v9 > 6]
@@ -303,11 +302,9 @@ which(math.grades > 80 & math.grades <= 90)
 
 
 
-
 ## naming vector elements
-names(math.grades) <- 1:4
 names(english.grades) <- c("noa", "tzipi", "avi", "shira")
-names(english.grades)
+english.grades
 english.grades["shira"]
 english.grades[4]
 english.grades[9 %% 5]
@@ -362,7 +359,6 @@ factor(sex, levels = c("M", "F"), labels = c("Male", "Female"))
 
 
 
-
 # Lists -------------------------------------------------------------------
 
 # What if you wanted to mix some types?
@@ -379,6 +375,7 @@ str(list1)
 list2 <- list("Name" = "Beer-Sheva",
               "Population" = 200000,
               "is_negev" = TRUE)
+str(list2)
 
 # We can now extract elements by their name:
 list2$Name
@@ -395,7 +392,7 @@ list2[c("Name","Population")]
 
 # list with sub list (etc...)
 list3 <- list("a" = 4,
-              "b" = 2,
+              "b" = c(2, 3),
               "c" = list(1, 3, 5, T, "T"))
 str(list3)
 

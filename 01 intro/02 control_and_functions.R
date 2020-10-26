@@ -34,6 +34,7 @@ list(salary, worker)
 
 # note: if..else is a control flow function. Takes only one logical value.
 salary <- runif(3, min = 1000, max = 20000)
+
 if (salary < 5000) {
   worker <- "poor"
 } else if (salary > 15000) {
@@ -74,7 +75,7 @@ list(salary,worker)
 # what does this code do?
 test <- numeric(length = 100)
 
-for (i in seq_along(test)) {
+for (i in c(1, 3, 6, 2)) {
   
   test[i] <- i ^ 2
   
