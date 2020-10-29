@@ -129,10 +129,10 @@ library(tidyverse)
 
 
 # load a data frame
-data_raw <- read.csv("emotional_2back.csv")
+data_raw <- read.csv("data/deaf_numer.csv")
 
 # for SPSS files
-data_raw <- read_spss("emotional_2back.sav")
+data_raw <- read_spss("data/deaf_numer.sav")
 
 # see also the `readxl` pkg for excel files.
 
@@ -142,15 +142,12 @@ glimpse(data_raw) # better!
 
 
 # emotional_1back:
-# Subject  - subject number
-# Group    - 1 = low social anxiety, 2 = high social anxiety
-# Block    - experimental block
-# Trial    - experimental trial
-# Emotion  - Condition 1: pos, neg, neu (type of emotion)
-# SameDiff - Condition 2: same, different (same or different to previous trial?)
-# Gender   - Condition 3: male, female (what gendered face?)
-# ACC      - accuracy: 1 correct, 0 error
-# RT       - reaction time
+# sID      - subject number
+# nFingers - Number of stimulated fingers
+# trial    - experimental trial
+# block    - experimental block
+# acc      - accuracy: 1 correct, 0 error
+# rt       - reaction time
 
 
 
@@ -164,28 +161,29 @@ glimpse(data_raw) # better!
 # The first argument in ALL of these functions is a data frame (e.g., data_raw)
 
 
-# select columns
+## select columns
 data_clean <- select(data_raw,
-                     Subject, Group:Trial, Emotion, RT)
+                     sID, nFingers, rt)
 head(data_clean)
 
 
-# filter -- selects rows:
+## filter -- selects rows:
 data_clean <- filter(data_clean,
-                     RT < 4000)
+                     rt < 2500)
 nrow(data_clean)
 nrow(data_raw)
 
 
-# mutate -- makes a new variable, or change an existing one
+## mutate -- makes a new variable, or change an existing one
 data_clean <- mutate(data_clean,
-                     sqrtRT = sqrt(RT), # new
-                     RT = RT / 1000)    # change RT from ms to seconds
+                     sqrt_rt = sqrt(rt), # new
+                     rt = rt / 1000)     # change RT from ms to seconds
 head(data_clean)
+
 
 # group_by -- group data by some variable.
 data_clean <- group_by(data_clean,
-                       Emotion)
+                       nFingers)
 # This doesn't actually change the data in any way, it just lets other functions
 # know that they should act on the data according to the groups.
 group_keys(data_clean) # see what is grouped by
@@ -193,11 +191,11 @@ group_keys(data_clean) # see what is grouped by
 
 # For example, mutate():
 data_clean <- mutate(data_clean,
-                     RT_z = scale(RT))
+                     rt_z = scale(rt))
 # What did this do?
 
 
-# ALWAYS ungroup when you're done with grouping!
+## ALWAYS ungroup when you're done with grouping!
 data_clean <- ungroup(data_clean)
 group_keys(data_clean)
 
@@ -268,12 +266,12 @@ TRUE %>%
 # as the FIRST argument, and also all RETURN a data frame, we can PIPE `dplyr`
 # functions:
 data_clean_piped <- data_raw %>%
-  select(Subject, Group:Trial, Emotion, RT) %>%
-  filter(RT < 4000) %>%
-  mutate(sqrtRT = sqrt(RT),
-         RT = RT / 1000) %>%
-  group_by(Emotion) %>%
-  mutate(RT_z = scale(RT)) %>%
+  select(sID, sID, nFingers, rt) %>%
+  filter(rt < 2500) %>%
+  mutate(sqrt_rt = sqrt(rt),
+         rt = rt / 1000) %>%
+  group_by(nFingers) %>%
+  mutate(rt_z = scale(rt)) %>%
   ungroup()
 
 # This pipe does all the things we did above:
@@ -313,7 +311,7 @@ saveRDS(xlist, file = "some list I made.Rds")
 
 
 # we can also save multiple objects into `.rdata` files (Don't!!):
-save(data_long, data_wide_again, file = "selected_objects.rdata")
+save(data_clean_piped, xlist, file = "selected_objects.rdata")
 # Or the whole current environment (Don't!!!!)
 save.image(file = "all_objects.rdata")
 #
@@ -326,22 +324,22 @@ save.image(file = "all_objects.rdata")
 
 
 
-data_raw <- read_csv("emotional_2back.csv")
+data_raw <- read.csv("data/deaf_numer.csv")
 # (Try to do the following with dplyr functions.)
 # (Try to do it all with the pipe!)
 # 1. Fix the Group variable: (the RA forgot to do it...)
-#        - For Subject <= 30, Group should be 1,
-#        - For Subject >  30, Group should be 2.
+#        - For Subject <= 15, Group should be 1,
+#        - For Subject >  15, Group should be 2.
 #    TIP: use `ifelse()`
 #    (see `02 control_and_functions.R` from last lesson)
-# 2. remove the first, practice block (Where Block == 1)
+# 2. remove the first, practice block (Where block == 1)
 # 3. remove trials following an error
 #    TIP: use `lag()`
 # 4. remove error trials (where ACC == 0)
 # 5. remove RTs that fall beyond +/- 2 SD from *each participant's*
 #    mean in *each* of the emotion-by-gender conditions.
-# 6. create the variable `delay_minutes`, randomly sampled from
-#    `c(short = 5, long = 60)`
+# 6. create the variable `vib_strength`, randomly sampled from
+#    `c(soft = 0.3, strong = 1.0)`
 # 7. Save that data to:
 #        - an Rds file
 #        - a csv file

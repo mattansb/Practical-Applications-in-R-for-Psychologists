@@ -1,16 +1,11 @@
 library(tidyverse)
 
 
-data_raw <- read.csv("emotional_2back.csv")
+data_raw <- read.csv("data/deaf_numer.csv")
 
 data_clean <- data_raw %>%
-  select(Subject, Group:Trial, Emotion, RT) %>%
-  filter(RT < 4000) %>%
-  mutate(sqrtRT = sqrt(RT),
-         RT = RT / 1000) %>%
-  group_by(Emotion) %>%
-  mutate(RT_z = scale(RT)) %>%
-  ungroup()
+  select(sID, sID, nFingers, rt) %>%
+  filter(rt < 2500)
 
 
 # Join data frames --------------------------------------------------------
@@ -26,14 +21,14 @@ data_clean <- data_raw %>%
 # 1. A file with performance on some task.
 head(data_clean)
 # 2. A file with demographic info for each subject.
-subject_info <- read.csv("emotional_2back_sub_data.csv")
+subject_info <- read.csv("data/deaf_numer_sinfo.csv")
 head(subject_info)
 
 
 # We can easily JOIN these data according to some key - the subject.
 data_clean_joined <- data_clean %>%
-  full_join(subject_info, by = "Subject")
-head(data_clean_joined)
+  full_join(subject_info, by = "sID")
+head(data_clean_joined, n = 12)
 
 
 
