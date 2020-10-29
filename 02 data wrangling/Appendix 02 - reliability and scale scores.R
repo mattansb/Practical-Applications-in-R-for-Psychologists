@@ -3,12 +3,13 @@
 
 library(dplyr)
 
-NPAS <- read.csv("data/NPAS.csv") # data from https://osf.io/5njdx/
+# data from https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses
+NPAS <- read.csv("data/NPAS data.csv")
 glimpse(NPAS)
 
 # Use `psych::alpha` to compute Cronbach's Alpha:
 NPAS %>%
-  select(NPAS_1:NPAS_26) %>%
+  select(Q1:Q26) %>%
   psych::alpha()
 
 
@@ -16,13 +17,13 @@ NPAS %>%
 NPAS_with_score <- NPAS %>%
   mutate(
     # Raw Sum/Mean scores
-    Nerd_sum_raw = across(NPAS_1:NPAS_26) %>% rowSums(na.rm = TRUE),
-    Nerd_mean_raw = across(NPAS_1:NPAS_26) %>% rowMeans(na.rm = TRUE), # better for missing data
+    Nerd_sum_raw = across(Q1:Q26) %>% rowSums(na.rm = TRUE),
+    Nerd_mean_raw = across(Q1:Q26) %>% rowMeans(na.rm = TRUE), # better for missing data
     # Standardized Sum/Mean scores
-    Nerd_sum_std = across(NPAS_1:NPAS_26, .fns = scale) %>% rowSums(na.rm = TRUE),
-    Nerd_mean_std = across(NPAS_1:NPAS_26, .fns = scale) %>% rowMeans(na.rm = TRUE), # better for missing data
+    Nerd_sum_std = across(Q1:Q26, .fns = scale) %>% rowSums(na.rm = TRUE),
+    Nerd_mean_std = across(Q1:Q26, .fns = scale) %>% rowMeans(na.rm = TRUE), # better for missing data
   ) %>%
-  select(-(NPAS_1:NPAS_26))
+  select(-(Q1:Q26))
 
 head(NPAS_with_score)
 

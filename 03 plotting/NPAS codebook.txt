@@ -1,0 +1,124 @@
+This data was collected through an interactive online test, the Nerdy Personality Attributes Scale
+http://openpsychometrics.org/tests/NPAS/development/
+
+Data collection occured December 2015 - December 2018.
+
+The following items were rated on a five point scale where 1=Disagree, 3=Neutral and 5=Agree.
+
+
+Q1	I am interested in science.
+Q2	I was in advanced classes.
+Q3	I like to play RPGs. (Ex. D&D)
+Q4	My appearance is not as important as my intelligence.
+Q5	I collect books.
+Q6	I prefer academic success to social success.
+Q7	I watch science related shows.
+Q8	I spend recreational time researching topics others might find dry or overly rigorous.
+Q9	I like science fiction.
+Q10	I would rather read a book than go to a party.
+Q11	I am more comfortable with my hobbies than I am with other people.		
+Q12	I spend more time at the library than any other public place.
+Q13	I would describe my smarts as bookish.
+Q14	I like to read technology news reports.
+Q15	I have started writing a novel.
+Q16	I gravitate towards introspection.
+Q17	I am more comfortable interacting online than in person.
+Q18	I love to read challenging material.
+Q19	I have played a lot of video games.
+Q20	I was a very odd child.
+Q21	I sometimes prefer fictional people to real ones.
+Q22	I enjoy learning more than I need to.
+Q23	I get excited about my ideas and research.
+Q24	I am a strange person.
+Q25	I care about super heroes.
+Q26	I can be socially awkward at times.
+
+
+
+The other following time elapses were also recorded:
+
+introelapse		The time spent on the introduction/landing page (in seconds)
+testelapse		The time spent on the RWAS questions
+surveyelapse	The time spent answering the rest of the demographic and survey questions
+
+The Ten Item Personality Inventory was administered (see Gosling, S. D., Rentfrow, P. J., & Swann, W. B., Jr. (2003). A Very Brief Measure of the Big Five Personality Domains. Journal of Research in Personality, 37, 504-528.):
+
+TIPI1	Extraverted, enthusiastic.
+TIPI2	Critical, quarrelsome.
+TIPI3	Dependable, self-disciplined.
+TIPI4	Anxious, easily upset.
+TIPI5	Open to new experiences, complex.
+TIPI6	Reserved, quiet.
+TIPI7	Sympathetic, warm.
+TIPI8	Disorganized, careless.
+TIPI9	Calm, emotionally stable.
+TIPI10	Conventional, uncreative.
+
+The TIPI items were rated "I see myself as:" _____ such that
+
+1 = Disagree strongly
+2 = Disagree moderately
+3 = Disagree a little
+4 = Neither agree nor disagree
+5 = Agree a little
+6 = Agree moderately
+7 = Agree strongly
+
+The following item was also supplemented into the TIPI:
+nerdy		Nerdy
+
+The following items were presented as a check-list and subjects were instructed "In the grid below, check all the words whose definitions you are sure you know":
+
+VCL1	boat
+VCL2	incoherent
+VCL3	pallid
+VCL4	robot
+VCL5	audible
+VCL6	cuivocal
+VCL7	paucity
+VCL8	epistemology
+VCL9	florted
+VCL10	decide
+VCL11	pastiche
+VCL12	verdid
+VCL13	abysmal
+VCL14	lucid
+VCL15	betray
+VCL16	funny
+
+A value of 1 is checked, 0 means unchecked. The words at VCL6, VCL9, and VCL12 are not real words and can be used as a validity check.
+
+A bunch more questions were then asked:
+
+
+education			"How much education have you completed?", 1=Less than high school, 2=High school, 3=University degree, 4=Graduate degree
+urban				"What type of area did you live when you were a child?", 1=Rural (country side), 2=Suburban, 3=Urban (town, city)
+gender				"What is your gender?", 1=Male, 2=Female, 3=Other
+engnat				"Is English your native language?", 1=Yes, 2=No
+age					"How many years old are you?"
+hand				"What hand do you use to write with?", 1=Right, 2=Left, 3=Both
+religion			"What is your religion?", 1=Agnostic, 2=Atheist, 3=Buddhist, 4=Christian (Catholic), 5=Christian (Mormon), 6=Christian (Protestant), 7=Christian (Other), 8=Hindu, 9=Jewish, 10=Muslim, 11=Sikh, 12=Other
+orientation			"What is your sexual orientation?", 1=Heterosexual, 2=Bisexual, 3=Homosexual, 4=Asexual, 5=Other
+voted				"Have you voted in a national election in the past year?", 1=Yes, 2=No
+married				"What is your marital status?", 1=Never married, 2=Currently married, 3=Previously married
+familysize			"Including you, how many children did your mother have?"		
+major				"If you attended a university, what was your major (e.g. "psychology", "English", "civil engineering")?"		
+ASD				" Have you even been diagnosed with an Autism Spectrum Disorder? " 1=yes, 2=no
+
+The user was provided with multiple choice race identification (1=selected, 0=not selected):
+race_arab	
+race_asian	
+race_black	
+race_white	
+race_hispanic	
+race_nativeam	
+race_nativeau	
+race_other
+
+
+The following technical information was recorded:
+
+screenw		Obtained from javascript:screen.width
+screenh		Obtained from javascript:screen.height
+country		The location of the network the user connected from
+

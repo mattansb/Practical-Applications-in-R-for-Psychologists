@@ -3,13 +3,15 @@ library(dplyr)
 
 # We will again be using the NAPS data set.
 
-# Let's clean it up a bit 
-df_NPAS <- readRDS("NPAS-data_clean.Rds") %>% 
+# Let's clean it up a bit
+# (data from https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses)
+df_NPAS <- read.csv("NPAS data.csv") %>% 
   na.omit() %>% 
   mutate(Nerdy = rowMeans(across(Q1:Q26)),
-         gender = factor(gender, labels = c("woman", "man", "other"))) %>%
+         gender = factor(gender, levels = c(2, 1, 0), labels = c("woman", "man", "other"))) %>%
   select(-(Q1:Q26)) %>% 
-  filter(age < 100)
+  filter(age < 100) %>% 
+  sample_n(1000) # get just some of the data
 
 
 glimpse(df_NPAS)
@@ -107,21 +109,19 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy)) +
 
 
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
-  geom_point(position = "jitter")
+  geom_boxplot()
 
 
 
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
-  geom_point(position = "jitter") + 
+  geom_boxplot() + 
   geom_violin()
 
 
 # Can't see the points! Order of geoms matters!
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
   geom_violin() + 
-  geom_boxplot() + 
-  geom_point(mapping = aes(shape = gender, color = age),
-             position = "jitter", alpha = 0.6)
+  geom_boxplot(mapping = aes(color = gender), fill = NA)
 
 
 
@@ -136,11 +136,6 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy)) +
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
   geom_point(color = gender)
 
-
-
-ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(aes(color = gender)) + 
-  geom_smooth()
 
 
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
@@ -216,9 +211,9 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 
 
 # Using ggplot, try and (visually) answer the following question:
-# 1. What is the relationship between family size (`familysize`) and nerdiness
-#   (`Nerdy`).
-# 2. Does it vary by ASD? sexual orientation (`orientation`) Both?
+# 1. What is the relationship between emotional stability
+#   (`Emotional_Stability`) and nerdiness (`Nerdy`).
+# 2. Does it vary by family size (`familysize`)? Autism diagnosis (`ASD`)? Both?
 
 
 
