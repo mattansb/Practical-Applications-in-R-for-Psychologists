@@ -70,7 +70,7 @@ sd(school_grades$english.grades)
 
 
 # What do these do?
-school_grades[school_grades$sex=="female", c("names", "math.grades", "math.grades_z")]
+school_grades[school_grades$sex == "female", c("names", "math.grades", "math.grades_z")]
 
 school_grades[school_grades$pass.english, c("names", "english.grades")]
 

@@ -1,5 +1,6 @@
 library(tidyverse)
 
+
 data_raw <- read.csv("emotional_2back.csv")
 
 data_clean <- data_raw %>%
@@ -45,9 +46,9 @@ head(data_clean_joined)
 # Most modeling functions in R take a data frame that is tidy. Unfortunately,
 # this is not true for other unmentionable statistical programs...
 
-
-data_wide <- read.csv("WIDE_data.csv")
-head(data_wide)
+emotionalWM <- readxl::read_excel("data/Zhang2018_emotionalWM.xlsx")
+# data from https://doi.org/10.3389%2Ffnbeh.2018.00065
+head(emotionalWM)
 # Is this data tidy? (No. Why not?)
 
 
@@ -55,26 +56,26 @@ head(data_wide)
 # To make this data tidy, we need to make it LONG (it is now WIDE).
 # We can do this with `pivot_longer()`:
 
-data_long <- data_wide %>%
+emotionalWM_long <- emotionalWM %>%
   pivot_longer(
-    cols = neg_diff:pos_same,
+    cols = positive_average:negative_O2,
     names_to = "condition",
-    values_to = "mRT"
+    values_to = "mV"
   )
-head(data_long)
+head(emotionalWM_long)
 # Is this data tidy?
 
 
 
 
-data_long_tidy <- data_wide %>%
+emotionalWM_long <- emotionalWM %>%
   pivot_longer(
-    neg_diff:pos_same,
+    cols = positive_average:negative_O2,
     names_sep = "_",
-    names_to = "Emotion", "SameDiff",
-    values_to = "mRT"
+    names_to = "emotion", "area",
+    values_to = "mV"
   )
-head(data_long_tidy)
+head(emotionalWM_long)
 # Is THIS data tidy?
 
 
@@ -83,11 +84,11 @@ head(data_long_tidy)
 
 # Sometimes we might want to take long form data and make it wide.
 # We can do this with `pivot_wider()`
-data_wide_again <- data_long_tidy %>%
+emotionalWM_wide_again <- emotionalWM_long %>%
   pivot_wider(
-    names_from = c("Emotion","SameDiff"),
-    values_from = "mRT"
+    names_from = c("emotion", "area"),
+    values_from = "mV"
   )
-head(data_wide_again)
+head(emotionalWM_wide_again)
 
 
