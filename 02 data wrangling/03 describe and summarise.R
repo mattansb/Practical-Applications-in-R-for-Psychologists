@@ -3,7 +3,7 @@ library(parameters) # for kurtosis & skewness
 library(summarytools) # for dfSummary
 
 e2b_data <- read.csv("emotional_2back.csv") %>%
-  mutate(Group = ifelse(Subject<=30,1,2) %>% factor(),
+  mutate(Group = ifelse(Subject <= 30, 1, 2) %>% factor(),
          Subject = factor(Subject),
          Emotion = factor(Emotion),
          SameDiff = factor(SameDiff),
@@ -23,7 +23,8 @@ view(quick_sum) # lowercase "v"!
 
 
 
-# For numeric variables, you can use `parameters::describe_distribution()`
+# For numeric variables, you can use `describe_distribution()` from the
+# `parameters` package:
 e2b_data %>%
   select(ACC, RT) %>%
   describe_distribution()
@@ -47,13 +48,13 @@ e2b_data %>%
 
 
 ## (See Appendix 01 for even more options.)
-## (See Appendix 02 for computing scale scores and their reliability.)
+## (See Appendix 02 for computing scale scores and their reliabilities.)
 
 
 # By Group ----------------------------------------------------------------
 
 
-# We might want to summarise seperatly for different groups.
+# We might want to summarise separately for different groups.
 # We just add `group_by()` (and `ungroup()`!).
 
 
@@ -69,8 +70,8 @@ e2b_data %>%
 
 
 
-# This is useful for prepping data with repeated measures (e.g.,
-# computerized cognitive tasks):
+# This is useful for prepping data with repeated measures (e.g., computerized
+# cognitive tasks):
 e2b_subj_data <- e2b_data %>%
   group_by(Subject, Emotion, SameDiff) %>% # for each of...
   summarise(mRT = mean(RT[ACC == 1]),
@@ -79,7 +80,7 @@ e2b_subj_data <- e2b_data %>%
 
 head(e2b_subj_data, n = 12)
 # This data frame is basically ready for a rm-ANOVA!
-# (see next semester...)
+# (which we will meet near the end of the semester.)
 
 
 # unfortunately we lost some columns (gender, groups) -
@@ -133,8 +134,7 @@ e2b_data %>%
 e2b_data %>%
   group_by(Gender, Group) %>%
   summary()
-# Here `nrow()` (returns the number of rows) and `summary()` didn't react to
-# `group_by(Gender, Group)`!!!
+# Here `nrow()` and `summary()` didn't react to `group_by(Gender, Group)`!!!
 
 
 
@@ -151,6 +151,6 @@ glimpse(df_NPAS)
 # 1. Summarize the data in `df_NPAS` by describing the variable `Knowlage` -
 #   mean, sd, and at least 2 other measures you can think of.
 # 2. Repeat (1) but for EACH gender AND EACH ASD group.
-# *. The examples in "Describe variables" section support `group_by()` - try
+# 3. The examples in "Describe variables" section support `group_by()` - try
 #   them grouped by `Gender`.
 
