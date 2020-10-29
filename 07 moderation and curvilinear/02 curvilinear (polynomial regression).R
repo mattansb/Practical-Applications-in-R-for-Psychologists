@@ -59,7 +59,7 @@ compare_performance(m_lin, m_curvi)
 
 
 # 2. Explore
-plot(ggemmeans(m_curvi, "parental_strictness"), add.data = TRUE)
+plot(ggemmeans(m_curvi, "parental_strictness [-6:0, by=0.5]"), add.data = TRUE)
 # This looks a lot better (not perfect, but better...)
 
 
