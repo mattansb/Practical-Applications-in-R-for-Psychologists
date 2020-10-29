@@ -1,5 +1,5 @@
 
-tai_missing <- readRDS("tai_missing.Rds")
+tai_missing <- readRDS("data/tai_missing.Rds")
 tai_missing$sex <- sample(c("m","f"), size = nrow(tai_missing), replace = TRUE)
 head(tai_missing)
 
