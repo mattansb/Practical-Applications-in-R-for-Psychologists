@@ -6,7 +6,7 @@ library(dplyr)
 # will be defined as any observation that is 1.1 IQRs (interquartile range) the
 # median (this is NOT a good rule of thumb!).
 
-tai_missing <- readRDS("tai_missing.Rds")
+tai_missing <- readRDS("data/tai_missing.Rds")
 head(tai_missing)
 
 (moEd_range <- tai_missing %>%
@@ -37,13 +37,10 @@ tai_no_OL <- tai_missing %>%
 # Winzorize ---------------------------------------------------------------
 # Replace Extreme Values By Less Extreme Ones
 
-library(DescTools) # for `Winsorize()`
-
-
 tai_winzorize_OL <- tai_missing %>%
-  mutate(moED_win = Winsorize(moED,
-                              minval = -1.1 * IQR(moED) + median(moED),
-                              maxval = 1.1 * IQR(moED) + median(moED)))
+  mutate(moED_win = DescTools::Winsorize(moED,
+                                         minval = -1.1 * IQR(moED) + median(moED),
+                                         maxval = 1.1 * IQR(moED) + median(moED)))
 
 # Compare -----------------------------------------------------------------
 
