@@ -1,7 +1,7 @@
 
-<img src='logo/BGUHex.png' align="right" height="139" />
+<img src='logo/Hex.png' align="right" height="139" />
 
-# Advanced Research Methods foR Psychologists
+# Practical Applications in R for Psychologists
 
 [![](https://img.shields.io/badge/Open%20Educational%20Resources-Compatable-brightgreen)](https://creativecommons.org/about/program-areas/education-oer/)
 [![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
