@@ -28,8 +28,6 @@ tail(school_grades, n = 3)  # get last few rows
 ncol(school_grades)         # how many columns?
 nrow(school_grades)         # how many rows?
 View(school_grades)         # view it in R's viewer.
-summary(school_grades)      # more on this next lesson...
-# Should id number have a "mean"?
 
 
 
