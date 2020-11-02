@@ -15,7 +15,7 @@ school_grades <- data.frame(
          304786643, 317171280, 326876070),
   sex = factor(c("F", "M", "F", "M", "F", "F", "M"),
                labels = c("female", "male")),
-  math.grades = c(93, 30, 84, 88, 100, 67, 79),
+  math.grades = c(93, 30, NA, 88, 100, 67, 79),
   english.grades = c(100, 45, 90, 77, 88, 90, 66)
 )
 school_grades
@@ -32,7 +32,7 @@ View(school_grades)         # view it in R's viewer.
 
 
 ## extract & replace with [row, column]
-school_grades[1,]   # first row
+school_grades[1, ] # first row
 school_grades[, 1]  # first column
 school_grades[3, 5] # 3rd row, 5th column
 
@@ -131,6 +131,7 @@ data_raw <- read.csv("data/deaf_numer.csv")
 
 # for SPSS files
 data_raw <- read_spss("data/deaf_numer.sav")
+
 
 # see also the `readxl` pkg for excel files.
 
@@ -264,7 +265,7 @@ TRUE %>%
 # as the FIRST argument, and also all RETURN a data frame, we can PIPE `dplyr`
 # functions:
 data_clean_piped <- data_raw %>%
-  select(sID, sID, nFingers, rt) %>%
+  select(sID, nFingers, rt) %>%
   filter(rt < 2500) %>%
   mutate(sqrt_rt = sqrt(rt),
          rt = rt / 1000) %>%
@@ -274,7 +275,6 @@ data_clean_piped <- data_raw %>%
 
 # This pipe does all the things we did above:
 all.equal(data_clean, data_clean_piped)
-
 
 
 
@@ -325,7 +325,7 @@ save.image(file = "all_objects.rdata")
 data_raw <- read.csv("data/deaf_numer.csv")
 # (Try to do the following with dplyr functions.)
 # (Try to do it all with the pipe!)
-# 1. Fix the Group variable: (the RA forgot to do it...)
+# 1. Create a Group variable: (the RA forgot to do it...)
 #        - For Subject <= 15, Group should be 1,
 #        - For Subject >  15, Group should be 2.
 #    TIP: use `ifelse()`
