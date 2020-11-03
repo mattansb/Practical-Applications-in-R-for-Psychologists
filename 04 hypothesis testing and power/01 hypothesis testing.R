@@ -99,10 +99,10 @@ corr.test(pdat[,c("Depression","Anxiety","Joy")],
 # What is the model?
 
 ## partial correlation
-pcor(pdat[,c("Depression","Anxiety","Joy")])
+pcor(pdat[, c("Depression", "Anxiety", "Joy")])
 
 ## part / semi-partial correlation
-spcor(pdat[,c("Depression","Anxiety","Joy")])
+spcor(pdat[, c("Depression", "Anxiety", "Joy")])
 
 # ci? :(
 
@@ -138,7 +138,7 @@ chisq.test(cont_table, correct = FALSE)
 
 contingencyTableBF(cont_table, sampleType = "jointMulti")
 
-cramers_v(cont_table, correct = FALSE)
+cramers_v(cont_table)
 
 
 
@@ -151,6 +151,6 @@ cramers_v(cont_table, correct = FALSE)
 # Conduct a one sided:
 #  - t test
 #  - correlation test
-# How do these affect the results?
+# How do these affect the results (compared to the two-sided test)?
 
 
