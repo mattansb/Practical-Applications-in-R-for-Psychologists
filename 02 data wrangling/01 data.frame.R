@@ -32,7 +32,7 @@ View(school_grades)         # view it in R's viewer.
 
 
 ## extract & replace with [row, column]
-school_grades[1, ] # first row
+school_grades[1, ]  # first row
 school_grades[, 1]  # first column
 school_grades[3, 5] # 3rd row, 5th column
 
