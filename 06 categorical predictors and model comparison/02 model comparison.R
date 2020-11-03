@@ -121,11 +121,11 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 #   - Test      - final grade on the test (averaged across the pair)
 # 2. Predict `Report` grade from `Test` grade.
 # 3. Predict the final Report grade from the `Test` and `TA`.
-# 4. Is there a difference between the TAs? (compare the two models)
+# 4. Is there some variation between the TAs? (compare the two models)
 # 5. Explore the model:
 #   - Who gave the highest grades? (what was it?)
 #   - Who gave the lowest? (what was it?)
 #   - Is the difference between them significant?
-# 6. Fit a second model, predicting `Report` grade from the `TA`, `Test` and
+# 6. Fit a third model, predicting `Report` grade from the `TA`, `Test` and
 #    `in_couple`. Is it better to do the project alone or in a couple?
 # 7. Compare all 3 models - which has the biggest adjusted R2?
