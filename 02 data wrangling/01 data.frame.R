@@ -335,7 +335,7 @@ data_raw <- read.csv("data/deaf_numer.csv")
 #    TIP: use `lag()`
 # 4. remove error trials (where ACC == 0)
 # 5. remove RTs that fall beyond +/- 2 SD from *each participant's*
-#    mean in *each* of the emotion-by-gender conditions.
+#    mean in *each* of the "finger" conditions.
 # 6. create the variable `vib_strength`, randomly sampled from
 #    `c(soft = 0.3, strong = 1.0)`
 # 7. Save that data to:
