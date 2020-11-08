@@ -324,7 +324,6 @@ save.image(file = "all_objects.rdata")
 
 data_raw <- read.csv("data/deaf_numer.csv")
 # (Try to do the following with dplyr functions.)
-# (Try to do it all with the pipe!)
 # 1. Create a Group variable: (the RA forgot to do it...)
 #        - For Subject <= 15, Group should be 1,
 #        - For Subject >  15, Group should be 2.
@@ -338,11 +337,13 @@ data_raw <- read.csv("data/deaf_numer.csv")
 #    mean in *each* of the "finger" conditions.
 # 6. create the variable `vib_strength`, randomly sampled from
 #    `c(soft = 0.3, strong = 1.0)`
-# 7. Save that data to:
+
+# 7. Try doing steps 1--6 with the pipe (you can copy your solution and just
+#   adjust it to work with the pipe.
+
+# 8. Save that data to:
 #        - an Rds file
 #        - a csv file
 
-
-
-# 8. Rewrite this ugly code using the pipe (%>%):
+# 9. Rewrite this ugly code using the pipe (%>%):
 diff(range(sample(head(iris[[1]], n = 10), size = 5, replace = TRUE)))
