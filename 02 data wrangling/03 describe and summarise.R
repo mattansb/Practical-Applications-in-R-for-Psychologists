@@ -29,7 +29,6 @@ deaf_numer %>%
 
 
 
-
 # You can also specify your own statistics / measures manually using `summarize`
 # - the `summarise` is like `mutate`, but it summarieses data into a single row.
 deaf_numer %>%
@@ -100,7 +99,8 @@ head(deaf_numer_subjsumm, n = 12)
 deaf_numer_subjsumm %>%
   group_by(Group, nFingers) %>%
   summarise(mRT_M = mean(mRT),
-            mRT_S = sd(mRT))
+            mRT_S = sd(mRT)) %>%
+  ungroup()
 
 
 
@@ -109,8 +109,8 @@ deaf_numer_subjsumm %>%
 # counting subjects in each group
 deaf_numer_subjsumm %>%
   group_by(sex, Group) %>%
-  summarise(N = n_distinct(sID)) # `n_distinct` counts unique values
-
+  summarise(N = n_distinct(sID)) %>%  # `n_distinct` counts unique values
+  ungroup()
 
 
 # NOTE: Not all functions respect the `group_by` action - tidyverse functions
@@ -139,7 +139,7 @@ glimpse(df_NPAS)
 
 # 1. Summarize the data in `df_NPAS` by describing the variable `familysize` -
 #   mean, sd, and at least 2 other measures you can think of.
-# 2. Repeat (1) but for EACH gender AND EACH ASD group.
-# 3. The examples in "Describe variables" section support `group_by()` - try
+# 2. Repeat question 1 but for EACH gender AND EACH ASD group.
+# 3. The examples in the "Describe variables" section support `group_by()` - try
 #   them grouped by `sex`.
 

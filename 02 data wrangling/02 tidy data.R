@@ -4,7 +4,7 @@ library(tidyverse)
 data_raw <- read.csv("data/deaf_numer.csv")
 
 data_clean <- data_raw %>%
-  select(sID, sID, nFingers, rt) %>%
+  select(sID, nFingers, rt) %>%
   filter(rt < 2500)
 
 
