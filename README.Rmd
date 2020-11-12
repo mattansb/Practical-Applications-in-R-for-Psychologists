@@ -25,9 +25,10 @@ This Github repo contains all lesson files for *Practical Applications in R for 
 
 These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev, *Fall semester, 2020*), laying the foundation for the topic-focused courses (*Spring semester*):
 
+- Hierarchical linear models (*HLM*).
+- [Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
 - [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
 - Machine Learning (*ML*).
-- Hierarchical linear models (*HLM*).
 
 **Notes:**  
 

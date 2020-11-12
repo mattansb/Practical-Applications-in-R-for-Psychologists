@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2020-10-30.*</sub>
+<sub>*Last updated 2020-11-12.*</sub>
 
 This Github repo contains all lesson files for *Practical Applications
 in R for Psychologists*. The goal is to impart students with the basic
@@ -21,10 +21,12 @@ Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University
 of the Negev, *Fall semester, 2020*), laying the foundation for the
 topic-focused courses (*Spring semester*):
 
+  - Hierarchical linear models (*HLM*).
+  - [Analysis of Factorial Designs
+    (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
   - [Structural equation modelling
     (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
   - Machine Learning (*ML*).
-  - Hierarchical linear models (*HLM*).
 
 **Notes:**
 
@@ -81,10 +83,10 @@ here:
 
   - `afex` 0.28-0 (*CRAN*)
   - `BayesFactor` 0.9.12-4.2 (*CRAN*)
-  - `bayestestR` 0.7.5 (*CRAN*)
+  - `bayestestR` 0.7.5.1 (*Dev*)
   - `DescTools` 0.99.38 (*CRAN*)
   - `dplyr` 1.0.2 (*CRAN*)
-  - `effectsize` 0.4.0 (*Dev*)
+  - `effectsize` 0.4.0.001 (*Dev*)
   - `emmeans` 1.5.2-1 (*CRAN*)
   - `finalfit` 1.0.2 (*CRAN*)
   - `ggeffects` 0.16.0 (*CRAN*)
@@ -92,12 +94,12 @@ here:
   - `ggResidpanel` 0.3.0 (*CRAN*)
   - `haven` 2.3.1 (*CRAN*)
   - `Hmisc` 4.4-1 (*CRAN*)
-  - `insight` 0.10.0 (*CRAN*)
+  - `insight` 0.10.0.1 (*Dev*)
   - `interactions` 1.1.3 (*CRAN*)
   - `mediation` 4.5.0 (*CRAN*)
   - `mice` 3.11.0 (*CRAN*)
-  - `parameters` 0.9.0 (*CRAN*)
-  - `performance` 0.5.1 (*CRAN*)
+  - `parameters` 0.9.0.1 (*Dev*)
+  - `performance` 0.5.1.1 (*Dev*)
   - `permuco` 1.1.0 (*CRAN*)
   - `ppcor` 1.1 (*CRAN*)
   - `psych` 2.0.9 (*CRAN*)
