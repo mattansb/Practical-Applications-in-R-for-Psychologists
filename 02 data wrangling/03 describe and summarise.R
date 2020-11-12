@@ -43,6 +43,11 @@ deaf_numer %>%
     RT_skew = skewness(rt)
   )
 
+# we can test the kurtosis or skewness with the printing function:
+print(skewness(deaf_numer$age), test = TRUE)
+print(kurtosis(deaf_numer$age), test = TRUE)
+
+
 
 ## (See Appendix 01 for even more options.)
 ## (See Appendix 02 for computing scale scores and their reliabilities.)
