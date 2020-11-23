@@ -1,17 +1,17 @@
 
 library(dplyr)
 
-# We will again be using the NAPS data set.
+# We will again be using the NPAS data set.
 
 # Let's clean it up a bit
 # (data from https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses)
 df_NPAS <- read.csv("NPAS data.csv") %>% 
-  na.omit() %>% 
-  mutate(Nerdy = rowMeans(across(Q1:Q26)),
+  tidyr::drop_na() %>% # this is similar to na.omit()
+  mutate(Nerdy = across(Q1:Q26, .fns = as.numeric) %>% rowMeans(),
          gender = factor(gender, levels = c(2, 1, 0), labels = c("woman", "man", "other"))) %>%
   select(-(Q1:Q26)) %>% 
   filter(age < 100) %>% 
-  sample_n(1000) # get just some of the data
+  sample_n(200) # get just some of the data
 
 
 glimpse(df_NPAS)
@@ -57,18 +57,17 @@ ggplot(df_NPAS)
 
 
 
-# `aes()` is the mapping function - it lets up MAP variables onto visual
+# `aes()` is the mapping function - it lets us MAP variables onto visual
 # features. For example, I want the X-axis to represent `Nerdy`, and color to
 # represent `gender`.
 ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender))
-# This still dreq nothing, because we didn't add any layers - we didn't tell
-# ggplot what type of plot we want.
+# This still does nothing, because we didn't add any layers - we didn't tell
+# ggplot what to draw!
 
 
 
-# All the actual "drawing" is specified with the various `geom_*` functions.
-# Here we might want to draw a histogram. So lets add that - literally, with a
-# `+`!
+# All the actual "drawing" is specified with the "geoms". Here we might want to
+# draw a histogram. So lets add that - literally, with a `+`!
 ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) + 
   geom_histogram()
 # Starting to get somewhere!
@@ -99,7 +98,7 @@ ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) +
 # Example 2 ---------------------------------------------------------------
 
 
-# Let's try another example, with the same data and variables (Nerdy / gender):
+# Let's try another example, with the same data and variables (Nerdy & gender):
 ggplot(df_NPAS, aes(x = gender, y = Nerdy))
 
 
@@ -107,7 +106,8 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy))
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
   geom_point()
 
-
+# because the x-variable is categorical, we might get a better understanding of
+# the data with a box plot:
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
   geom_boxplot()
 
@@ -118,12 +118,15 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy)) +
   geom_violin()
 
 
-# Can't see the points! Order of geoms matters!
+# Can't really see the boxes! Order of geoms matters!
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
-  geom_violin() + 
+  geom_violin(trim = FALSE) + 
   geom_boxplot(mapping = aes(color = gender), fill = NA)
 
 
+# Note that both geom_violin and geom_boxplot didn't draw the data as is, but
+# summarized the data first. In some cases, we might want to summarize the data
+# ourselves in some way before plotting (with `group_by() %>% summarize()`)
 
 
 
@@ -136,11 +139,14 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy)) +
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
   geom_point(color = gender)
 
+# We can also map color on to a continious variable:
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = TIPI2))
 
 
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
   geom_point(aes(color = gender)) + 
-  geom_smooth()
+  geom_smooth() # add regression line
 
 
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
@@ -153,27 +159,24 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
   geom_point(aes(color = gender)) + 
   geom_smooth(aes(color = gender), method = "lm") + 
-  facet_grid(~urban)
+  facet_grid(rows = vars(urban))
 
 
 
 
 
-
-
-
-
-
-
-# We can "prettify" the plot the themes, change the scales, and more...
+# We can "prettify" the plot with themes, change the "scales", and more...
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(aes(color = gender), alpha = 0.7) + 
-  geom_smooth(aes(color = gender), method = "lm", size = 1.5, fill = "white") + 
+  geom_point(aes(color = gender), alpha = 0.7, shape = 3) + 
+  geom_smooth(aes(color = gender), method = "lm", 
+              size = 1.5, fill = "gray") + 
   facet_grid(~urban) + 
-  scale_color_manual(values = c(woman = "steelblue", man = "pink", other = "green"),
+  # scale_*() functions can be used to control the appearance of different
+  # scales (x, y, color, fill, size...) - things that we've mapped.
+  scale_color_manual(values = c(woman = "red4", man = "steelblue4", other = "purple1"),
                      labels = c("Woman", "Man", "Other")) + 
   labs(x = "Age [years]", color = "Gender") + 
-  theme_dark() + 
+  theme_light() + 
   theme(legend.position = "bottom")
 
 
@@ -211,8 +214,8 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 
 
 # Using ggplot, try and (visually) answer the following question:
-# 1. What is the relationship between emotional stability
-#   (`Emotional_Stability`) and nerdiness (`Nerdy`).
+# 1. What is the relationship between extraversion (`TIPI1`) and nerdiness
+#   (`Nerdy`).
 # 2. Does it vary by family size (`familysize`)? Autism diagnosis (`ASD`)? Both?
 
 
