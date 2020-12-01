@@ -1,6 +1,6 @@
+
 library(psych) # for corr.test
 library(effectsize) # cohens_d and cramers_v
-library(ppcor) # for pcor and spcor
 library(BayesFactor) # all the Bayes...
 
 pdat <- readRDS("pdat.Rds")
@@ -56,6 +56,7 @@ cohens_d(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 # correlation -------------------------------------------------------------
 
 ## single correlation
+cor(pdat$Depression, pdat$Joy)
 
 # Pearson
 # What is the model?
@@ -73,42 +74,22 @@ cor.test(pdat$Depression, pdat$Joy, method = "spearman")
 
 
 ## many at once (`corr.test` is NOT `cor.test`!)
-(res <- corr.test(pdat[,c("Depression","Anxiety","Joy")]))
-res$ci
+res <- corr.test(pdat[,c("Depression","Anxiety","Joy")])
+print(res, short = FALSE)
 
 
-corr.test(pdat[,c("Depression","Anxiety","Joy")],
-          method = "spearman", use = "complete")
+res <- corr.test(pdat[,c("Depression","Anxiety","Joy")],
+                 method = "spearman", use = "complete")
 # `use = "complete"` to only use full cases for all correlations!
-
-
+print(res, short = FALSE)
 
 
 
 # The `psych` package has a lot more correlation-related things... We will meet
 # some of them next semester.
-# You might also find the `correlation` package interesting for quick (and tidy)
+# The `ppcor` also offers partial and semi-partial (part) correlations. You
+# might also find the `correlation` package interesting for quick (and tidy)
 # exploration and visualization of correlations.
-
-
-
-
-
-# partial and part (semi-partial) correlations ----------------------------
-
-# What is the model?
-
-## partial correlation
-pcor(pdat[, c("Depression", "Anxiety", "Joy")])
-
-## part / semi-partial correlation
-spcor(pdat[, c("Depression", "Anxiety", "Joy")])
-
-# ci? :(
-
-
-
-
 
 
 
@@ -121,7 +102,7 @@ prop.test(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
-# Whats the effect size?
+# What's the effect size?
 
 
 
@@ -132,7 +113,8 @@ proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 # What is the model?
 
-(cont_table <- table(pdat$sex, pdat$Group))
+cont_table <- table(pdat$sex, pdat$Group)
+cont_table
 
 chisq.test(cont_table, correct = FALSE)
 
@@ -141,16 +123,21 @@ contingencyTableBF(cont_table, sampleType = "jointMulti")
 cramers_v(cont_table)
 
 
-
+# Chi-sqaured for goodness of fit
+group_table <- table(pdat$Group)
+chisq.test(group_table, p = c(0.2,0.4,0.4))
 
 
 # Exercise ----------------------------------------------------------------
 
-
-# Both frequentist and Bayesian tests support one sided tests...
-# Conduct a one sided:
-#  - t test
-#  - correlation test
-# How do these affect the results (compared to the two-sided test)?
+# 1. Conduct a t-test comparing Anxiety between the Sexes.
+#   - What is Cohen's d?
+#   - What is the Bayes Factor for this difference?
+# 2. What is the correlation between the Cond_A and Cond_B scores?
+# 3. Both frequentist and Bayesian tests support one sided tests... Conduct a
+#   one sided:
+#   - Frequentist correlation test (from Question 2).
+#   - Bayesian t test (from Question 1).
+#   How do these affect the results (compared to the two-sided test)?
 
 

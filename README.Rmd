@@ -58,9 +58,9 @@ extract_pkgs <- function(fl) {
     pkgs <- sapply(fl, extract_pkgs)
   }
   
-  
   pkgs %>%
-    unlist(recursive = TRUE) %>%
+    unlist(recursive = TRUE) %>% 
+    as.vector() %>% 
     unique()
 }
 
@@ -69,9 +69,19 @@ make_pkg_table <- function(pkgs) {
   
   # pkgs <- pkgs[sapply(pkgs, function(x) length(x) > 0)]
   
-  ps <- sapply(pkgs, function(x){
+  new_pkgs <- lapply(seq_along(pkgs), function(i) {
+    lesson_pkgs <- pkgs[[i]]
+    prev_lesson_pkgs <- unlist(head(pkgs,i-1))
+    
+    !lesson_pkgs %in% prev_lesson_pkgs
+  })
+  
+  
+  ps <- sapply(seq_along(pkgs), function(idx){
+    x <- pkgs[[idx]]
+    is_new <- ifelse(new_pkgs[[idx]], "**", "")
     paste0(
-      glue::glue("[`{x}`](https://CRAN.R-project.org/package={x})"),
+      glue::glue("[{is_new}`{x}`{is_new}](https://CRAN.R-project.org/package={x})"),
       collapse = ", "
     )
   })
@@ -105,6 +115,8 @@ print_pkgs <- make_pkg_table(pkgs)
 ```
 
 `r print_pkgs`
+
+<sub>*(Bold denotes the first lesson in which the package was used.)*</sub>
 
 You can install all the packages used by running:
 
