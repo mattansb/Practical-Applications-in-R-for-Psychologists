@@ -36,14 +36,14 @@ plot(ggemmeans(m_lin, "parental_strictness"), add.data = TRUE)
 
 
 
-# Curvilinear -------------------------------------------------------------
+# A curvilinear model -----------------------------------------------------
 
 # Polynomial regression allows to model predictors with the form of:
 #   X + X^2 + X^3 + ... + X^k.
 # This type of model is often called a "curvilinear" model.
 
 
-# 1. Fit the model
+## 1. Fit the model ----
 # We can fit it using the `poly()` function:
 m_curvi <- lm(child_satisfaction ~ poly(parental_strictness, 2), parental_iris)
 # we can also have X^3 with poly(x,3), etc...
@@ -58,7 +58,7 @@ compare_performance(m_lin, m_curvi)
 
 
 
-# 2. Explore
+## 2. Explore ----
 plot(ggemmeans(m_curvi, "parental_strictness [-6:0, by=0.5]"), add.data = TRUE)
 # This looks a lot better (not perfect, but better...)
 

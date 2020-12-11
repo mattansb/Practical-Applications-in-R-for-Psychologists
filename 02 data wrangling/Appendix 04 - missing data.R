@@ -56,8 +56,10 @@ tai_missing %>%
 
 
 
+# Imputations -------------------------------------------------------------
 
-# Simple Imputation (Hmisc) -----------------------------------------------
+
+## Simple Imputation (Hmisc) -----------------------------------------------
 
 library(Hmisc)
 
@@ -78,7 +80,7 @@ library(Hmisc)
 
 
 
-# Multivariate Imputation (MICE) ------------------------------------------
+## Multivariate Imputation (MICE) ------------------------------------------
 
 library(mice)
 

@@ -83,7 +83,7 @@ model_performance(fit)
 
 
 
-# Making sense of coefficients --------------------------------------------
+## Making sense of coefficients -------------------------------------------
 
 # The coefficients are the log of the change in odds (change in odds is also
 # called the odds ratio: OR). To get the change in odds ratio (that is
@@ -115,7 +115,7 @@ qlogis(0.4700359)
 
 
 
-# predicted values: on the link vs response scale -------------------------
+## Predicted values: on the link vs response scale ------------------------
 
 # The function `predict` returns the result of the linear part of the model.
 # That is, it returns the values of the logit, mu:
@@ -132,11 +132,12 @@ predict(fit, type = "response")
 
 
 
-# Follow-up analyses: on the link vs response scale -----------------------
+## Follow-up analyses: on the link vs response scale ----------------------
 
-# We have the same link/response problem when conducting follow-up analyses (contrasts,
-# simple slopes, simple effects, etc.). We will usually prefer to look at the response scale,
-# as this is usually what we're interested in (who cares about the log of the odds??).
+# We have the same link/response problem when conducting follow-up analyses
+# (contrasts, simple slopes, simple effects, etc.). We will usually prefer to
+# look at the response scale, as this is usually what we're interested in (who
+# cares about the log of the odds??).
 
 # `ggeffects` plots the response scale by default:
 plot(ggemmeans(fit, "mean_valence [all]"), add.data = TRUE)
@@ -212,13 +213,13 @@ model_performance(fit2)
 # Exercise ----------------------------------------------------------------
 
 
-# 1. Plot (with `ggeffects`) the relationship between depression and the rate of
-#   negative words. Interpret these results.
-# 2. Predict the number of negative words for a non-depressed person for found
+# 1. Plot (with `ggeffects`) the relationship between depression and the RATE of
+#   negative words (in the Poisson model). Interpret these results.
+# 2. Predict the number of negative words for a non-depressed person who found
 #   the words to have a mean_valence of 7.4.
 # 3. Build a second Poisson model with `mean_valence` as an additional
 #   predictor. Compare this model to the first model (use `anova()`).
 # 4. In Poisson models, we can also conduct an follow-up analysis (with
-#   `emmeans`) on the latent or on the outcome level. Compare the levels of
-#   `is.depressed` on both levels.
+#   `emmeans`) on the latent ("linear") or on the outcome ("response") level.
+#   Compare the levels of `is.depressed` on both levels.
 

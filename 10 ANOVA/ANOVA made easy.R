@@ -34,7 +34,7 @@ head(Phobia)
 
 
 
-## 1. Build a model
+## 1. Build a model ----
 m_aov <- aov_ez(id = "ID", dv = "BehavioralAvoidance", data = Phobia,
                 between = c("Condition", "Phobia"),
                 anova_table = list(es = "pes")) # (pes = partial eta square)
@@ -49,7 +49,7 @@ eta_squared(m_aov, partial = TRUE)
 
 
 
-## 2. Explore the model
+## 2. Explore the model ----
 afex_plot(m_aov, ~ Condition, ~ Phobia)
 
 
@@ -123,7 +123,7 @@ head(mindful_work_stress_long)
 
 
 
-## 1. Build a model:
+## 1. Build a model ----
 fit_mfs <- aov_ez("id", "work_stress", mindful_work_stress_long,
                   between = "Family_status",
                   within = "Time",
@@ -139,7 +139,7 @@ fit_mfs
 # to run HLM/LMM ANOVAs.
 
 
-## 2. Explore the model
+## 2. Explore the model ----
 afex_plot(fit_mfs, ~Time, ~Family_status)
 
 

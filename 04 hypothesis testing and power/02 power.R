@@ -191,6 +191,8 @@ ggplot(p_data, aes(n, power, color = d, group = d)) +
 # (Or with the effect size on x, and lines for samples size - try it yourself!)
 
 
+
+
 # MORE POWER --------------------------------------------------------------
 
 # Simple analytical solutions are usually not available for more complex designs
@@ -202,3 +204,6 @@ ggplot(p_data, aes(n, power, color = d, group = d)) +
 # - `Superpower` for Factorial designs (within, between, or mixed).
 # - `simsem` (https://simsem.org/) for SEMs.
 # - `simstudy` - a general purpose package for data simulation.
+
+
+

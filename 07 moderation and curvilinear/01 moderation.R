@@ -10,8 +10,8 @@ glimpse(parental_iris)
 head(parental_iris)
 
 # Last time we saw that R doesn't need you to make dummy variables - if can deal
-# with factors just fine.
-# Today we will see that this is also true for moderation and interactions!
+# with factors just fine. Today we will see that this is also true for
+# moderation and interactions!
 # (I will not be showing how to do these the long way...)
 
 
@@ -31,7 +31,7 @@ parental_iris <- parental_iris %>%
 
 
 
-# 1. Fit the model(s) -----------------------------------------------------
+## 1. Fit the model(s) ----------------------------------------------------
 m_additive <- lm(child_satisfaction ~ involvement_c + attachment,
                  data = parental_iris)
 
@@ -45,6 +45,9 @@ m_moderation <- lm(child_satisfaction ~ involvement_c * attachment,
 
 anova(m_additive, m_moderation)
 compare_performance(m_additive, m_moderation)
+
+
+# Look at the parameters. What do they mean?
 summary(m_moderation) # for comparison
 
 
@@ -53,8 +56,12 @@ summary(m_moderation) # for comparison
 
 
 
-# 2. Explore the model  ---------------------------------------------------
+## 2. Explore the model  --------------------------------------------------
 # simple slope analysis!
+
+# We don't (just) care about the model's parameters - what we usually care about
+# are the different estimates the model can give us - the simple (conditional)
+# slopes.
 
 emtrends(m_moderation, ~attachment, "involvement_c") %>%
   summary(infer = TRUE)
@@ -80,7 +87,7 @@ parental_iris$strictness_c <- scale(parental_iris$parental_strictness, TRUE, FAL
 
 
 
-# 1. Fit the model(s) -----------------------------------------------------
+## 1. Fit the model(s) ----------------------------------------------------
 
 m_additive <- lm(child_satisfaction ~ involvement_c + strictness_c,
                  data = parental_iris)
@@ -91,6 +98,8 @@ m_moderation <- lm(child_satisfaction ~ involvement_c * strictness_c,
 anova(m_additive, m_moderation)
 compare_performance(m_additive, m_moderation)
 
+
+# Look at the parameters. What do they mean?
 summary(m_moderation)
 
 
@@ -100,7 +109,7 @@ summary(m_moderation)
 
 
 
-# 2. Explore the model  ---------------------------------------------------
+## 2. Explore the model  --------------------------------------------------
 # simple slope analysis!
 
 emtrends(m_moderation, ~strictness_c, "involvement_c",
@@ -127,7 +136,8 @@ plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")), add.da
 
 # What about a categorical variable moderating the effect of another categorical
 # variable? We can do that just the same! We will see more of this next week,
-# when we talk about ANOVAs/
+# when we talk about ANOVAs...
+
 
 
 

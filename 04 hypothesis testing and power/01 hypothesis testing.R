@@ -53,7 +53,7 @@ cohens_d(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 # http://xeniaschmalz.blogspot.com/2019/09/justifying-bayesian-prior-parameters-in.html
 
 
-# correlation -------------------------------------------------------------
+# Correlation -------------------------------------------------------------
 
 ## single correlation
 cor(pdat$Depression, pdat$Joy)
@@ -93,7 +93,7 @@ print(res, short = FALSE)
 
 
 
-# proportion test ---------------------------------------------------------
+# Proportion test ---------------------------------------------------------
 
 # What is the model?
 
@@ -109,7 +109,7 @@ proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 
 
-# chi-squared test --------------------------------------------------------
+# Chi-squared test --------------------------------------------------------
 
 # What is the model?
 

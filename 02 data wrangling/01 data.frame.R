@@ -218,7 +218,7 @@ View(data_clean)
 
 
 
-# Piping with %>% ("and then") --------------------------------------------
+## Piping with %>% ("and then") -------------------------------------------
 
 
 # The aim of the pipe (%>%) is to make code more human readable.

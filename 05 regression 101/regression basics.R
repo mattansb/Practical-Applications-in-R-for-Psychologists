@@ -1,5 +1,17 @@
 
 
+# Although this course is focused for the most part on linear regression models,
+# the principles of modeling are quite consistent across all types of models
+# that you can build in R:
+# - *Build* a model:
+#   - Specify a model
+#   - Estimate its parameters
+# - *Evaluate* the model's fit
+# - *Explore* the model (predict, plot, estimate...)
+# And so everything taught here and in the next few of lessons is also relevant
+# to those interested in machine learning, mixed models, structural equation
+# modeling, ANOVAs, and more and more...
+
 library(effectsize)   # for parameters_standardize
 library(parameters)   # for model_parameters
 library(performance)  # for model_performance etc..
@@ -36,11 +48,15 @@ y ~ x
 fit <- lm(salary ~ xtra_hours, data = hardlyworking)
 fit
 
-# See df, sig and more...
+# Now that we have the model, we can evaluate and explore it!
+
+
+# Some basic stuff: df, sig and more...
 summary(fit)
 
 
-## Explore the model's *parameters*:
+## Explore the model's *parameters* ----
+
 # CIs
 confint(fit)
 
@@ -58,7 +74,8 @@ model_parameters(fit, standardize = "basic")
 
 
 
-## Model indices
+## Evaluate the model ----
+# Look at some model indices
 rmse(fit)
 r2(fit) # and more...
 model_performance(fit)
@@ -66,7 +83,8 @@ model_performance(fit)
 
 
 
-## Prediction and residuals
+## Prediction ----
+# and residuals
 predict(fit)
 residuals(fit)
 # what is the correlation between these ^ two?
@@ -78,7 +96,7 @@ predict(fit, newdata = new_observations)
 # module.
 
 
-## Plot
+## Plot ----
 plot(ggpredict(fit, "xtra_hours"))
 plot(ggpredict(fit, "xtra_hours"), add.data = TRUE)
 # see more: https://strengejacke.github.io/ggeffects
@@ -94,33 +112,44 @@ plot(ggpredict(fit, "xtra_hours"), add.data = TRUE)
 
 # Multiple predictors in a formula are specified with "+":
 fit2 <- lm(salary ~ xtra_hours + n_comps, data = hardlyworking)
+
 summary(fit2)
+
+
+## Explore the model's *parameters* ----
+model_parameters(fit2)
+model_parameters(fit2, standardize = "basic") # Get Betas
 
 
 # how will this affect the results?
 hardlyworking$xtra_minutes <- hardlyworking$xtra_hours * 60
 
-
 fit3 <- lm(salary ~ xtra_minutes + n_comps, data = hardlyworking)
+
 model_parameters(fit2)
 model_parameters(fit3)
 
 
 
-## Get Beta and R2
-model_parameters(fit2, standardize = "basic")
-r2(fit2)
+## Evaluate the model ----
+compare_performance(fit2)
 
 
-## Predict
+
+
+
+## Predict ----
 new_obs2 <- data.frame(xtra_hours = c(0, 5),
-                       n_comps = c(-0.5, 2)) # what are negative compliments??
+                       # What are negative compliments??
+                       # What is HALF a compliment??
+                       n_comps = c(-0.5, 2))
 new_obs2
 predict(fit2, newdata = new_obs2)
 
 
 
-## Plot
+
+## Plot ----
 plot(ggpredict(fit2, "xtra_hours"), add.data = TRUE)
 plot(ggpredict(fit2, "n_comps"), add.data = TRUE)
 plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
@@ -131,6 +160,9 @@ plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
 # for multiple regression, you might want to use partial residuals instead of
 # the raw data, by setting `residuals = TRUE`. See:
 # https://strengejacke.github.io/ggeffects/articles/introduction_partial_residuals.html
+
+
+
 
 
 

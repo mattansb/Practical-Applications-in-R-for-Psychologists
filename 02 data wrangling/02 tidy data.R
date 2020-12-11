@@ -35,7 +35,8 @@ head(data_clean_joined, n = 12)
 
 
 
-# Long and Wide data ------------------------------------------------------
+
+# Reshaping data ----------------------------------------------------------
 
 
 # Most modeling functions in R take a data frame that is tidy. Unfortunately,
@@ -46,6 +47,9 @@ emotionalWM <- readxl::read_excel("data/Zhang2018_emotionalWM.xlsx")
 head(emotionalWM)
 # Is this data tidy? (No. Why not?)
 
+
+
+## Wide to long ----
 
 
 # To make this data tidy, we need to make it LONG (it is now WIDE).
@@ -62,6 +66,9 @@ head(emotionalWM_long)
 
 
 
+
+
+## Long to wide ----
 
 emotionalWM_long <- emotionalWM %>%
   pivot_longer(

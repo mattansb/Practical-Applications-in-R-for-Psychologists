@@ -52,7 +52,7 @@ summary(mod)
 # regression to a scale outcome? This will necessarily be a bad fit...
 
 
-# 1. "Linearity" ----------------------------------------------------------
+## 1. "Linearity" ---------------------------------------------------------
 
 # This states that predictors are linearly related to the outcome. But we can
 # also have non-linear predictors (e.g., polynomial predictors, etc...). More
@@ -77,7 +77,7 @@ plot(ggemmeans(mod, c("OSF","in_couple")), residuals = TRUE, residuals.line = TR
 
 
 
-# 2. (Low) Collinearity ---------------------------------------------------
+## 2. (Low) Collinearity --------------------------------------------------
 
 # Collinearity states that some predictors are related to each other. Why is
 # collinearity bad? Two main reasons:
@@ -128,7 +128,7 @@ check_collinearity(mod)
 
 
 
-# 1. Normality (of residuals) ---------------------------------------------
+## 1. Normality (of residuals) --------------------------------------------
 
 # The true normality assumption is about the normality of the residuals!
 
@@ -162,7 +162,7 @@ parameters::describe_distribution(residuals(mod)) # Skewness & Kurtosis
 
 
 
-# 2. Homoscedasticity (of residuals) --------------------------------------
+## 2. Homoscedasticity (of residuals) -------------------------------------
 
 
 check_heteroscedasticity(mod)

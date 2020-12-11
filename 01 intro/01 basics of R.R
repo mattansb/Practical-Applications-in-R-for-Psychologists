@@ -221,7 +221,7 @@ qt(.95, df = 12)
 
 
 
-# Working with vectors ----------------------------------------------------
+## Working with vectors ---------------------------------------------------
 
 ## Creating vectors
 # Manually
@@ -323,7 +323,7 @@ french.grades["anat"] + 2
 
 
 
-# Factors -----------------------------------------------------------------
+## Factors ----------------------------------------------------------------
 
 # A factor is a vector of CATEGORIES.
 # Unlike a character vector, factors usually represent "levels".

@@ -61,7 +61,7 @@ m_strict <- lm(parental_strictness ~ ave_sweets,
 
 
 
-# Mediation w/ `mediation` ------------------------------------------------
+# Mediation with `mediation` ----------------------------------------------
 
 
 # To conduct a mediation analysis, we will use the... `mediation` package:
@@ -118,10 +118,10 @@ plot(med)
 
 # 1. Estimate the direct and indirect effects in the following causal model:
 #
-#          >     parental_strictness       \
-#         /                                 \
-#    (a) /                               (b) \
-#       /                    (c)              >
-#   parental_involvement ----------- > child_satisfaction
+#          ^    parental_strictness      \
+#         /                               \
+#    (a) /                             (b) \
+#       /                  (c)              v
+#   parental_involvement ------- > child_satisfaction
 #
 # 2. Interpret the results.
