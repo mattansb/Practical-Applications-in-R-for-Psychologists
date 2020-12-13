@@ -151,6 +151,24 @@ glimpse(data_raw) # better!
 
 
 
+## How does R know where the file is? ------------------
+
+# There are several methods for letting R know where your files are:
+# 1. Using an RStudio project - when in a project, R searches within the project
+#   folder.
+# 2. Setting the folder R will look in (called the working directory) manually:
+getwd() # Where is R looking now?
+setwd("C:/Users/Mattan/Documents") # set it to something specific
+#   (You might find the `here` package to be useful too.)
+# 3. Giving the full file path:
+data_raw <- read.csv("C:/Users/Mattan/Documents/R/PAiR/02 data wrangling/deaf_numer.sav")
+
+# Of these options, I recommend them in the order in which they're presented.
+# (Make sure you use the right / and not \ for file paths!)
+
+
+
+
 
 
 # Manipulating Data -------------------------------------------------------
