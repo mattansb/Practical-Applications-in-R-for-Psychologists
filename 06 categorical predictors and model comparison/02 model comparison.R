@@ -51,14 +51,15 @@ library(bayestestR)
 fit1B <- lmBF(anxiety ~ sex, data = anxiety_adhd)
 fit2B <- lmBF(anxiety ~ sex + ADHD_symptoms, data = anxiety_adhd)
 fit3B <- lmBF(anxiety ~ sex + ADHD_symptoms + treat_group, data = anxiety_adhd)
-
+fit4B <- lmBF(anxiety ~ ADHD_symptoms, data = anxiety_adhd)
 
 
 # 2) Compare them:
-c(fit1B,fit2B,fit3B) # Third model looks the best, but is it?
+c(fit1B, fit2B, fit3B, fit4B) # Third model looks the best, but is it?
 
 # compare models by dividing them:
 fit3B / fit2B
+fit1B / fit4B
 # ALWAYS remember - BFs are comparative! Who are you comparing to?
 
 
@@ -92,6 +93,10 @@ fit_allB[3] / fit_allB[2] # new BFs comparing the two models
 # We can also use Bayesian model averaging (BMA) to test terms specifically, not
 # just by comparing 2 specific models:
 bayesfactor_inclusion(fit_allB, match_models = TRUE)
+bayesfactor_inclusion(c(fit1B, fit2B, fit3B, fit4B), match_models = TRUE)
+
+
+
 # which terms are most supported?
 # which terms are least supported?
 
@@ -102,7 +107,7 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 # read more about Bayesian model averaging:
 # https://easystats.github.io/bayestestR/articles/bayes_factors.html
 
-# For more Bayesian modeling, check out brms, rstanarm or BAS.
+# For more Bayesian modeling, check out that BAS, rstanarm and brms packages.
 
 
 
@@ -111,7 +116,7 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 
 # Exercise ----------------------------------------------------------------
 
-# 1. import the "Exp_Psych_Grades.csv" dataset
+# 1. Import the "Exp_Psych_Grades.csv" dataset
 #   - Group     - the group number
 #   - in_couple - work was done in pairs or singles
 #   - TA        - (anonimized) "Metargelet"
@@ -121,10 +126,11 @@ bayesfactor_inclusion(fit_allB, match_models = TRUE)
 #   - Test      - final grade on the test (averaged across the pair)
 # 2. Predict `Report` grade from `Test` grade.
 # 3. Predict the final Report grade from the `Test` and `TA`.
-# 4. Is there some variation between the TAs? (compare the two models)
-# 5. Explore the model:
-#   - Who gave the highest grades? (what was it?)
-#   - Who gave the lowest? (what was it?)
+# 4. Is there some variation between the TAs (when controlling for `Test`)?
+#   (compare the two models.)
+# 5. Explore the second model:
+#   - Which TA gave the highest grades on average? (What was it?)
+#   - Which gave the lowest? (What was it?)
 #   - Is the difference between them significant?
 # 6. Fit a third model, predicting `Report` grade from the `TA`, `Test` and
 #    `in_couple`. Is it better to do the project alone or in a couple?
