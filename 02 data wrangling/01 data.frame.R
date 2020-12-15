@@ -161,7 +161,7 @@ getwd() # Where is R looking now?
 setwd("C:/Users/Mattan/Documents") # set it to something specific
 #   (You might find the `here` package to be useful too.)
 # 3. Giving the full file path:
-data_raw <- read.csv("C:/Users/Mattan/Documents/R/PAiR/02 data wrangling/deaf_numer.sav")
+data_raw <- read.csv("C:/Users/Mattan/Documents/R/PAiR/02 data wrangling/data/deaf_numer.sav")
 
 # You can use `choose.files()` or `choose.dir()` to interactively get the full
 # path to a file or folder.
