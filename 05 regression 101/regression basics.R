@@ -98,7 +98,7 @@ predict(fit, newdata = new_observations)
 
 ## Plot ----
 plot(ggpredict(fit, "xtra_hours"))
-plot(ggpredict(fit, "xtra_hours"), add.data = TRUE)
+plot(ggpredict(fit, "xtra_hours"), add.data = TRUE, jitter = 0)
 # see more: https://strengejacke.github.io/ggeffects
 
 
@@ -150,9 +150,9 @@ predict(fit2, newdata = new_obs2)
 
 
 ## Plot ----
-plot(ggpredict(fit2, "xtra_hours"), add.data = TRUE)
-plot(ggpredict(fit2, "n_comps"), add.data = TRUE)
-plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
+plot(ggpredict(fit2, "xtra_hours"), add.data = TRUE, jitter = 0)
+plot(ggpredict(fit2, "n_comps"), add.data = TRUE, jitter = 0.1)
+plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE, jitter = 0)
 # The lines in the last plot are exactly parallel - why?
 
 
@@ -174,7 +174,7 @@ plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE)
 # If we have non-linear relationships, we can also pre-transform the data,
 # BUT... we can also specify any transformations in the formula:
 fit_seniority <- lm(salary ~ log(seniority), data = hardlyworking)
-plot(ggpredict(fit_seniority, "seniority"), add.data = TRUE)
+plot(ggpredict(fit_seniority, "seniority"), add.data = TRUE, jitter = 0.1)
 
 
 

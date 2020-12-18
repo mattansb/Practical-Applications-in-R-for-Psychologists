@@ -171,5 +171,5 @@ emmeans(fit_factor2, ~ treat_group) %>%
 
 ## Plot
 library(ggeffects)
-plot(ggemmeans(fit_factor2, "treat_group"), add.data = TRUE)
+plot(ggemmeans(fit_factor2, "treat_group"), add.data = TRUE, jitter = 0.1)
 
