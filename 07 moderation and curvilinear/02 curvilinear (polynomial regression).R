@@ -26,7 +26,7 @@ model_parameters(m_lin)
 
 
 # 2. Explore
-plot(ggemmeans(m_lin, "parental_strictness"), add.data = TRUE)
+plot(ggemmeans(m_lin, "parental_strictness"), add.data = TRUE, jitter = 0)
 
 # Wow, that looks wrong! (See how important it is to plot the data points??)
 # It seems like we need to model something more complex...
@@ -45,7 +45,8 @@ plot(ggemmeans(m_lin, "parental_strictness"), add.data = TRUE)
 
 ## 1. Fit the model ----
 # We can fit it using the `poly()` function:
-m_curvi <- lm(child_satisfaction ~ poly(parental_strictness, 2), parental_iris)
+m_curvi <- lm(child_satisfaction ~ poly(parental_strictness, 2),
+              data = parental_iris)
 # we can also have X^3 with poly(x,3), etc...
 # Note that the `poly` function also centers the predictor!
 
@@ -59,7 +60,7 @@ compare_performance(m_lin, m_curvi)
 
 
 ## 2. Explore ----
-plot(ggemmeans(m_curvi, "parental_strictness [-6:0, by=0.5]"), add.data = TRUE)
+plot(ggemmeans(m_curvi, "parental_strictness"), add.data = TRUE, jitter = 0)
 # This looks a lot better (not perfect, but better...)
 
 
@@ -80,7 +81,8 @@ ggplot(parental_iris, aes(parental_strictness,child_satisfaction)) +
                size = 1, position = position_nudge(.02)) +
   geom_segment(aes(xend = parental_strictness, yend = Y_pred_curvlin, color = "Poly"),
                size = 1, position = position_nudge(-.02)) +
-  geom_point()
+  geom_point() +
+  theme_minimal()
 
 
 

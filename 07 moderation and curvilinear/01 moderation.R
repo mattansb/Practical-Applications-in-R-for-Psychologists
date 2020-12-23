@@ -1,5 +1,6 @@
 
 library(dplyr)
+library(parameters)
 library(performance) # for `compare_performance()`
 library(emmeans) # for simple slope analysis
 library(ggeffects) # for model plotting
@@ -23,7 +24,7 @@ head(parental_iris)
 # Let's prep the data for modeling:
 parental_iris <- parental_iris %>%
   mutate(attachment = relevel(factor(attachment), ref = "secure"),
-         involvement_c = scale(parental_involvement,center = TRUE, scale = FALSE))
+         involvement_c = scale(parental_involvement, center = TRUE, scale = FALSE))
 # Here we don't want to get z scores (or maybe we do?) just to center the
 # variable around 0.
 
@@ -48,8 +49,7 @@ compare_performance(m_additive, m_moderation)
 
 
 # Look at the parameters. What do they mean?
-summary(m_moderation) # for comparison
-
+model_parameters(m_moderation)
 
 
 
@@ -63,18 +63,17 @@ summary(m_moderation) # for comparison
 # are the different estimates the model can give us - the simple (conditional)
 # slopes.
 
-emtrends(m_moderation, ~attachment, "involvement_c") %>%
+emtrends(m_moderation, ~ attachment, var = "involvement_c") %>%
   summary(infer = TRUE)
 
 # we can also use contrasts here to COMPARE slopes:
-emtrends(m_moderation, ~attachment, "involvement_c") %>%
+emtrends(m_moderation, ~ attachment, var = "involvement_c") %>%
   contrast(method = "pairwise")
 
 
-plot(ggemmeans(m_moderation, c("involvement_c","attachment")), add.data = TRUE)
-
-
-
+## Plot
+plot(ggemmeans(m_moderation, c("involvement_c","attachment")),
+     add.data = TRUE, jitter = 0)
 
 
 
@@ -83,7 +82,8 @@ plot(ggemmeans(m_moderation, c("involvement_c","attachment")), add.data = TRUE)
 # Continuous moderator ----------------------------------------------------
 
 ## Prep the data
-parental_iris$strictness_c <- scale(parental_iris$parental_strictness, TRUE, FALSE)
+parental_iris <- parental_iris %>%
+  mutate(strictness_c = scale(parental_strictness, TRUE, FALSE))
 
 
 
@@ -100,7 +100,7 @@ compare_performance(m_additive, m_moderation)
 
 
 # Look at the parameters. What do they mean?
-summary(m_moderation)
+model_parameters(m_moderation)
 
 
 
@@ -112,14 +112,23 @@ summary(m_moderation)
 ## 2. Explore the model  --------------------------------------------------
 # simple slope analysis!
 
+mean_plus_minus_sd <- function(x) {
+  m <- mean(x)
+  s <- sd(x)
+
+  c(m - s, m, m + s)
+}
+
 emtrends(m_moderation, ~strictness_c, "involvement_c",
-         cov.reduce = list(strictness_c = values_at)) %>%
-  # `cov.reduce = list(strictness_c = values_at)` tells `emtrends()` to get the
-  # mean +-sd of `strictness_c`.
+         # Condition on the mean+-sd of `strictness_c`:
+         cov.reduce = list(strictness_c = mean_plus_minus_sd)) %>%
   summary(infer = TRUE)
 
 
-plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")), add.data = TRUE)
+plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")),
+     add.data = TRUE, jitter = 0)
+# See how ggemmeans took the mean +- sd? So smart...
+
 
 
 
@@ -135,8 +144,8 @@ plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")), add.da
 # Categorical by Categorical ----------------------------------------------
 
 # What about a categorical variable moderating the effect of another categorical
-# variable? We can do that just the same! We will see more of this next week,
-# when we talk about ANOVAs...
+# variable? We can do that just the same! We will see more of this in a few
+# weeks, when we talk about ANOVAs...
 
 
 
@@ -144,10 +153,11 @@ plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")), add.da
 # Exercise ----------------------------------------------------------------
 
 # 1. Using the `interactions` package, plot a Johnson-Neyman plot
-#   (`interactions::johnson_neyman()`). What does it do?
-# 2. Fit the same moderation model with the un-centered predictors. How does it
-#   differ from the moderation model with the centered predictors?
-#   A. How do the parameters differ?
+#   (`interactions::johnson_neyman()`). What does it do? (Note, both the
+#   predictor and the moderator must be continuous.)
+# 2. Fit the same moderation model with the original *non-centered* predictors.
+#   How does it differ from the moderation model with the centered predictors?
+#   A. How do the parameters differ? Interpret them.
 #   B. How does the model fit (R^2) differ?
-#   C. How does the simple slopes analysis differ?
+#   C. How do the simple slopes analysis differ?
 
