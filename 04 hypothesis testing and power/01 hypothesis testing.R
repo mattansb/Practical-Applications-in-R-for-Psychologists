@@ -111,10 +111,16 @@ proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
 # Chi-squared test --------------------------------------------------------
 
-# What is the model?
 
 cont_table <- table(pdat$sex, pdat$Group)
 cont_table
+
+
+# What is the model?
+prop.table(cont_table) # % from total
+prop.table(cont_table, margin = 1) # % from row
+prop.table(cont_table, margin = 2) # % from col
+
 
 chisq.test(cont_table, correct = FALSE)
 
