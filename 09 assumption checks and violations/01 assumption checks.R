@@ -1,3 +1,4 @@
+
 library(ggeffects)    # for partial residual plots
 library(performance)  # for check_*
 library(ggResidpanel) # for resid_panel
@@ -38,7 +39,7 @@ summary(mod)
 
 # If you approach these checks without an a-priori belief about the check's
 # result, you should take a step back and consider why you decided to fit THIS
-# type of model THIS way with THESE predictors to begin with.
+# type of model THIS way with THESE predictors to THESE data to begin with.
 
 
 
@@ -88,7 +89,7 @@ plot(ggemmeans(mod, c("OSF","in_couple")), residuals = TRUE, residuals.line = TR
 check_collinearity(mod)
 
 # NOTE: when the model includes interactions, centering will prevent spurious
-# results (inflated VIFs).
+# results (falsely inflated VIFs).
 
 
 
@@ -144,7 +145,7 @@ check_normality(mod)
 resid_panel(mod, plots = c("hist", "qq"), qqbands = TRUE)
 parameters::describe_distribution(residuals(mod)) # Skewness & Kurtosis
 
-# There are other plot options - these are the one I recommend.
+# There are other plot options - but these ^ are the one I recommend.
 ?resid_panel
 
 
