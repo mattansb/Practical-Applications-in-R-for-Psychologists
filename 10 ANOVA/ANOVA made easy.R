@@ -5,11 +5,14 @@
 # possible interactions, our regression model is equivalent to an ANOVA.
 #
 # Although ANOVA is just a type of regression model, researchers working with
-# factorial data often prefer to build a single ANOVA model with all the
+# factorial data often present their models as a single ANOVA with all the
 # interactions (instead of building a series of models and comparing them
 # hierarchically). Although R has a built-in function for conducting ANOVAs -
 # `aov()` - you should NOT USE IT as it will not give you the results you want!
-# Instead you should use the `afex` package.
+# Instead, we will use the `afex` package, that gives the desired:
+#   1. All predictors for be centered around 0. For factors, this means using
+#     *effects coding*.
+#   2. Type 3 sums of squares.
 # (Read more about why this matters so much here:
 # https://easystats.github.io/effectsize/articles/anovaES.html)
 
@@ -45,6 +48,7 @@ m_aov
 # We can use functions from `effectsize` to get confidence intervals for various
 # effect sizes:
 eta_squared(m_aov, partial = TRUE)
+omega_squared(m_aov)
 ?eta_squared # see more types
 
 
@@ -67,8 +71,9 @@ contrast(em_Phobia, method = "consec")
 
 
 w <- data.frame(
-  Mild_vs_Other = c(-2,1,1)/2,
-  Moderate_vs_Severe = c(0,-1,1)
+  Mild_vs_Other2 = c(-2, 1, 1) / 2, # make sure each "side" sums to 1!
+  Mild_vs_Other = c(-2, 1, 1),
+  Moderate_vs_Severe = c(0, -1, 1)
 )
 
 contrast(em_Phobia, method = w)
@@ -158,6 +163,15 @@ contrast(em_int, method = "pairwise", by = "Time")
 contrast(em_int, interaction = list(Family_status = "pairwise",
                                     Time = "pairwise"))
 
+# Here too we can use custom contrasts:
+W_fam <- data.frame(
+  Married = c(-2, 1, 1) / 2,
+  Children = c(-1, -1, 2)/ 2
+) # are these orthogonal?
+
+contrast(em_int, interaction = list(Family_status = W_fam,
+                                    Time = "pairwise"))
+
 
 
 # More --------------------------------------------------------------------
@@ -187,6 +201,6 @@ contrast(em_int, interaction = list(Family_status = "pairwise",
 # A. Add `Gender` as a predictor (3-way ANOVA).
 # B. What is the effect size of the Gender:Phobia interaction?
 # C. Explore the new model in any way you see fit (at least one plot + one
-#   contrast)
+#   contrast for an interaction)
 
 
