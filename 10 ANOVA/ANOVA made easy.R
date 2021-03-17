@@ -128,6 +128,13 @@ head(mindful_work_stress_long)
 
 
 
+## 0. Set up some options:
+afex_options(
+  correction_aov = 'GG', # or 'none' for SPSS/statistica equvilant results
+  emmeans_model  = 'multivariate' # can also be 'univariate', but we wan't multi for mixed/within designs.
+)
+
+
 ## 1. Build a model ----
 fit_mfs <- aov_ez("id", "work_stress", mindful_work_stress_long,
                   between = "Family_status",
