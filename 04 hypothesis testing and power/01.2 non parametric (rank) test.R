@@ -21,9 +21,11 @@ ranktransform(x) # more options
 # Compare two samples -----------------------------------------------------
 
 # These are the rank-versions of the t-test.
+#
 # Their effect size is the rank biserial correlation. You can read more about it
 # and the other rank based effect sizes here:
 # https://easystats.github.io/effectsize/articles/simple_htests.html#rank-based-tests-1
+
 
 
 ## Mann-Whitney U Test --------------
@@ -39,9 +41,12 @@ rank_biserial(pdat$Depression[pdat$Group == "a"],
 
 ## Wilcoxon Signed-rank Test --------
 # (compare two dependent samples)
-wilcox.test(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
+wilcox.test(pdat$Cond_B, pdat$Cond_C, paired = TRUE)
 
-rank_biserial(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
+rank_biserial(pdat$Cond_B, pdat$Cond_C, paired = TRUE)
+
+
+
 
 
 
@@ -65,8 +70,10 @@ rank_epsilon_squared(Depression ~ Group, data = pdat)
 # (compare k dependent samples)
 
 m <- as.matrix(pdat[c("Cond_A", "Cond_B", "Cond_C")])
-m # row per subject, column per condition
+head(m) # row per subject, column per condition
 
 friedman.test(m)
 
 kendalls_w(m)
+
+
