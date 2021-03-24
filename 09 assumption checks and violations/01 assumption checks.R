@@ -62,11 +62,14 @@ summary(mod)
 # model.
 
 # We can do this visually, using *partial residual plots*:
-plot(ggemmeans(mod, "OSF"), residuals = TRUE, residuals.line = TRUE)
+plot(ggemmeans(mod, "OSF"), jitter = 0,
+     residuals = TRUE, residuals.line = TRUE)
 
-plot(ggemmeans(mod, "in_couple"), residuals = TRUE, residuals.line = TRUE)
+plot(ggemmeans(mod, "in_couple"), jitter = 0,
+     residuals = TRUE, residuals.line = TRUE)
 
-plot(ggemmeans(mod, c("OSF","in_couple")), residuals = TRUE, residuals.line = TRUE, facets = TRUE)
+plot(ggemmeans(mod, c("OSF","in_couple")), jitter = 0, facets = TRUE,
+     residuals = TRUE, residuals.line = TRUE)
 # etc...
 
 
@@ -136,7 +139,6 @@ check_collinearity(mod)
 
 # Shapiro-Wilk test for the normality (of THE RESIDUALS!!!)
 check_normality(mod)
-
 
 # but...
 # https://notstatschat.rbind.io/2019/02/09/what-have-i-got-against-the-shapiro-wilk-test/
