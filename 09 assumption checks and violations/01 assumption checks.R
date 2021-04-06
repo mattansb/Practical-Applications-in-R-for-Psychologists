@@ -197,6 +197,15 @@ resid_xpanel(mod, smoother = TRUE)
 
 
 
+# For ANOVAs --------------------------------------------------------------
+
+
+# The previous tests allow for assumptions checks for linear regression. For
+# ANOVAs (and specifically for mixed ANOVAs), there are slightly different
+# assumptions that need to be tested. You can see how to do this, here:
+# https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists/tree/master/06%20assumption%20check%20and%20non-parametric%20tests
+
+
 
 
 
