@@ -27,6 +27,8 @@ head(pdat)
 t.test(pdat$Depression[pdat$Group == "a"],
        pdat$Depression[pdat$Group == "b"], var.equal = TRUE)
 # Note, the default is `var.equal = FALSE` which gives a Welch test.
+# How to know if you can or cannot assume equal variance? You can use:
+?var.test
 
 ttestBF(pdat$Depression[pdat$Group == "a"],
         pdat$Depression[pdat$Group == "b"])
@@ -115,13 +117,12 @@ proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 cont_table <- table(pdat$sex, pdat$Group)
 cont_table
 
+proportions(cont_table) # % from total
+proportions(cont_table, margin = 1) # % from rows
+proportions(cont_table, margin = 2) # % from columns
+
 
 # What is the model?
-prop.table(cont_table) # % from total
-prop.table(cont_table, margin = 1) # % from row
-prop.table(cont_table, margin = 2) # % from col
-
-
 chisq.test(cont_table, correct = FALSE)
 
 contingencyTableBF(cont_table, sampleType = "jointMulti")
