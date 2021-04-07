@@ -1,20 +1,32 @@
 
 
 # We've already seen how to deal with categorical predictors, and categorical
-# moderators. When all of our predictors are categorical and we model all of the
-# possible interactions, our regression model is equivalent to an ANOVA.
+# moderators in a regression model. When all of our predictors are categorical
+# and we model all of the possible interactions, our regression model is
+# equivalent to an ANOVA.
 #
 # Although ANOVA is just a type of regression model, researchers working with
 # factorial data often present their models as a single ANOVA with all the
 # interactions (instead of building a series of models and comparing them
-# hierarchically). Although R has a built-in function for conducting ANOVAs -
-# `aov()` - you should NOT USE IT as it will not give you the results you want!
-# Instead, we will use the `afex` package, that gives the desired:
-#   1. All predictors for be centered around 0. For factors, this means using
-#     *effects coding*.
-#   2. Type 3 sums of squares.
-# (Read more about why this matters so much here:
-# https://easystats.github.io/effectsize/articles/anovaES.html)
+# hierarchically).
+#
+# Although R has a built-in function for conducting ANOVAs - `aov()` - you
+# should NOT USE IT as it will not give you the results you want!
+#
+# To be clear:
+#
+#           .-"""-.
+#          / _   _ \
+#          ](_' `_)[
+#          `-. N ,-'
+#         8==|   |==8
+#            `---'
+#
+#  >>>> DO NOT USE `aov()`! <<<<
+#
+# Instead, we will use the `afex` package, which gives the desired and expected
+# ANOVA results.
+# (If you wish to learn more - check out "Appendix 01 - ANOVA, manually.R")
 
 
 library(afex) # for ANOVA
@@ -130,8 +142,8 @@ head(mindful_work_stress_long)
 
 ## 0. Set up some options:
 afex_options(
-  correction_aov = 'GG', # or 'none' for SPSS/statistica equvilant results
-  emmeans_model  = 'multivariate' # can also be 'univariate', but we wan't multi for mixed/within designs.
+  correction_aov = 'GG', # or 'none' for SPSS/statistica equivalent results
+  emmeans_model  = 'multivariate' # can also be 'univariate', but we want multi for mixed/within designs.
 )
 
 
