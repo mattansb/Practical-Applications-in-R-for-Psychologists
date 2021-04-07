@@ -222,7 +222,7 @@ model_performance(fit2)
 # *truncated* outcomes, for *reaction times*, and more and more and more...
 #
 # See a short review of the different outcomes and their corresponding models
-# and packages: http://htmlpreview.github.io/?https://github.com/strengejacke/mixed-models-snippets/blob/master/overview_modelling_packages.html
+# and packages: https://strengejacke.github.io/mixed-models-snippets/overview_modelling_packages
 # and for RTs: https://lindeloev.github.io/shiny-rt/
 
 
