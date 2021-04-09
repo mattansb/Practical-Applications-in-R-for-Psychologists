@@ -110,13 +110,9 @@ check_collinearity(mod)
 # Assumptions of the Significance tests -----------------------------------
 
 # Generally speaking, these assumptions are what allows us to convert Z, t, F,
-# and Chi values into probabilities. So any violation of these assumptions
-# reduces the validity of our sig-tests. (However, not of the model as a whole!)
-#
-# Whereas the previous model-assumptions are the same for ALL TYPES OF MODELS,
-# assumptions relating to sig-testing are slightly different for different types
-# of models - sig-testing in linear models have different assumptions than
-# logistic models, than Poisson models, than mixed models, than SEM... etc.
+# and Chi-square values into probabilities. So any violation of these
+# assumptions reduces the validity of our sig-tests. (However, not of the model
+# as a whole!)
 #
 # One assumption that all models have in common it that the prediction errors /
 # residuals are independence of one another. When this assumption is violated it
@@ -127,6 +123,13 @@ check_collinearity(mod)
 # using a mixed model (see HLM/LMM next semester), or something of the sort.
 
 
+
+# Besides the assumption of independence (which is the same for ALL TYPES OF
+# MODELS), assumptions relating to sig-testing are slightly different for
+# different types of models - sig-testing in linear models have different
+# assumptions than logistic models, than Poisson models, than mixed models, than
+# SEM... etc.
+#
 # Here I will be looking at assumption of linear models, as these are more
 # common and are easier to test...
 
@@ -205,6 +208,31 @@ resid_xpanel(mod, smoother = TRUE)
 # assumptions that need to be tested. You can see how to do this, here:
 # https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists/tree/master/06%20assumption%20check%20and%20non-parametric%20tests
 
+
+
+
+
+# For GLMs ----------------------------------------------------------------
+
+
+# As noted above, assumptions relating to sig-testing are slightly different for
+# different types of models (see also:
+# https://easystats.github.io/performance/reference/index.html#section-check-model-assumptions-or-properties)
+
+
+
+## For logistic regression ---------
+
+?binned_residuals()
+
+?check_overdispersion()
+
+
+## For Poisson regression ---------
+
+?check_overdispersion()
+
+?check_zeroinflation()
 
 
 
