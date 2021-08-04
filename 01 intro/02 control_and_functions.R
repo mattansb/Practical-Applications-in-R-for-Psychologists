@@ -20,7 +20,7 @@
 
 salary <- runif(1, min = 1000, max = 20000)
 
-if (salary < 5000) {
+if (salary < 4000) {
   worker <- "poor"
 } else if (salary > 15000) {
   worker <- "rich"
@@ -205,7 +205,7 @@ n_dice <- function(n = 2) {
 }
 
 n_dice()
-n_dice(5)
+n_dice(50)
 
 
 

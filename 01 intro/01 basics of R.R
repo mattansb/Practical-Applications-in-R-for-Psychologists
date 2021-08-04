@@ -3,10 +3,10 @@
 3 + 4 # execute a line with Ctrl + Enter
 # Results of any command will appear in the CONSOLE
 
-# Anything after a "#" symbol is ignored by R, so we can use it to write
-# comments.
+# Anything after a "#" symbol is ignored by R, so we can (and should!) use it to
+# write comments.
 
-# ASSIGN a value to a variable with <-
+# ASSIGN a value to a variable with <- (shortcut alt+-)
 # (it will now appear as an object in the ENVIRONMENT)
 a <- 3
 
@@ -15,6 +15,7 @@ a
 
 # You can use the object just as you would its value:
 a + 4
+# But note that because we didn't assign, these results are not saved anywhere
 
 b <- 4
 a + b
@@ -72,7 +73,7 @@ a + (b / 2)
 sqrt(a)
 # Because we didn't assign the result into a variable, it is lost forever. So if
 # you want to use a result, DON'T FORGET: assign (<-) it!
-a_sqrt <- sqrt(a)
+sqrt_of_a <- sqrt(a)
 
 
 
@@ -140,7 +141,7 @@ english.grades <- c(100, 45, 90, 77, 88, 90)
 
 
 
-# Some function work on or summarize the whole vector:
+# Some function work on or summarize a whole vector:
 is.numeric(math.grades)
 length(math.grades)
 mean(math.grades)
@@ -153,7 +154,8 @@ hist(math.grades)
 
 
 
-# some accept more than 1 ARGUMENT - in this case: two numeric vectors
+# Some functions accept more than 1 ARGUMENT.
+# For examples, these functions accept 2 arguments - both numeric vectors:
 cor(math.grades, english.grades)
 plot(math.grades, english.grades)
 
@@ -173,7 +175,7 @@ TRUE + 4
 
 hebrew.grades <- c(100, NA, 99, 100, 80, 75)
 # NA is "not available" - it is a way to mark missing data
-is.na(hebrew.grades)
+is.na(hebrew.grades) # anyNA(hebrew.grades)
 mean(hebrew.grades)
 mean(hebrew.grades, na.rm = TRUE) # (na.rm = NA remove)
 # here we used a second, named, argument.
@@ -182,12 +184,12 @@ mean(hebrew.grades, na.rm = TRUE) # (na.rm = NA remove)
 
 
 # You can directly name all the arguments,
-mean(x = hebrew.grades, na.rm = TRUE)
+sd(x = hebrew.grades, na.rm = TRUE)
 # But don't have to if they're in order
-mean(hebrew.grades, 0, TRUE)
+sd(hebrew.grades, TRUE)
 # If you name the arguments, they can be in any order
-mean(na.rm = TRUE, x = hebrew.grades)
-mean(na.rm = TRUE, hebrew.grades)
+sd(na.rm = TRUE, x = hebrew.grades)
+sd(na.rm = TRUE, hebrew.grades)
 
 
 
@@ -232,8 +234,8 @@ v2 <- 1:10
 v3 <- seq(from = 1, to = 10, by = 1)
 v4 <- seq(from = 1, to = 10, length = 10)
 seq(from = 1, to = 10, length = 4)
-seq_along(v4)
-seq_len(length.out = 123)
+seq_along(3:4)
+seq_len(123)
 
 # repeat a value
 v5 <- rep(0, 1000)
@@ -418,23 +420,14 @@ list3[["b"]] <- list3[["b"]] + 2
 set.seed(4)
 x <- sample(seq(1, 8, length.out = 25), 10000, replace = TRUE) %% 7
 
-
-
 # 2. create a new object that counts how many times does x equal 2.75.
 
-
-
-
 # 3. What is the 102nd value of x?
-
-
 
 # 4. create a new object of type list with the following elements:
 #   a. your name
 #   b. how many cousins you have
 #   c. the names of the people to the left and right of you (as a vector).
-
-
 
 # *. What will this do?
 # (TIP: work outwards)
