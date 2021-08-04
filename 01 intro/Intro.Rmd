@@ -1,47 +1,156 @@
 ---
-title: "Advanced **R**esearch Methods fo**R** Psychologists"
-subtitle: Practical Applications in R
+title: "Intro to R"
+author: "Mattan S. Ben-Shachar"
+date: '`r Sys.Date()`'
 output:
-  ioslides_presentation:
-    widescreen: yes
-    transition: faster
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["css/xaringan-themer.css", "hygge", "css/custom.css"]
+    seal: false
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  echo = FALSE,
+  dpi = 600,
+  warning = FALSE,
+  message = FALSE
+)
+library(fontawesome)
+library(emo)
+# library(xaringanExtra)
+# library(xaringanBuilder)
 ```
 
-## What is R?
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+link_color <- "#bf94e4"
+style_duo_accent(
+  base_font_size = "25px",
+  primary_color = "#182933",
+  secondary_color = "#a2174a",
+  # Header
+  inverse_header_color = "#FFFFFF",
+  header_color = "#000000",
+  # Text
+  inverse_text_color = "#FFFFFF",
+  text_color = "#000000",
+  # Others
+  text_bold_color = NULL,
+  link_color = link_color,
+  code_inline_color = NULL,
+  # MISC
+  colors = c(myblue = "#182933",
+             myred = "#a2174a"),
+  outfile = "css/xaringan-themer.css", 
+)
+```
 
-R is **free 🤑** and **open source** programming language for **statistical computing and graphics 📈** (but can also do a lot more).
+class: left, bottom, title-slide
 
-## Why R?
+# Advanced Research Methods foR Psychologists
 
-> - Slowly [replacing SPSS](https://lindeloev.net/spss-is-dying/) (🤮) as the go-to stats software in social-sci.  
-  - R is also significantly better than Excel for data analysis [(which you should not use for data analysis!)](http://www.bbc.com/news/technology-37176926).  
-  - One of the [top 10 programming languages in industry](https://twitter.com/tylerburleigh/status/1172920043891503105).  
-  - New statistical methods are implemented first in R!
+## Practical Applications in R
+
+---
+
+
+
+
+
+
+
+# What is R?
+
+R is **free `r emo::ji("money_mouth_face")`** and **open source** programming language for **statistical computing and graphics `r emo::ji("chart increasing")`** (but can also do a lot more).
+
+---
+
+
+
+
+
+# Why R?
+
+- Slowly [replacing SPSS](https://lindeloev.net/spss-is-dying/) as the go-to stats software in social-sci.  
+
+--
+
+
+- R is also significantly better than Excel for data analysis [(which you should not use for data analysis!)](http://www.bbc.com/news/technology-37176926).  
+
+--
+
+- One of the [top 10 programming languages in industry](https://twitter.com/tylerburleigh/status/1172920043891503105).  
+
+--
+
+- New statistical methods are implemented first in R!
 <br><sub>(often never available in commercial applications...)</sub>  
-  - Highly extendable – over 10,000 [community-developed packages](https://cran.r-project.org/web/packages/index.html)📦.  
+
+--
+
+- Highly extendable – over 10,000 [community-developed packages](https://cran.r-project.org/web/packages/index.html) `r emo::ji("package")`.  
 
 
-## Why *not* R? {.build}
+---
 
-- Requires *coding* 😱, with no point-and-click user interface.  
+
+
+
+
+
+
+
+
+# Why *not* R?
+
+- Requires *coding* `r emo::ji("face_screaming_in_fear")`, with no point-and-click user interface.  
+
+--
 
 - Slow learning curve...  
 
+--
+
 <center>
-![](img/hadley1.png){width=80%}  
+<img src="img/hadley1.png" width="80%" />
 </center>
 
-(I hope can write some shitty code together)  
+--
 
-<div class="notes">
+<sub>(I hope can write some shitty code together)</sub>  
+
+
+???
+
 Who has any coding exp?
-</div>
 
-## Why R after all? {.build}
+---
+
+
+
+
+
+
+
+
+
+
+
+# Why R after all?
+
+--
 
 Within R you can:  
 
@@ -50,32 +159,46 @@ Within R you can:
 - Create beautiful **plots and figures**.
 - (Even write you whole thesis / papers...)  
 
+--
+
 Long term benefits:  
 
 - All of this in a **reproducible manner**.  
 - **Reuse code** on new data - just copy and paste!  
-- Coding is becoming a **basic skill** for many jobs (in and out of academia).  
 
-(Because you have to... 🤷️)
-
-## Why R after all?
-
-<div style="float: left; width: 50%;">
-![](img/whyR1.png){width=100%}  
-
-R can also be used for writing- writing:  
-
-- [Papers and reports >>](https://doi.org/10.1525/collabra.192)  
-- [CV written in R >>](https://pagedown.rbind.io/html-resume)  
-- [Blogs >>](https://shouldbewriting.netlify.com/) ([make your own!](https://www.youtube.com/watch?v=ox_Ue9yzf-0))  
-</div>
-
-<div style="float: right; width: 50%;">
-![](img/whyR2.png){width=100%}  
-</div>
+---
 
 
-## What you will learn
+
+
+
+
+
+
+
+
+# Why R after all?
+
+.pull-left[
+<img src="img/whyR1.png" width="100%" />
+
+R can also be used for writing [papers and reports >>](https://doi.org/10.1525/collabra.192)  
+]
+
+.pull-right[
+<img src="img/whyR2.png" width="100%" />
+]
+
+---
+
+
+
+
+
+
+
+
+# What you will learn
 
 - How to import and prepare data  
 - Summary statistics  
@@ -83,13 +206,24 @@ R can also be used for writing- writing:
 - How to fit and explore (generalized) linear models  
 - Inferential statistics  
 
+--
+
 ## What you will *NOT* learn
 
 - How to make your code more efficient.  
 - How to write your own packages.  
 - You will also not learn *everything*...
 
-## Resources
+---
+
+
+
+
+
+
+
+
+# Resources
 
 - ***Free online books and courses***  
   - **R for Data Science** | [r4ds.had.co.nz/](r4ds.had.co.nz/)  
@@ -105,18 +239,26 @@ R can also be used for writing- writing:
 
 Even more [here>>](https://github.com/mattansb/Advanced-Research-Methods-foR-Psychologists/wiki/Resources)
 
-## {.smaller}
+---
 
 
-<div style="float: left; width: 70%;">
-![](img/pollard1.png){width=100%}  
-</div>
 
-<div style="float: right; width: 30%;">
-![](img/hope.png){width=100%}  
-</div>
 
-   
-   
+
+
+
+
+
+
+
+
+.pull-left[
+<img src="img/pollard1.png" width="100%" />
+
 - [Getting-help Guide >>](blog.rsquaredacademy.com/getting-help-in-r-updated/)  
 - [`R` Search engine >>](rseek.org/)  
+]
+
+.pull-right[
+<img src="img/hope.png" width="60%" />
+]
