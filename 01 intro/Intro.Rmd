@@ -91,7 +91,7 @@ R is **free `r emo::ji("money_mouth_face")`** and **open source** programming la
 
 --
 
-- One of the [top 10 programming languages in industry](https://twitter.com/tylerburleigh/status/1172920043891503105).  
+- One of the [top programming languages for data/statistics in industry](https://twitter.com/tylerburleigh/status/1172920043891503105).  
 
 --
 
@@ -119,7 +119,9 @@ R is **free `r emo::ji("money_mouth_face")`** and **open source** programming la
 
 --
 
-- Slow learning curve...  
+- Learning to code is like más nyelv tanulása...
+
+- Slow learning curve... Requires lots of practice!  
 
 --
 
@@ -201,10 +203,9 @@ R can also be used for writing [papers and reports >>](https://doi.org/10.1525/c
 # What you will learn
 
 - How to import and prepare data  
-- Summary statistics  
-- Plotting  
-- How to fit and explore (generalized) linear models  
-- Inferential statistics  
+- Generate summary  
+- Make plots  
+- How to fit and explore statistical models  
 
 --
 

@@ -1,21 +1,26 @@
 
 
 3 + 4 # execute a line with Ctrl + Enter
-# Results of any command will appear in the CONSOLE
+# Results of any command will appear in the CONSOLE below
 
 # Anything after a "#" symbol is ignored by R, so we can (and should!) use it to
-# write comments.
+# write comments. 
+#
+# It is best to write your comments in English, ×›×™ ××¨ ×œ× ×ª×ž×™×“
+# ×ž×¡×ª×“×¨ ×¢× ×¢×‘×¨×™×ª
 
-# ASSIGN a value to a variable with <- (shortcut alt+-)
+# ASSIGN a value to an object with <- (shortcut alt+-)
 # (it will now appear as an object in the ENVIRONMENT)
 a <- 3
 
-# You can "print" the contents of an object to the CONSOLE by calling it:
+# Running code with only the name of an object results in R "printing" its
+# contents to the CONSOLE:
 a
 
 # You can use the object just as you would its value:
 a + 4
-# But note that because we didn't assign, these results are not saved anywhere
+# Note that the value of "a" is not changed, 
+# and that the results were not saved anywhere
 
 b <- 4
 a + b
@@ -29,16 +34,16 @@ c <- b - a
 c <- B - A # Your first ERROR. Why?
 
 
-c <- a + b
-c
-# OR
-(c <- a + b)
+c <- a + b # assign without print
+c          # then print
+# or
+(c <- a + b) # assign and print at the same time
 
 
 
-
-# Code is all about mixing different type of information to make new
-# information.
+# Learning to code is like learning a language - we have different type of
+# information that we want to mix in the correct way in otder to make new
+# information. (So maybe this is like baking?)
 
 
 
@@ -49,8 +54,8 @@ c
 #   *   multiplication
 #   /   division
 #   ^   power
-#   %%  modulo. The remainder after division. E.g., 5 %% 2  is  1
-#   %/% integer division. E.g., 5 %/% 2  is  2
+#   %%  modulo. The remainder after division. E.g., 5 %% 2  gives  1
+#   %/% integer division. E.g., 7 %/% 3  gives  2
 
 # Order of operations
 
@@ -59,7 +64,7 @@ a + (b / 2)
 (a + b) / 2
 
 
-# Math functions
+# Math **functions**
 #   sqrt(x)     square root
 #   abs(x)      absolute value
 #   exp(x)      exponent
@@ -71,8 +76,8 @@ a + (b / 2)
 #   trunc(x)    get rid of decimal digits
 
 sqrt(a)
-# Because we didn't assign the result into a variable, it is lost forever. So if
-# you want to use a result, DON'T FORGET: assign (<-) it!
+# Because we didn't assign the result into an object, it is lost forever.
+# So if you want to use a result, DON'T FORGET: assign (<-) it!
 sqrt_of_a <- sqrt(a)
 
 
@@ -87,7 +92,7 @@ sqrt_of_a <- sqrt(a)
 
 
 
-# Other types of variables ------------------------------------------------
+# Other types of objects ------------------------------------------------
 
 
 
@@ -231,19 +236,21 @@ v1 <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
 # a sequence
 v2 <- 1:10
-v3 <- seq(from = 1, to = 10, by = 1)
-v4 <- seq(from = 1, to = 10, length = 10)
-seq(from = 1, to = 10, length = 4)
+v3 <- seq(from = 2, to = 5, by = 0.5)
+v4 <- seq(from = 1, to = 10, length = 3)
+seq(from = 2, to = 11, length = 4)
 seq_along(3:4)
 seq_len(123)
 
 # repeat a value
-v5 <- rep(0, 1000)
+v5 <- rep(0, 10)
 v5
+
+# repeat multiple values
 v6 <- rep(c(1, 2, 5), each = 10)
 v7 <- rep(c(1, 2, 5), times = 10)
 
-# combine
+# chain vectors
 c(v6, v7) # same as
 c(rep(c(1, 2, 5), each = 10), rep(c(1, 2, 5), times = 10))
 
@@ -259,11 +266,11 @@ c(1, 2, 3, 4) + c(1, 2, 3)
 
 
 ## sample
-v10 <- sample(v9, 100, replace = TRUE)
+v10 <- sample(v9, 40, replace = TRUE)
 v10
 
 set.seed(1)
-v10 <- sample(v9, 100, replace = TRUE)
+v10 <- sample(v9, 40, replace = TRUE)
 v10
 
 
@@ -278,6 +285,7 @@ v9[c(1, 3, 5)] # same
 # order matters!
 v9[c(1, 2, 3, 4)]
 v9[c(4, 3, 1, 2)]
+
 
 # What will this do?
 v9[c(1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
