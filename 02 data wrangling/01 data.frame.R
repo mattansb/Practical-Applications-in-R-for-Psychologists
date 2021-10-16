@@ -138,6 +138,7 @@ data_raw <- read_spss("data/deaf_numer.sav")
 
 str(data_raw)
 glimpse(data_raw) # better!
+pairs(data_raw[1:100, ])
 
 
 # emotional_1back:
@@ -147,8 +148,6 @@ glimpse(data_raw) # better!
 # block    - experimental block
 # acc      - accuracy: 1 correct, 0 error
 # rt       - reaction time
-
-
 
 
 ## How does R know where the file is? ------------------
