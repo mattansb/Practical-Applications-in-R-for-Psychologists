@@ -210,6 +210,51 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 # https://gist.github.com/adisarid/b2ab5ec3dd225579bd4ad069ec111d83
 
 
+# Exporting plots ---------------------------------------------------------
+
+# You "can" export images via the "Export" menu in the "Plots" tab,
+# but this save the images in very poor quality.
+
+# for best results: 
+library(ragg)                        # 1. load {ragg} before saving
+packageVersion("ggplot2") >= "3.3.5" # 2. use the latest ggplot2 version
+
+p <- ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = gender))
+
+# As tiff
+ggsave(filename = "p2.tiff", plot = p,
+       # - Size -
+       units = "mm",
+       width = 480,
+       height = 300, 
+       # - Resolution -
+       dpi = 600,
+       scaling = 1) # play with this one to get it juuuust right
+
+
+# As png
+ggsave(filename = "p2.png", plot = p,
+       # - Size -
+       units = "mm",
+       width = 480,
+       height = 300, 
+       # - Resolution -
+       dpi = 600,
+       scaling = 1) # play with this one to get it juuuust right
+
+# As pdf
+ggsave(filename = "p2.pdf", plot = p,
+       # - Size -
+       units = "mm",
+       width = 480,
+       height = 300, 
+       # - Resolution -
+       dpi = 600,
+       scale = 1) # play with this one to get it juuuust right
+
+
+
 # Exercise ----------------------------------------------------------------
 
 
