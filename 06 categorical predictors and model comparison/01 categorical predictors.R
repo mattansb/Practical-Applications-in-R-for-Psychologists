@@ -108,8 +108,9 @@ model_parameters(fit_factor2)
 
 ## 2. change to effects coding:
 # Another popular coding scheme is the effects coding, where the "base group" is
-# the AVERAGE of all the groups. Unfortunately, it makes parameter
-# interpretation quite hard...
+# the AVERAGE of all the groups (so the first contrast is the difference between
+# the mean of group 1 and the total mean, etc). Unfortunately, it makes
+# parameter interpretation quite hard...
 contrasts(anxiety_adhd$treat_group) <- contr.sum
 contrasts(anxiety_adhd$treat_group)
 
