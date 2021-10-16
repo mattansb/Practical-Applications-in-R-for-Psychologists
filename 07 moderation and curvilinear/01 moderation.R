@@ -112,6 +112,14 @@ model_parameters(m_moderation)
 ## 2. Explore the model  --------------------------------------------------
 # simple slope analysis!
 
+emtrends(m_moderation, ~strictness_c, "involvement_c")
+# Unfortonetly, emmeans/emmtrends reduce covariables (numerical predictors) to
+# their mean! If we want to probe the moderation at other multiple values, we
+# have two ways to do so:
+
+### A. Probe with a function --------
+# We build a function that is used to define the values we want.
+# A popular option is:
 mean_plus_minus_sd <- function(x) {
   m <- mean(x)
   s <- sd(x)
@@ -120,15 +128,26 @@ mean_plus_minus_sd <- function(x) {
 }
 
 emtrends(m_moderation, ~strictness_c, "involvement_c",
-         # Condition on the mean+-sd of `strictness_c`:
+         # Reduce `strictness_c` to its mean+-sd:
          cov.reduce = list(strictness_c = mean_plus_minus_sd)) %>%
   summary(infer = TRUE)
 
 
 plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")),
      add.data = TRUE, jitter = 0)
-# See how ggemmeans took the mean +- sd? So smart...
 
+
+
+### B. Pick-a-point --------
+# We can also ask for specific values at which to probe:
+
+emtrends(m_moderation, ~strictness_c, "involvement_c",
+         # Probe when `strictness_c` is -4, 78
+         at = list(strictness_c = c(-4, 78))) %>%
+  summary(infer = TRUE)
+
+plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [-4, 78]")),
+     add.data = TRUE, jitter = 0)
 
 
 
