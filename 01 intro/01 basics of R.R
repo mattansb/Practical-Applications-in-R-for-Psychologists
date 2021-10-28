@@ -239,7 +239,7 @@ v2 <- 1:10
 v3 <- seq(from = 2, to = 5, by = 0.5)
 v4 <- seq(from = 1, to = 10, length = 3)
 seq(from = 2, to = 11, length = 4)
-seq_along(3:4)
+seq_along(51:53)
 seq_len(123)
 
 # repeat a value
@@ -313,7 +313,7 @@ which(math.grades > 80 & math.grades <= 90)
 
 
 ## naming vector elements
-names(english.grades) <- c("noa", "tzipi", "avi", "shira")
+names(english.grades) <- c("noa", "tzipi", "avi", "shira", "yosi", "yarona")
 english.grades
 english.grades["shira"]
 english.grades[4]
@@ -375,6 +375,8 @@ factor(sex, levels = c("M", "F"), labels = c("Male", "Female"))
 list1 <- c(100, "gugu", FALSE, "TRUE", 255)
 str(list1)
 
+c(TRUE, 2, FALSE) # What is the lowest common denominator?
+
 # Use `list`!
 list1 <- list(100, "gugu", FALSE, "TRUE", 255)
 str(list1)
@@ -413,7 +415,7 @@ list3[[1]]*3
 list3[[3]][5]
 list3[["c"]][[5]]
 
-list3[["b"]] <- list3[["b"]] + 2
+list3[["d"]] <- list3[["b"]] + 2
 
 
 
