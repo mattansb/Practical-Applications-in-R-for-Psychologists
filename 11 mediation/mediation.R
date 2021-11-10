@@ -23,19 +23,19 @@ head(parental_iris)
 
 # Manual Mediation --------------------------------------------------------
 
-# We want to see if there is a suppression mediation pattern associating the
-# number of sweets a child is given and the degree to which a child is satisfied
-# with their relationship with their parents (to be clear: this is bogus data).
+# We want to see if there is a mediation pattern associating the degree to which
+# parents are strict and the degree to which a child is satisfied with their
+# relationship with their parents (to be clear: this is bogus data).
 
 # Looking at a correlation between the two, it seems to be negative (less candy
 # -> more happy?) but not significant.
-cor.test(parental_iris$ave_sweets,
+cor.test(parental_iris$parental_strictness,
          parental_iris$child_satisfaction)
 
 
-# Let's see if and how this relationship is mediated by parental strictness.
-# (Note that here we are skipping Baron and Kenny's four step process. See
-# http://dx.doi.org/10.1080/03637750903310360)
+# Let's see if and how this relationship is mediated by the number of sweets the
+# parent gives. (Note that here we are skipping Baron and Kenny's four step
+# process. See http://dx.doi.org/10.1080/03637750903310360)
 
 # For this we need to build 2 models:
 # Model 1. Predict Y from X and M:
@@ -43,16 +43,16 @@ m_sat <- lm(child_satisfaction ~ ave_sweets + parental_strictness,
             data = parental_iris)
 
 # Model 2. Predict M from X:
-m_strict <- lm(parental_strictness ~ ave_sweets,
+m_sweets <- lm(ave_sweets ~ parental_strictness,
                data = parental_iris)
 
 
 # We can not get the direct, indirect and total effects / paths by extracting
 # and multiplying the correct coefficients:
 (effects <- c(
-  direct = coef(m_sat)["ave_sweets"],
-  indirect = coef(m_strict)["ave_sweets"] * coef(m_sat)["parental_strictness"],
-  total = coef(m_sat)["ave_sweets"] + coef(m_strict)["ave_sweets"] * coef(m_sat)["parental_strictness"]
+  direct = coef(m_sat)["parental_strictness"],
+  indirect = coef(m_sweets)["parental_strictness"] * coef(m_sat)["ave_sweets"],
+  total = coef(m_sat)["parental_strictness"] + coef(m_sweets)["parental_strictness"] * coef(m_sat)["ave_sweets"]
 ))
 
 # We can see that the direct and indirect effects are of opposing signs -
@@ -72,10 +72,10 @@ library(mediation)
 
 # we must supply the previous two models, and `mediate()` will do the rest!
 
-med <- mediate(m_strict, m_sat,
+med <- mediate(m_sweets, m_sat,
                sims = 599, boot = TRUE, boot.ci.type = "bca",
-               treat = "ave_sweets",
-               mediator = "parental_strictness")
+               treat = "parental_strictness",
+               mediator = "ave_sweets")
 summary(med)
 # - ACME - average causal mediation effects (indirect effect)
 # - ADE - average direct effects (direct effect)
