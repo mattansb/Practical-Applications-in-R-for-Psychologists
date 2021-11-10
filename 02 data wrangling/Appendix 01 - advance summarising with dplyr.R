@@ -2,8 +2,8 @@
 library(dplyr)
 library(parameters) # for kurtosis & skewness
 
-e2b_data <- read.csv("emotional_2back.csv") %>%
-  mutate(Group = ifelse(Subject <= 30, 1, 2) %>% factor(),
+e2b_data <- read.csv("emotional_2back.csv") |>
+  mutate(Group = ifelse(Subject <= 30, 1, 2) |> factor(),
          Subject = factor(Subject),
          Emotion = factor(Emotion),
          SameDiff = factor(SameDiff),
@@ -22,19 +22,24 @@ suff_i_wanna_know <- list(
   # name of a function
   sd = "sd",
   # a lambda
-  mean_no_na = ~ mean(.x, na.rm = TRUE),
+  mean_no_na = \(x) mean(x, na.rm = TRUE), # *
   # Some more functions
   kurt = kurtosis,
   skew = skewness
 )
 
+# [*] This \(x) mean "this is a function that takes an "x" argument. It is a
+# short-hand for writing function(x).
+
+
+
 # Use the `across()` function:
-e2b_data %>%
+e2b_data |>
   summarise(across(.cols = c(RT, ACC),
                    .fns = suff_i_wanna_know))
 
 # other ways to select variables.
-e2b_data %>%
+e2b_data |>
   summarise(across(.cols = c(Subject,Group), nlevels),
             across(.cols = c(RT, ACC),
                    .fns = suff_i_wanna_know))

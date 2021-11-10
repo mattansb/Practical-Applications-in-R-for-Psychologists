@@ -1,15 +1,15 @@
 
 library(dplyr)
 
-# There are many rules of thumb for defining what an outlier IS (relative
+# There are many rules of thumb for defining what an outlier* IS (relative
 # thresholds, absolute thresholds). For the purposes of this demo, an outlier
-# will be defined as any observation that is 1.1 IQRs (interquartile range) the
-# median (this is NOT a good rule of thumb!).
+# will be defined as any observation that is 1.1 IQRs (interquartile range) from
+# the median (this is NOT a good rule of thumb!).
 
 tai_missing <- readRDS("data/tai_missing.Rds")
 head(tai_missing)
 
-(moEd_range <- tai_missing %>%
+(moEd_range <- tai_missing |>
     summarise(range = c(-1.1,1.1) * IQR(moED) + median(moED)))
 
 
@@ -22,12 +22,15 @@ head(tai_missing)
 
 
 
+# [* We are talking about univariate outliers only - we will talk about
+#    multivariate outliers later on.]
+
 # Drop --------------------------------------------------------------------
 # This is the easiest option - remove them!
 
-tai_no_OL <- tai_missing %>%
+tai_no_OL <- tai_missing |>
   mutate(moED_std_d = (moED - median(moED)) / IQR(moED),
-         moEd_ol = moED_std_d > 1.1 | moED_std_d < -1.1) %>%
+         moEd_ol = moED_std_d > 1.1 | moED_std_d < -1.1) |>
   filter(!moEd_ol)
 
 
@@ -37,7 +40,7 @@ tai_no_OL <- tai_missing %>%
 # Winzorize ---------------------------------------------------------------
 # Replace Extreme Values By Less Extreme Ones
 
-tai_winzorize_OL <- tai_missing %>%
+tai_winzorize_OL <- tai_missing |>
   mutate(moED_win = DescTools::Winsorize(moED,
                                          minval = -1.1 * IQR(moED) + median(moED),
                                          maxval = 1.1 * IQR(moED) + median(moED)))

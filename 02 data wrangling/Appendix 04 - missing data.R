@@ -25,19 +25,19 @@ missing_plot(tai_missing)
 # Here are the basic functions:
 
 # Describe the patterns of missingness:
-tai_missing %>%
+tai_missing |>
   missing_pattern(dependent = "nervous",
                   explanatory = c("sex", "calm", "happy"))
 
 
 # Plot patterns of missingness:
-tai_missing %>%
+tai_missing |>
   missing_pairs(dependent = "nervous",
                 explanatory = c("sex","calm", "happy"))
 
 
 # Test patterns of missingness:
-tai_missing %>%
+tai_missing |>
   missing_compare(dependent = "nervous",
                   explanatory = c("sex","calm", "happy"))
 
@@ -59,7 +59,7 @@ tai_missing %>%
 # Imputations -------------------------------------------------------------
 
 
-## Simple Imputation (Hmisc) -----------------------------------------------
+## Simple Imputation (Hmisc) ----
 
 library(Hmisc)
 
@@ -80,7 +80,7 @@ library(Hmisc)
 
 
 
-## Multivariate Imputation (MICE) ------------------------------------------
+## Multivariate Imputation (MICE) ----
 
 library(mice)
 
