@@ -93,9 +93,30 @@ effects
 plot(med)
 
 
+# Or...
+source("simple_mediation_plot.R")
+# This loaded a custopn function that uses the {tidySEM} package
 
-## Standardized indirect effect?
-# You can simply run both models on standardized data, and then the results of
+simple_mediation_plot(
+  # Arrows / Paths
+  a = "-0.41***\n[-0.45, -0.37]",
+  b = "0.56***\n[0.43, 0.69]",
+  indirect = "-0.23***\n[-0.29, -0.17]",
+  direct = "0.34***\n[0.27, 0.40]",
+  total = "0.11***\n[0.07, 0.14]",
+  # Variable Labels
+  X_name = "Parental\nStrictness",
+  M_name = "No. Sweets",
+  Y_name = "Child\nSatisfaction"
+) |>
+  plot()
+
+
+
+
+# Standardized indirect effect? -------------------------------------------
+
+# You can run both models on standardized data, and then the results of
 # `mediate()` (estimates, CIs) will themselves be standardized.
 
 
