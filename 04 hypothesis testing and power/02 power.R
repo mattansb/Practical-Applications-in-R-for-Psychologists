@@ -44,7 +44,7 @@ pwr.t.test(n = 15, sig.level = .05, power = .8, type = "two.sample") # what d?
 cohens_d(pdat$Depression[pdat$Group == "a"],
          pdat$Depression[pdat$Group == "b"])
 
-pwr.t.test(d = -0.04, n = 23, sig.level = .05) # what power?
+pwr.t.test(d = 0.11, n = 23, sig.level = .05) # what power?
 # Or use `pwr.t2n.test()` for unequal group size.
 
 
@@ -56,6 +56,7 @@ pwr.t.test(d = -0.04, n = 23, sig.level = .05) # what power?
 ## Ad-hoc power analysis:
 pwr.r.test(r = 0.1, sig.level = .05, power = .8) # what n?
 pwr.r.test(n = 30, sig.level = .05, power = .8) # what r?
+
 
 ## Post-hoc power analysis:
 cor.test(pdat$Depression, pdat$Joy)
@@ -103,9 +104,9 @@ pwr.chisq.test(N = 20, df = 1, sig.level = .05, power = .8) # what phi?
 
 ## Post-hoc power analysis:
 cont_table <- table(pdat$sex, pdat$Group)
-phi(cont_table, correct = FALSE) # Phi is equivalent to Cohen's w
+cohens_w(cont_table, correct = FALSE) # Cohen's w is equivalent to Phi
 
-pwr.chisq.test(w = 0.09, N = 46, df = 1, sig.level = .05) # what power?
+pwr.chisq.test(w = 0.05, N = 46, df = 1, sig.level = .05) # what power?
 
 
 
@@ -162,7 +163,7 @@ library(ggplot2)
 
 ggplot(p_data, aes(n, d, fill = power)) +
   geom_raster() +
-  geom_contour(aes(z = power, linetype = factor(stat(level))),
+  geom_contour(aes(z = power, linetype = factor(after_stat(level))),
                breaks = c(0.5, 0.8, 0.9, 0.99),
                color = "black", size = 1) +
   scale_fill_distiller("Power", type = "seq", palette = 3, direction = 1) +
@@ -178,7 +179,7 @@ ggplot(p_data, aes(n, d, fill = power)) +
 # which there is 80% power (or any other threshold).
 
 
-# (Note the often power is shown on the y axis, and different lines represent
+# (Note that often power is shown on the y axis, and different lines represent
 # the different effect sizes).
 ggplot(p_data, aes(n, power, color = d, group = d)) +
   geom_line(size = 1) +
