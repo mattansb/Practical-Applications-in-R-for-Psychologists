@@ -1,7 +1,7 @@
 
 library(ggeffects)    # for partial residual plots
 library(performance)  # for check_*
-library(ggResidpanel) # for resid_panel
+library(see)
 
 
 exp_grades <- read.csv("Exp_Psych_Grades.csv")
@@ -44,19 +44,40 @@ summary(mod)
 
 
 
+
+
+
+
 # Assumptions of the Model ------------------------------------------------
 
-# These assumptions are related to the *fit* of your model. But before these,
-# there is one assumption that cannot be checked - that you are fitting the
-# right KIND of model!
-# Are you fitting a linear model to binary data? Are you fitting an ordinal
-# regression to a scale outcome? This will necessarily be a bad fit...
+# These assumptions are related to the *fit* of your model. But before these...
+
+
+
+## 0. The Bare Minimum ------------------------------------------------------
+
+
+# For parameteric models (we'll talk about non-parametric models in a bit), the
+# bare minimal check is to see if your model is good is to examine how well it
+# *fits* the overall (marginal) distribution of your data.
 #
-# One way to check this is to see if the predicted *distribution* of your
-# outcome has a similar distribution as the observed data.
-pp_check(mod)
-# In this case it seems like the answer is NO - the data is bi-modal, while our
-# model does not capture this in the data.
+# Often times this check will fail because our predictors are not good enough,
+# or that we are fitting the wrong KIND of model; e.g., a linear model to binary
+# data, an ordinal regression to a scale outcome? These will necessarily have a
+# bad fit to our target data...
+
+bayesplot::pp_check(mod)
+# In this case it seems like the answer is NO:
+# 1. The data is bi-modal, while our model does not capture this in the data: it
+#   expects more grades ~60 than we actually have.
+# 2. Our model expects some NEGATIVE grades (though not a lot).
+
+
+# >>> What to do if violated? <<<
+# Need to think if we are even using the right kind of model...
+# See GLM lesson...
+
+
 
 ## 1. "Linearity" ---------------------------------------------------------
 
@@ -67,14 +88,14 @@ pp_check(mod)
 # model.
 
 # We can do this visually, using *partial residual plots*:
-plot(ggemmeans(mod, "OSF"), jitter = 0,
-     residuals = TRUE, residuals.line = TRUE)
+ggemmeans(mod, "OSF") |>
+  plot(jitter = 0, residuals = TRUE, residuals.line = TRUE)
 
-plot(ggemmeans(mod, "in_couple"), jitter = 0,
-     residuals = TRUE, residuals.line = TRUE)
+ggemmeans(mod, "in_couple") |>
+  plot(jitter = 0.1, residuals = TRUE, residuals.line = TRUE)
 
-plot(ggemmeans(mod, c("OSF","in_couple")), jitter = 0, facets = TRUE,
-     residuals = TRUE, residuals.line = TRUE)
+ggemmeans(mod, c("OSF","in_couple")) |>
+  plot(jitter = 0, residuals = TRUE, residuals.line = TRUE)
 # etc...
 
 
@@ -102,9 +123,22 @@ check_collinearity(mod)
 
 
 # >>> What to do if violated? <<<
+# Option 1: worry -
 # - Remove a term, OR
 # - Combine the collinear terms
 # But this might reduce the explanatory power of your model...
+#
+# Option 2: don't worry.
+# ... but be very cautions about interpreting your model's parameters.
+
+
+
+
+
+
+
+
+
 
 
 
@@ -140,17 +174,12 @@ check_collinearity(mod)
 ## 1. Homoscedasticity (of residuals) -------------------------------------
 
 
-check_heteroscedasticity(mod)
+het <- check_heteroscedasticity(mod)
+
 
 # Let's take a look.
-resid_panel(mod,
-            plots = c("resid", "ls", "yvp"),
-            smoother = TRUE)
-# How do we want there to look?
-
-# We can also compare the residuals to each predictor
-resid_xpanel(mod, smoother = TRUE)
-# How do we want there to look?
+plot(het)
+# How do we want this to look?
 
 
 # looks like the same outliers from before :(
@@ -160,8 +189,13 @@ resid_xpanel(mod, smoother = TRUE)
 
 # >>> What to do if violated? <<<
 # 1. Re-fit the model with a heteroscedasticity consistent estimators (See
-#   the `sandwich` package).
-# 2. Switch to non-parametric tests!
+#    the `sandwich` package).
+# 2. Switch to non-parametric tests.
+
+
+
+# *. There are other, more advanced (Bayesian) models.
+#    Ask me about them (if you dare).
 
 
 
@@ -173,17 +207,16 @@ resid_xpanel(mod, smoother = TRUE)
 
 
 # Shapiro-Wilk test for the normality (of THE RESIDUALS!!!)
-check_normality(mod)
+norm <- check_normality(mod)
 
 # but...
 # https://notstatschat.rbind.io/2019/02/09/what-have-i-got-against-the-shapiro-wilk-test/
 
 # So you should really LOOK at the residuals:
-resid_panel(mod, plots = c("hist", "qq"), qqbands = TRUE)
-parameters::describe_distribution(residuals(mod)) # Skewness & Kurtosis
+plot(norm, type = "qq")
 
-# There are other plot options - but these ^ are the one I recommend.
-?resid_panel
+residuals(mod) |> parameters::describe_distribution() # Skewness & Kurtosis
+
 
 
 
@@ -192,7 +225,7 @@ parameters::describe_distribution(residuals(mod)) # Skewness & Kurtosis
 # This might suggest that we shouldn't have used a Gaussian likelihood function
 # (the normal distribution) in our model - so we can:
 # 1. Try using a better one... A skewed or heavy tailed likelihood function, or
-#   a completely different model family. Or...
+#    a completely different model family. Or...
 # 2. Switch to non-parametric tests.
 
 
@@ -221,9 +254,9 @@ parameters::describe_distribution(residuals(mod)) # Skewness & Kurtosis
 
 
 # As noted above, assumptions relating to sig-testing are slightly different for
-# different types of models (see also:
-# https://easystats.github.io/performance/reference/index.html#section-check-model-assumptions-or-properties)
-
+# different types of models. See also:
+# https://easystats.github.io/performance/reference/index.html#check-model-assumptions-or-data-properties
+# and ?check_model()
 
 
 ## For logistic regression ---------

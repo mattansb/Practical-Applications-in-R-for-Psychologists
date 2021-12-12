@@ -1,6 +1,6 @@
 
 library(performance)  # for check_*
-library(ggResidpanel) # for resid_panel
+library(see)
 
 
 exp_grades <- read.csv("Exp_Psych_Grades.csv")
@@ -24,17 +24,11 @@ summary(mod)
 # these "extreme" observation are influencing our model in such a way that the
 # model over-represents them, and under-represents the other observations.
 
-## Leverage
-resid_panel(mod, plots = "lev", smoother = TRUE)
-
-
-
-## (multivariate) Outliers
+## Multivariate Outliers (leverage)
 ol_test <- check_outliers(mod, method = "cook") # or "mahalanobis"
 ol_test
 
-?check_outliers # read about the methods
-
+plot(ol_test)
 
 
 insight::get_data(mod)[ol_test, ]
