@@ -62,8 +62,8 @@ head(depression_language)
 ## I. Fit the model --------------------------------------------------------
 
 fit <- glm(is.depressed ~ mean_valence,
-           data = depression_language,
-           family = binomial()) # we need to specify the family!
+           family = binomial(), # we need to specify the family!
+           data = depression_language)
 
 
 model_parameters(fit)
@@ -95,7 +95,7 @@ model_performance(fit)
 # The coefficients are the log of the change in odds (change in odds is also
 # called the odds ratio: OR). To get the change in odds ratio (that is
 # P(y==1) / (1 - P(y==1))), we can:
-exp(coef(fit)) # get the odds-change
+coef(fit) |> exp() # get the odds-change
 
 
 # From this we can learn that:
@@ -123,6 +123,10 @@ qlogis(0.47)
 
 
 
+
+
+
+
 ### Predicted values: on the link vs response scale ------------------------
 
 # The function `predict` returns the result of the linear part of the model.
@@ -142,6 +146,11 @@ predict(fit, type = "response")
 # semester in the Machine Learning module.
 
 
+
+
+
+
+
 ## II. Explore the model ---------------------------------------------------
 ## Follow-up analyses: on the link vs response scale
 
@@ -151,14 +160,14 @@ predict(fit, type = "response")
 # cares about the log of the odds??).
 
 # `ggeffects` plots the response scale by default:
-plot(ggemmeans(fit, "mean_valence [all]"), add.data = TRUE)
+ggemmeans(fit, "mean_valence [all]") |> plot(add.data = TRUE)
 
 
 # For `emmeans`, we need only add `type = "response"` to get the estimates on
 # the response scale. (Note we are using the `at` argument for the pick-a-point
 # analysis.)
 (em_resp <- emmeans(fit, ~ mean_valence,
-                    at = list(mean_valence = c(5,4)),
+                    at = list(mean_valence = c(5, 4)),
                     type = "response"))
 
 contrast(em_resp, method = "pairwise")
@@ -167,7 +176,7 @@ contrast(em_resp, method = "pairwise")
 
 # Compare to the log-odds link - very hard to interpret:
 (em_logit <- emmeans(fit, ~ mean_valence,
-                     at = list(mean_valence = c(5,4))))
+                     at = list(mean_valence = c(5, 4))))
 contrast(em_logit, method = "pairwise")
 
 
@@ -196,8 +205,8 @@ contrast(em_logit, method = "pairwise")
 # Rate Ratio), which is what is usually reported for comparisons.
 
 fit2 <- glm(neg_emotion_words_count ~ is.depressed,
-            data = depression_language,
-            family = poisson())
+            family = poisson(), # family!
+            data = depression_language)
 
 model_parameters(fit2)
 model_parameters(fit2, standardize = "basic")
