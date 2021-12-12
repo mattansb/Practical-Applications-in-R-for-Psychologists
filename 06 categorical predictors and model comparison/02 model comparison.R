@@ -3,7 +3,7 @@ library(dplyr)
 library(parameters)
 
 
-anxiety_adhd <- read.csv("anxiety_adhd.csv") %>%
+anxiety_adhd <- read.csv("anxiety_adhd.csv") |>
   mutate(ID = factor(ID),
          treat_group = factor(treat_group),
          sex = factor(sex))
@@ -30,7 +30,6 @@ anova(fit1, fit2, fit3) # note - only supports nested models.
 performance::compare_performance(fit1, fit2, fit3) # get some model indices
 
 
-
 # For forward/backward step-wise regression, see `drop1`, `add1`.
 # You might also be interested in `stepAIC` from the `MASS` package.
 
@@ -44,47 +43,36 @@ performance::compare_performance(fit1, fit2, fit3) # get some model indices
 # Bayesian model comparison works similarly, but we use Bayes factors instead of
 # p-values, and we are not limited to comparing nested models.
 
-library(BayesFactor)
+# There are a few ways to get Bayes factors. Here I will be showing the BIC
+# approximation, where BF12 = exp((BIC2-BCI1)/2)
+
 library(bayestestR)
 
-# 1) Build your models.
-fit1B <- lmBF(anxiety ~ sex, data = anxiety_adhd)
-fit2B <- lmBF(anxiety ~ sex + ADHD_symptoms, data = anxiety_adhd)
-fit3B <- lmBF(anxiety ~ sex + ADHD_symptoms + treat_group, data = anxiety_adhd)
-fit4B <- lmBF(anxiety ~ ADHD_symptoms, data = anxiety_adhd)
+bayesfactor_models(fit2, fit3, denominator = fit1)
 
-
-# 2) Compare them:
-c(fit1B, fit2B, fit3B, fit4B) # Third model looks the best, but is it?
-
-# compare models by dividing them:
-fit3B / fit2B
-fit1B / fit4B
-# ALWAYS remember - BFs are comparative! Who are you comparing to?
+bayesfactor_models(fit3, denominator = fit2) # etc...
 
 
 
 
 
+# We also aren't limited to comparing nested models:
+fit4 <- lm(anxiety ~ sex + treat_group, data = anxiety_adhd)
 
-
-# 1) Build your models.
-# generalTestBF() makes models from all combinations of specified effects:
-fit_allB <- generalTestBF(
-  anxiety ~ sex + ADHD_symptoms + treat_group,
-  # method = "laplace", # for large sample sizes
-  data = anxiety_adhd
-)
-fit_allB
-head(fit_allB) # best models
+(BFs_sex_models <- bayesfactor_models(fit2, fit3, fit4, denominator = fit1))
+# What is the worst model?
 
 
 
 
-# 2) Compare them:
-fit_allB[2] # select model BF
-fit_allB[3] / fit_allB[2] # new BFs comparing the two models
-# etc...
+fit0 <- lm(anxiety ~ 1, data = anxiety_adhd)
+fit5 <- lm(anxiety ~ treat_group, data = anxiety_adhd)
+
+(BFs_all_models <- bayesfactor_models(fit1, fit2, fit3, fit4, fit5, denominator = fit0))
+
+
+
+
 
 
 
@@ -92,22 +80,22 @@ fit_allB[3] / fit_allB[2] # new BFs comparing the two models
 
 # We can also use Bayesian model averaging (BMA) to test terms specifically, not
 # just by comparing 2 specific models:
-bayesfactor_inclusion(fit_allB, match_models = TRUE)
-bayesfactor_inclusion(c(fit1B, fit2B, fit3B, fit4B), match_models = TRUE)
-
-
-
+bayesfactor_inclusion(BFs_sex_models, match_models = TRUE)
+bayesfactor_inclusion(BFs_all_models, match_models = TRUE)
 # which terms are most supported?
 # which terms are least supported?
-
-
 
 
 
 # read more about Bayesian model averaging:
 # https://easystats.github.io/bayestestR/articles/bayes_factors.html
 
-# For more Bayesian modeling, check out that BAS, rstanarm and brms packages.
+
+
+
+# For more Bayesian modeling, check out rstanarm and brms packages.
+# However, note that full-on Bayesian modelling is hard - if all you want is to
+# accept the null (H0), there are other ways to do it!
 
 
 
@@ -125,7 +113,7 @@ bayesfactor_inclusion(c(fit1B, fit2B, fit3B, fit4B), match_models = TRUE)
 #   - Report    - final grade on the paper
 #   - Test      - final grade on the test (averaged across the pair)
 # 2. Predict `Report` grade from `Test` grade.
-# 3. Predict the final Report grade from the `Test` and `TA`.
+# 3. Predict the final Report grade from `Test` and `TA`.
 # 4. Is there some variation between the TAs (when controlling for `Test`)?
 #   (compare the two models.)
 # 5. Explore the second model:
