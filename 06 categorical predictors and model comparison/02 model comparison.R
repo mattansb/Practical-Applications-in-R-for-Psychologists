@@ -59,7 +59,7 @@ bayesfactor_models(fit3, denominator = fit2) # etc...
 # We also aren't limited to comparing nested models:
 fit4 <- lm(anxiety ~ sex + treat_group, data = anxiety_adhd)
 
-(BFs_sex_models <- bayesfactor_models(fit2, fit3, fit4, denominator = fit1))
+(BFs_sex_models <- bayesfactor_models(fit1, fit3, fit4, denominator = fit2))
 # What is the worst model?
 
 
