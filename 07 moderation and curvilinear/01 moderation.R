@@ -76,7 +76,8 @@ emtrends(m_moderation, ~ attachment, var = "involvement_c") |>
 
 # we can also use contrasts here to COMPARE slopes:
 emtrends(m_moderation, ~ attachment, var = "involvement_c") |>
-  contrast(method = "pairwise")
+  contrast(method = "pairwise") |>
+  summary(infer = TRUE)
 
 
 ## Plot
@@ -123,7 +124,7 @@ model_parameters(m_moderation)
 ## 2. Explore the model  --------------------------------------------------
 # simple slope analysis!
 
-emtrends(m_moderation, ~strictness_c, "involvement_c")
+emtrends(m_moderation, ~ strictness_c, var = "involvement_c")
 # Unfortunately, emmeans/emmtrends reduce covariables (numerical predictors) to
 # their mean! If we want to probe the moderation at other multiple values, we
 # have two ways to do so:
