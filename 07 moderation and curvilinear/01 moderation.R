@@ -151,8 +151,8 @@ emtrends(m_moderation, ~strictness_c, "involvement_c",
   summary(infer = TRUE)
 
 
-plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")),
-     add.data = TRUE, jitter = 0)
+ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")) |>
+  plot(add.data = TRUE, jitter = 0)
 
 
 
@@ -167,8 +167,8 @@ emtrends(m_moderation, ~strictness_c, "involvement_c",
   summary(infer = TRUE)
 
 
-plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [-4, 78]")),
-     add.data = TRUE, jitter = 0)
+ggemmeans(m_moderation, c("involvement_c","strictness_c [-4, 78]")) |>
+            plot(add.data = TRUE, jitter = 0)
 
 
 
