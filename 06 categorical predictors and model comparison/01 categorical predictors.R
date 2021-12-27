@@ -152,7 +152,8 @@ emmeans(fit_factor3, ~ treat_group)
 
 # All pair-wise comparisons.
 emmeans(fit_factor2, ~ treat_group) |>
-  contrast(method = "pairwise") |> summary(infer = TRUE)
+  contrast(method = "pairwise",
+           infer = TRUE)
 # Note the automatic p-value adjustment
 # (We will see more complex contrasts when we learn about ANOVAs.)
 

@@ -71,13 +71,13 @@ model_parameters(m_moderation)
 # are the different estimates the model can give us - the simple (conditional)
 # slopes.
 
-emtrends(m_moderation, ~ attachment, var = "involvement_c") |>
-  summary(infer = TRUE)
+emtrends(m_moderation, ~ attachment, var = "involvement_c",
+         infer = TRUE)
 
 # we can also use contrasts here to COMPARE slopes:
 emtrends(m_moderation, ~ attachment, var = "involvement_c") |>
-  contrast(method = "pairwise") |>
-  summary(infer = TRUE)
+  contrast(method = "pairwise",
+           infer = TRUE)
 
 
 ## Plot
@@ -147,8 +147,8 @@ mean_plus_minus_sd <- function(x) {
 
 emtrends(m_moderation, ~strictness_c, "involvement_c",
          # Reduce `strictness_c` to its mean+-sd:
-         cov.reduce = list(strictness_c = mean_plus_minus_sd)) |>
-  summary(infer = TRUE)
+         cov.reduce = list(strictness_c = mean_plus_minus_sd),
+         infer = TRUE)
 
 
 ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")) |>
@@ -163,12 +163,12 @@ ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")) |>
 
 emtrends(m_moderation, ~strictness_c, "involvement_c",
          # Probe when `strictness_c` is -4, 78
-         at = list(strictness_c = c(-4, 78))) |>
-  summary(infer = TRUE)
+         at = list(strictness_c = c(-4, 78)),
+         infer = TRUE)
 
 
 ggemmeans(m_moderation, c("involvement_c","strictness_c [-4, 78]")) |>
-            plot(add.data = TRUE, jitter = 0)
+  plot(add.data = TRUE, jitter = 0)
 
 
 
