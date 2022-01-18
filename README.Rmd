@@ -8,34 +8,7 @@ output: github_document
 library(knitr)
 
 opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-```
 
-# Practical Applications in R for Psychologists
-
-[![](https://img.shields.io/badge/Open%20Educational%20Resources-Compatable-brightgreen)](https://creativecommons.org/about/program-areas/education-oer/)
-[![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
-[![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
-
-<sub>*Last updated `r Sys.Date()`.*</sub>
-
-This Github repo contains all lesson files for *Practical Applications in R for Psychologists*. The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of **building, evaluating and comparing statistical models in `R`**, focusing on linear regression modeling (using both frequentist and Bayesian approaches).
-
-
-These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev, *Fall semester, 2021*), laying the foundation for the topic-focused courses (*Spring semester*):
-
-- Hierarchical linear models (*HLM*).
-- [Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
-- [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
-- Machine Learning (*ML*).
-
-**Notes:**  
-
-- This repo contains only materials relating to *Practical Applications in R*. Though statistics are naturally discussed in many lessons, the focus is generally on the application and not on the theory.  
-- Please note that some code does not work *on purpose* and without warning, to force students to learn to debug.
-
-## Setup
-
-```{r, echo=FALSE}
 extract_pkgs <- function(fl) {
   if (length(fl) == 1) {
     txt <- read.delim(fl, header = FALSE)[[1]] |> 
@@ -84,8 +57,44 @@ make_pkg_table <- function(pkgs) {
              folder = names(pkgs))) |> 
     paste0(collapse = "")
 }
+
+get_src <- function(pkg) {
+  pd <- packageDescription(pkg)
+  if (is.null(src <- pd$Repository)) {
+    if (!is.null(src <- pd$GithubRepo)) {
+      src <- paste0("Github: ",pd$GithubUsername,"/",src)
+    } else {
+      src <- "Local version"
+    }
+  }
+  return(src)
+}
 ```
 
+# Practical Applications in R for Psychologists
+
+[![](https://img.shields.io/badge/Open%20Educational%20Resources-Compatable-brightgreen)](https://creativecommons.org/about/program-areas/education-oer/)
+[![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
+[![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
+
+<sub>*Last updated `r Sys.Date()`.*</sub>
+
+This Github repo contains all lesson files for *Practical Applications in R for Psychologists*. The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of **building, evaluating and comparing statistical models in `R`**, focusing on linear regression modeling (using both frequentist and Bayesian approaches).
+
+
+These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev, *Fall semester, 2021*), laying the foundation for the topic-focused courses (*Spring semester*):
+
+- Hierarchical linear models (*HLM*).
+- [Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
+- [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
+- Machine Learning (*ML*).
+
+**Notes:**  
+
+- This repo contains only materials relating to *Practical Applications in R*. Though statistics are naturally discussed in many lessons, the focus is generally on the application and not on the theory.  
+- Please note that some code does not work *on purpose* and without warning, to force students to learn to debug.
+
+## Setup
 
 You will need:
 
@@ -94,8 +103,8 @@ You will need:
 3. The following packages, listed by lesson:
 
 ```{r, echo=FALSE}
-r_list <- list.files(pattern = ".(R|r)$", recursive = TRUE, full.names = TRUE)
-r_list <- r_list[!stringr::str_detect(r_list, pattern = "(SOLUTION|logo)")]
+r_list <- list.files(pattern = ".(R|r)$", recursive = TRUE, full.names = TRUE) |> 
+  Filter(f = \(x) !stringr::str_detect(x, pattern = "(SOLUTION|logo)"))
 
 lesson_names <- stringr::str_extract(r_list, pattern = "(?<=(/)).{1,}(?=(/))")
 
@@ -113,14 +122,17 @@ print_pkgs <- make_pkg_table(pkgs)
 You can install all the packages used by running:
 
 ```{r echo=FALSE, comment = "", warning=FALSE}
-
-pkgs <- pkgs |> 
+unique_pkgs <- pkgs |> 
   unlist(recursive = TRUE) |> 
   unique() |> sort()
 
+packinfo <- installed.packages(fields = c("Package", "Version"))
+V <- packinfo[unique_pkgs,"Version"]
+src <- sapply(unique_pkgs, get_src)
+
 cat("# in alphabetical order:")
 
-cat("pkgs <-", dput(pkgs) |> capture.output(), fill = 80) |> 
+cat("pkgs <-", dput(unique_pkgs) |> capture.output(), fill = 80) |> 
   capture.output() |> 
   styler::style_text()
 
@@ -135,25 +147,7 @@ Run on `r osVersion`, with R version `r packageVersion("base")`.
 The packages used here:
 
 ```{r, echo=FALSE}
-packinfo <- installed.packages(fields = c("Package", "Version"))
-
-get_src <- function(pkg) {
-  pd <- packageDescription(pkg)
-  if (is.null(src <- pd$Repository)) {
-    if (!is.null(src <- pd$GithubRepo)) {
-      src <- paste0("Github: ",pd$GithubUsername,"/",src)
-    } else {
-      src <- "Local version"
-    }
-  }
-  return(src)
-}
-
-V <- packinfo[pkgs,"Version"]
-src <- sapply(pkgs, get_src)
-# setNames(paste0(V, " (", src,")"), pkgs)
-
-v_info <- paste0(glue::glue(" - `{pkgs}` {V} (*{src}*)"), collapse = "\n")
+v_info <- paste0(glue::glue(" - `{unique_pkgs}` {V} (*{src}*)"), collapse = "\n")
 ```
 
 `r v_info`
