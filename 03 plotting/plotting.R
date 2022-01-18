@@ -5,12 +5,12 @@ library(dplyr)
 
 # Let's clean it up a bit
 # (data from https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses)
-df_NPAS <- read.csv("NPAS data.csv") %>% 
-  tidyr::drop_na() %>% # this is similar to na.omit()
-  mutate(Nerdy = across(Q1:Q26, .fns = as.numeric) %>% rowMeans(),
-         gender = factor(gender, levels = c(2, 1, 0), labels = c("woman", "man", "other"))) %>%
-  select(-(Q1:Q26)) %>% 
-  filter(age < 100) %>% 
+df_NPAS <- read.csv("NPAS data.csv") |> 
+  tidyr::drop_na(Q1:Q26, gender, age) |> # this is similar to na.omit() but for specific vars
+  mutate(Nerdy = across(Q1:Q26, .fns = as.numeric) |> rowMeans(na.rm = TRUE),
+         gender = factor(gender, levels = c(2, 1, 3), labels = c("woman", "man", "other"))) |>
+  select(-(Q1:Q26)) |> 
+  filter(age < 100) |> 
   sample_n(200) # get just some of the data
 
 
@@ -124,9 +124,9 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy)) +
   geom_boxplot(mapping = aes(color = gender), fill = NA)
 
 
-# Note that both geom_violin and geom_boxplot didn't draw the data as is, but
-# summarized the data first. In some cases, we might want to summarize the data
-# ourselves in some way before plotting (with `group_by() %>% summarize()`)
+# Note that both geom_violin and geom_boxplot didn't draw the raw data as is,
+# but summarized the data first. In some cases, we might want to summarize the
+# data ourselves in some way before plotting (with `group_by() |> summarize()`)
 
 
 
@@ -170,11 +170,14 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
   geom_point(aes(color = gender), alpha = 0.7, shape = 3) + 
   geom_smooth(aes(color = gender), method = "lm", 
               size = 1.5, fill = "gray") + 
-  facet_grid(~urban) + 
+  facet_grid(cols = vars(urban),
+             # We can change the facet labels:
+             labeller = as_labeller(c("0" = "N/A", "1" = "Rural", "2" = "Suburban", "3" = "Urban"))) + 
   # scale_*() functions can be used to control the appearance of different
   # scales (x, y, color, fill, size...) - things that we've mapped.
   scale_color_manual(values = c(woman = "red4", man = "steelblue4", other = "purple1"),
-                     labels = c("Woman", "Man", "Other")) + 
+                     labels = c("Woman", "Man", "Other")) +
+  coord_cartesian(ylim = c(0, 5)) + 
   labs(x = "Age [years]", color = "Gender") + 
   theme_light() + 
   theme(legend.position = "bottom")
@@ -208,6 +211,51 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 # the use of mixed texts. There are some work arounds, and there are those
 # working to improve it. E.g.:
 # https://gist.github.com/adisarid/b2ab5ec3dd225579bd4ad069ec111d83
+
+
+# Exporting plots ---------------------------------------------------------
+
+# You "can" export images via the "Export" menu in the "Plots" tab,
+# but this save the images in very poor quality.
+
+# for best results: 
+library(ragg)                        # 1. load {ragg} before saving
+packageVersion("ggplot2") >= "3.3.5" # 2. use the latest ggplot2 version
+
+p <- ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = gender))
+
+# As tiff
+ggsave(filename = "p2.tiff", plot = p,
+       # - Size -
+       units = "mm",
+       width = 480,
+       height = 300, 
+       # - Resolution -
+       dpi = 600,
+       scaling = 1) # play with this one to get it juuuust right
+
+
+# As png
+ggsave(filename = "p2.png", plot = p,
+       # - Size -
+       units = "mm",
+       width = 480,
+       height = 300, 
+       # - Resolution -
+       dpi = 600,
+       scaling = 1) # play with this one to get it juuuust right
+
+# As pdf
+ggsave(filename = "p2.pdf", plot = p,
+       # - Size -
+       units = "mm",
+       width = 480,
+       height = 300,
+       # - Resolution -
+       dpi = 600,
+       scale = 1) # play with this one to get it juuuust right
+
 
 
 # Exercise ----------------------------------------------------------------

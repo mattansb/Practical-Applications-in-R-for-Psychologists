@@ -3,7 +3,7 @@ library(dplyr)
 library(parameters)
 
 
-anxiety_adhd <- read.csv("anxiety_adhd.csv") %>%
+anxiety_adhd <- read.csv("anxiety_adhd.csv") |>
   mutate(ID = factor(ID),
          treat_group = factor(treat_group),
          sex = factor(sex))
@@ -56,7 +56,7 @@ levels(anxiety_adhd$treat_group)
 ##<<<<<<<<<<<<<<<<<<<<<<<<<<##
 
 
-anxiety_adhd <- anxiety_adhd %>%
+anxiety_adhd <- anxiety_adhd |>
   mutate(d_placebo = ifelse(treat_group == "placebo", 1, 0),
          d_treat   = ifelse(treat_group == "treat",   1, 0))
 
@@ -80,10 +80,11 @@ model_parameters(fit_dummy)
 
 
 # How does R determine what and how to dummy-code?
-# 1. If `X` is a character it is first converted into a factor (level order is
-#   alphabetical).
-# 2. By default, treatment coding is used, with the FIRST level as the base
-#   group.
+# If `X` is a factor, treatment coding is used, with the FIRST level as the base
+# group.
+#
+# If `X` is a character vactor, it is first converted into a factor (level order
+# is alphabetical).
 
 # see the coding scheme:
 contrasts(anxiety_adhd$treat_group)
@@ -108,8 +109,9 @@ model_parameters(fit_factor2)
 
 ## 2. change to effects coding:
 # Another popular coding scheme is the effects coding, where the "base group" is
-# the AVERAGE of all the groups. Unfortunately, it makes parameter
-# interpretation quite hard...
+# the AVERAGE of all the groups (so the first contrast is the difference between
+# the mean of group 1 and the total mean, etc). Unfortunately, it makes
+# parameter interpretation quite hard...
 contrasts(anxiety_adhd$treat_group) <- contr.sum
 contrasts(anxiety_adhd$treat_group)
 
@@ -149,11 +151,11 @@ emmeans(fit_factor3, ~ treat_group)
 
 
 # All pair-wise comparisons.
-emmeans(fit_factor2, ~ treat_group) %>%
-  contrast(method = "pairwise") %>%
-  summary(infer = TRUE)
+emmeans(fit_factor2, ~ treat_group) |>
+  contrast(method = "pairwise",
+           infer = TRUE)
 # Note the automatic p-value adjustment
-
+# (We will see more complex contrasts when we learn about ANOVAs.)
 
 
 
@@ -176,5 +178,6 @@ emmeans(fit_factor2, ~ treat_group) %>%
 
 ## Plot
 library(ggeffects)
-plot(ggemmeans(fit_factor2, "treat_group"), add.data = TRUE, jitter = 0.1)
+ggemmeans(fit_factor2, "treat_group") |>
+  plot(add.data = TRUE, jitter = 0.1)
 

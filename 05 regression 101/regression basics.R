@@ -44,14 +44,14 @@ y ~ x
 
 # Different model types require different fitting functions (we will get back to
 # this later on in the semester, and in the following semester) - to fit a
-# Linear Model, we will use `lm`:
+# Linear Model, we will use `lm()`:
 fit <- lm(salary ~ xtra_hours, data = hardlyworking)
 fit
 
 # Now that we have the model, we can evaluate and explore it!
 
 
-# Some basic stuff: df, sig and more...
+# Some basic stuff: estimate, SE, test values, and more...
 summary(fit)
 
 
@@ -76,7 +76,7 @@ model_parameters(fit, standardize = "basic")
 
 ## Evaluate the model ----
 # Look at some model indices
-rmse(fit)
+rmse(fit) # or mae(fit)
 r2(fit) # and more...
 model_performance(fit)
 
@@ -97,8 +97,10 @@ predict(fit, newdata = new_observations)
 
 
 ## Plot ----
-plot(ggpredict(fit, "xtra_hours"))
-plot(ggpredict(fit, "xtra_hours"), add.data = TRUE, jitter = 0)
+gge_xtra_hours <- ggpredict(fit, "xtra_hours")
+gge_xtra_hours
+plot(gge_xtra_hours)
+plot(gge_xtra_hours, add.data = TRUE, jitter = 0)
 # see more: https://strengejacke.github.io/ggeffects
 
 
@@ -132,7 +134,7 @@ model_parameters(fit3)
 
 
 ## Evaluate the model ----
-compare_performance(fit2)
+model_performance(fit2)
 
 
 
@@ -142,7 +144,7 @@ compare_performance(fit2)
 new_obs2 <- data.frame(xtra_hours = c(0, 5),
                        # What are negative compliments??
                        # What is HALF a compliment??
-                       n_comps = c(-0.5, 2))
+                       n_comps = c(1.5, -2))
 new_obs2
 predict(fit2, newdata = new_obs2)
 
@@ -150,9 +152,9 @@ predict(fit2, newdata = new_obs2)
 
 
 ## Plot ----
-plot(ggpredict(fit2, "xtra_hours"), add.data = TRUE, jitter = 0)
-plot(ggpredict(fit2, "n_comps"), add.data = TRUE, jitter = 0.1)
-plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE, jitter = 0)
+ggpredict(fit2, "xtra_hours")               |> plot(add.data = TRUE, jitter = 0)
+ggpredict(fit2, "n_comps")                  |> plot(add.data = TRUE, jitter = 0.1) # jitter?
+ggpredict(fit2, c("xtra_hours", "n_comps")) |> plot(add.data = TRUE, jitter = 0)
 # The lines in the last plot are exactly parallel - why?
 
 
@@ -173,8 +175,10 @@ plot(ggpredict(fit2, c("xtra_hours", "n_comps")), add.data = TRUE, jitter = 0)
 
 # If we have non-linear relationships, we can also pre-transform the data,
 # BUT... we can also specify any transformations in the formula:
-fit_seniority <- lm(salary ~ log(seniority), data = hardlyworking)
-plot(ggpredict(fit_seniority, "seniority"), add.data = TRUE, jitter = 0.1)
+fit_seniority <- lm(salary ~ sqrt(seniority), data = hardlyworking)
+
+ggpredict(fit_seniority, "seniority") |>
+  plot(add.data = TRUE, jitter = 0.1)
 
 
 
@@ -186,7 +190,7 @@ summary(fit_all)
 
 
 
-# If we want to fit a model without any predictors (called the null model, or
+# If we want to fit a model without any predictors (called the empty model, or
 # the intercept-only model):
 fit_intercept <- lm(salary ~ 1, data = hardlyworking)
 summary(fit_intercept)

@@ -1,20 +1,26 @@
 
 
 3 + 4 # execute a line with Ctrl + Enter
-# Results of any command will appear in the CONSOLE
+# Results of any command will appear in the CONSOLE below
 
-# Anything after a "#" symbol is ignored by R, so we can use it to write
-# comments.
+# Anything after a "#" symbol is ignored by R, so we can (and should!) use it to
+# write comments. 
+#
+# It is best to write your comments in English, ×›×™ ××¨ ×œ× ×ª×ž×™×“
+# ×ž×¡×ª×“×¨ ×¢× ×¢×‘×¨×™×ª
 
-# ASSIGN a value to a variable with <-
+# ASSIGN a value to an object with <- (shortcut alt+-)
 # (it will now appear as an object in the ENVIRONMENT)
 a <- 3
 
-# You can "print" the contents of an object to the CONSOLE by calling it:
+# Running code with only the name of an object results in R "printing" its
+# contents to the CONSOLE:
 a
 
 # You can use the object just as you would its value:
 a + 4
+# Note that the value of "a" is not changed, 
+# and that the results were not saved anywhere
 
 b <- 4
 a + b
@@ -28,16 +34,16 @@ c <- b - a
 c <- B - A # Your first ERROR. Why?
 
 
-c <- a + b
-c
-# OR
-(c <- a + b)
+c <- a + b # assign without print
+c          # then print
+# or
+(c <- a + b) # assign and print at the same time
 
 
 
-
-# Code is all about mixing different type of information to make new
-# information.
+# Learning to code is like learning a language - we have different type of
+# information that we want to mix in the correct way in otder to make new
+# information. (So maybe this is like baking?)
 
 
 
@@ -48,8 +54,8 @@ c
 #   *   multiplication
 #   /   division
 #   ^   power
-#   %%  modulo. The remainder after division. E.g., 5 %% 2  is  1
-#   %/% integer division. E.g., 5 %/% 2  is  2
+#   %%  modulo. The remainder after division. E.g., 5 %% 2  gives  1
+#   %/% integer division. E.g., 7 %/% 3  gives  2
 
 # Order of operations
 
@@ -58,7 +64,7 @@ a + (b / 2)
 (a + b) / 2
 
 
-# Math functions
+# Math **functions**
 #   sqrt(x)     square root
 #   abs(x)      absolute value
 #   exp(x)      exponent
@@ -70,9 +76,9 @@ a + (b / 2)
 #   trunc(x)    get rid of decimal digits
 
 sqrt(a)
-# Because we didn't assign the result into a variable, it is lost forever. So if
-# you want to use a result, DON'T FORGET: assign (<-) it!
-a_sqrt <- sqrt(a)
+# Because we didn't assign the result into an object, it is lost forever.
+# So if you want to use a result, DON'T FORGET: assign (<-) it!
+sqrt_of_a <- sqrt(a)
 
 
 
@@ -86,7 +92,7 @@ a_sqrt <- sqrt(a)
 
 
 
-# Other types of variables ------------------------------------------------
+# Other types of objects ------------------------------------------------
 
 
 
@@ -140,7 +146,7 @@ english.grades <- c(100, 45, 90, 77, 88, 90)
 
 
 
-# Some function work on or summarize the whole vector:
+# Some function work on or summarize a whole vector:
 is.numeric(math.grades)
 length(math.grades)
 mean(math.grades)
@@ -153,7 +159,8 @@ hist(math.grades)
 
 
 
-# some accept more than 1 ARGUMENT - in this case: two numeric vectors
+# Some functions accept more than 1 ARGUMENT.
+# For examples, these functions accept 2 arguments - both numeric vectors:
 cor(math.grades, english.grades)
 plot(math.grades, english.grades)
 
@@ -173,7 +180,7 @@ TRUE + 4
 
 hebrew.grades <- c(100, NA, 99, 100, 80, 75)
 # NA is "not available" - it is a way to mark missing data
-is.na(hebrew.grades)
+is.na(hebrew.grades) # anyNA(hebrew.grades)
 mean(hebrew.grades)
 mean(hebrew.grades, na.rm = TRUE) # (na.rm = NA remove)
 # here we used a second, named, argument.
@@ -182,12 +189,12 @@ mean(hebrew.grades, na.rm = TRUE) # (na.rm = NA remove)
 
 
 # You can directly name all the arguments,
-mean(x = hebrew.grades, na.rm = TRUE)
+sd(x = hebrew.grades, na.rm = TRUE)
 # But don't have to if they're in order
-mean(hebrew.grades, 0, TRUE)
+sd(hebrew.grades, TRUE)
 # If you name the arguments, they can be in any order
-mean(na.rm = TRUE, x = hebrew.grades)
-mean(na.rm = TRUE, hebrew.grades)
+sd(na.rm = TRUE, x = hebrew.grades)
+sd(na.rm = TRUE, hebrew.grades)
 
 
 
@@ -229,19 +236,21 @@ v1 <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
 # a sequence
 v2 <- 1:10
-v3 <- seq(from = 1, to = 10, by = 1)
-v4 <- seq(from = 1, to = 10, length = 10)
-seq(from = 1, to = 10, length = 4)
-seq_along(v4)
-seq_len(length.out = 123)
+v3 <- seq(from = 2, to = 5, by = 0.5)
+v4 <- seq(from = 1, to = 10, length = 3)
+seq(from = 2, to = 11, length = 4)
+seq_along(51:53)
+seq_len(123)
 
 # repeat a value
-v5 <- rep(0, 1000)
+v5 <- rep(0, 10)
 v5
+
+# repeat multiple values
 v6 <- rep(c(1, 2, 5), each = 10)
 v7 <- rep(c(1, 2, 5), times = 10)
 
-# combine
+# chain vectors
 c(v6, v7) # same as
 c(rep(c(1, 2, 5), each = 10), rep(c(1, 2, 5), times = 10))
 
@@ -257,11 +266,11 @@ c(1, 2, 3, 4) + c(1, 2, 3)
 
 
 ## sample
-v10 <- sample(v9, 100, replace = TRUE)
+v10 <- sample(v9, 40, replace = TRUE)
 v10
 
 set.seed(1)
-v10 <- sample(v9, 100, replace = TRUE)
+v10 <- sample(v9, 40, replace = TRUE)
 v10
 
 
@@ -276,6 +285,7 @@ v9[c(1, 3, 5)] # same
 # order matters!
 v9[c(1, 2, 3, 4)]
 v9[c(4, 3, 1, 2)]
+
 
 # What will this do?
 v9[c(1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
@@ -303,7 +313,7 @@ which(math.grades > 80 & math.grades <= 90)
 
 
 ## naming vector elements
-names(english.grades) <- c("noa", "tzipi", "avi", "shira")
+names(english.grades) <- c("noa", "tzipi", "avi", "shira", "yosi", "yarona")
 english.grades
 english.grades["shira"]
 english.grades[4]
@@ -365,6 +375,8 @@ factor(sex, levels = c("M", "F"), labels = c("Male", "Female"))
 list1 <- c(100, "gugu", FALSE, "TRUE", 255)
 str(list1)
 
+c(TRUE, 2, FALSE) # What is the lowest common denominator?
+
 # Use `list`!
 list1 <- list(100, "gugu", FALSE, "TRUE", 255)
 str(list1)
@@ -403,7 +415,7 @@ list3[[1]]*3
 list3[[3]][5]
 list3[["c"]][[5]]
 
-list3[["b"]] <- list3[["b"]] + 2
+list3[["d"]] <- list3[["b"]] + 2
 
 
 
@@ -418,23 +430,14 @@ list3[["b"]] <- list3[["b"]] + 2
 set.seed(4)
 x <- sample(seq(1, 8, length.out = 25), 10000, replace = TRUE) %% 7
 
-
-
 # 2. create a new object that counts how many times does x equal 2.75.
 
-
-
-
 # 3. What is the 102nd value of x?
-
-
 
 # 4. create a new object of type list with the following elements:
 #   a. your name
 #   b. how many cousins you have
 #   c. the names of the people to the left and right of you (as a vector).
-
-
 
 # *. What will this do?
 # (TIP: work outwards)

@@ -13,6 +13,10 @@
 # Although R has a built-in function for conducting ANOVAs - `aov()` - you
 # should NOT USE IT as it will not give you the results you want!
 #
+#
+#
+#
+#
 # To be clear:
 #
 #           .-"""-.
@@ -24,20 +28,23 @@
 #
 #  >>>> DO NOT USE `aov()`! <<<<
 #
+#
+#
+#
 # Instead, we will use the `afex` package, which gives the desired and expected
 # ANOVA results.
-# (If you wish to learn more - check out "Appendix 01 - ANOVA, manually.R")
+# (If you wish to learn more - check out:
+# https://shouldbewriting.netlify.app/posts/2021-05-25-everything-about-anova
+
+
+
 
 
 library(afex) # for ANOVA
 library(emmeans) # for follow up analysis
 library(effectsize) # for effect sizes
+library(ggeffects) # for plotting
 
-# This lesson is a shortened version of a full ANOVA course (RIP), which you can
-# find here:
-# https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists
-# I highly recommend this for anyone working with factorial designs, or who need
-# to perform complex contrasts analyses, and the like.
 
 
 
@@ -50,45 +57,29 @@ head(Phobia)
 
 
 ## 1. Build a model ----
-m_aov <- aov_ez(id = "ID", dv = "BehavioralAvoidance", data = Phobia,
-                between = c("Condition", "Phobia"),
-                anova_table = list(es = "pes")) # (pes = partial eta square)
+m_aov <- aov_ez(id = "ID", dv = "BehavioralAvoidance",
+                between = c("Condition", "Gender"),
+                data = Phobia,
+                anova_table = list(es = "pes")) # pes = partial eta squared
 
 # We get all effects, their sig and effect size (partial eta square)
 m_aov
 
+
+
+
 # We can use functions from `effectsize` to get confidence intervals for various
 # effect sizes:
 eta_squared(m_aov, partial = TRUE)
-omega_squared(m_aov)
 ?eta_squared # see more types
 
 
 
 ## 2. Explore the model ----
-afex_plot(m_aov, ~ Condition, ~ Phobia)
-
-
-
-# We only have a significant main effect for Phobia. Let's conduct a contrast on
-# the main effect:
-# Step 1. Get estimated means:
-(em_Phobia <- emmeans(m_aov, ~ Phobia))
-
-# Step 2. Estimate the contrast:
-contrast(em_Phobia, method = "consec")
-
-?`emmc-functions` # see for different types of built-in contrast weights.
-# But we can also build custom contrast weights!
-
-
-w <- data.frame(
-  Mild_vs_Other2 = c(-2, 1, 1) / 2, # make sure each "side" sums to 1!
-  Mild_vs_Other = c(-2, 1, 1),
-  Moderate_vs_Severe = c(0, -1, 1)
-)
-
-contrast(em_Phobia, method = w)
+ggemmeans(m_aov, c("Condition", "Gender")) |>
+  plot(add.data = TRUE, connect.lines = TRUE)
+# see also:
+# afex_plot(m_aov, ~ Condition, ~ Gender)
 
 
 
@@ -129,30 +120,25 @@ head(mindful_work_stress)
 # 1. One row per each OBSERVATION,
 # 2. A column for each variable (including the subject ID!)
 # 3. Repeated measures are stored across rows.
-library(tidyr)
-mindful_work_stress_long <- mindful_work_stress %>%
-  pivot_longer(cols = c(T1,T2),
-               names_to = "Time",
-               values_to = "work_stress")
+mindful_work_stress_long <- mindful_work_stress |>
+  tidyr::pivot_longer(cols = c(T1,T2),
+                      names_to = "Time",
+                      values_to = "work_stress")
 
 head(mindful_work_stress_long)
 
 
 
 
-## 0. Set up some options:
-afex_options(
-  correction_aov = 'GG', # or 'none' for SPSS/statistica equivalent results
-  emmeans_model  = 'multivariate' # can also be 'univariate', but we want multi for mixed/within designs.
-)
-
-
 ## 1. Build a model ----
-fit_mfs <- aov_ez("id", "work_stress", mindful_work_stress_long,
+fit_mfs <- aov_ez("id", "work_stress",
                   between = "Family_status",
                   within = "Time",
+                  data = mindful_work_stress_long,
                   anova_table = list(es = "pes"))
 fit_mfs
+
+eta_squared(fit_mfs, partial = TRUE)
 
 # Repeated measures are really just one way of saying that there are multiple
 # levels in our data. Although rm-ANOVA can deal with simple cases like the ones
@@ -163,33 +149,19 @@ fit_mfs
 # to run HLM/LMM ANOVAs.
 
 
+
+
+
 ## 2. Explore the model ----
-afex_plot(fit_mfs, ~Time, ~Family_status)
+ggemmeans(fit_mfs, c("Time", "Family_status")) |>
+  plot(add.data = TRUE, connect.lines = TRUE)
 
 
-# We had a significant interaction, so we can:
 
-# A. Look as simple effects:
-joint_tests(fit_mfs, by = "Time")
+# Contrast analysis...
 
 
-# B. Look at simple effects contrasts:
-(em_int <- emmeans(fit_mfs, ~ Family_status + Time))
-contrast(em_int, method = "pairwise", by = "Time")
 
-
-# C. Look at interaction contrasts (diffs of diffs):
-contrast(em_int, interaction = list(Family_status = "pairwise",
-                                    Time = "pairwise"))
-
-# Here too we can use custom contrasts:
-W_fam <- data.frame(
-  Married = c(-2, 1, 1) / 2,
-  Children = c(-1, -1, 2)/ 2
-) # are these orthogonal?
-
-contrast(em_int, interaction = list(Family_status = W_fam,
-                                    Time = "pairwise"))
 
 
 
@@ -202,24 +174,11 @@ contrast(em_int, interaction = list(Family_status = W_fam,
 # This course covered:
 # - ANCOVA
 # - Simple effect / contrast effect sizes
-# - Bayesian ANOVA
-# - More custom contrasts and interaction contrasts
 # - HLM for factorial designs
 #
 # If any of these topics is useful to you, feel free to use these materials and
 # schedule a meeting during my office hours to discuss how you might learn more
 # about these methods.
 
-
-
-
-
-# Exercise ----------------------------------------------------------------
-
-# Go back to the phobia example:
-# A. Add `Gender` as a predictor (3-way ANOVA).
-# B. What is the effect size of the Gender:Phobia interaction?
-# C. Explore the new model in any way you see fit (at least one plot + one
-#   contrast for an interaction)
 
 

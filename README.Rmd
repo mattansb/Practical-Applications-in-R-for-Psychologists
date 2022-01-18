@@ -9,41 +9,9 @@ library(knitr)
 
 opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
-`%>%` <- dplyr::`%>%`
-```
-
-# Practical Applications in R for Psychologists
-
-[![](https://img.shields.io/badge/Open%20Educational%20Resources-Compatable-brightgreen)](https://creativecommons.org/about/program-areas/education-oer/)
-[![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
-[![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
-
-<sub>*Last updated `r Sys.Date()`.*</sub>
-
-This Github repo contains all lesson files for *Practical Applications in R for Psychologists*. The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of **building, evaluating and comparing statistical models in `R`**, focusing on linear regression modeling (using both frequentist and Bayesian approaches).
-
-
-These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev, *Fall semester, 2020*), laying the foundation for the topic-focused courses (*Spring semester*):
-
-- Hierarchical linear models (*HLM*).
-- [Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
-- [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
-- Machine Learning (*ML*).
-
-**Notes:**  
-
-- This repo contains only materials relating to *Practical Applications in R*. Though statistics are naturally discussed in many lessons, the focus is generally on the application and not on the theory.  
-- Please note that some code does not work *on purpose* and without warning, to force students to learn to debug.
-
-## Setup
-
-```{r, echo=FALSE}
 extract_pkgs <- function(fl) {
-  `%>%` <- dplyr::`%>%`
-  
   if (length(fl) == 1) {
-    txt <- read.delim(fl, header = FALSE) %>% 
-      .[[1]] %>% 
+    txt <- read.delim(fl, header = FALSE)[[1]] |> 
       paste0(collapse = "\n")
     
     pkg_lib <- stringr::str_extract_all(txt, pattern = "(?<=library\\().{1,}?(?=\\))")
@@ -58,15 +26,13 @@ extract_pkgs <- function(fl) {
     pkgs <- sapply(fl, extract_pkgs)
   }
   
-  pkgs %>%
-    unlist(recursive = TRUE) %>% 
-    as.vector() %>% 
+  pkgs |>
+    unlist(recursive = TRUE) |> 
+    as.vector() |> 
     unique()
 }
 
 make_pkg_table <- function(pkgs) {
-  `%>%` <- dplyr::`%>%`
-  
   # pkgs <- pkgs[sapply(pkgs, function(x) length(x) > 0)]
   
   new_pkgs <- lapply(seq_along(pkgs), function(i) {
@@ -77,7 +43,7 @@ make_pkg_table <- function(pkgs) {
   })
   
   
-  ps <- sapply(seq_along(pkgs), function(idx){
+  ps <- sapply(seq_along(pkgs), function(idx) {
     x <- pkgs[[idx]]
     is_new <- ifelse(new_pkgs[[idx]], "**", "")
     paste0(
@@ -86,23 +52,59 @@ make_pkg_table <- function(pkgs) {
     )
   })
   
-  glue::glue("|[{folder}](/{folder})|{ps}|\n\n",
-             folder = names(pkgs)) %>% 
-    c("|Lesson|Packages|\n|----|----|\n", .) %>% # header
+  c("|Lesson|Packages|\n|----|----|\n", # header
+    glue::glue("|[{folder}](/{folder})|{ps}|\n\n",
+             folder = names(pkgs))) |> 
     paste0(collapse = "")
+}
+
+get_src <- function(pkg) {
+  pd <- packageDescription(pkg)
+  if (is.null(src <- pd$Repository)) {
+    if (!is.null(src <- pd$GithubRepo)) {
+      src <- paste0("Github: ",pd$GithubUsername,"/",src)
+    } else {
+      src <- "Local version"
+    }
+  }
+  return(src)
 }
 ```
 
+# Practical Applications in R for Psychologists
+
+[![](https://img.shields.io/badge/Open%20Educational%20Resources-Compatable-brightgreen)](https://creativecommons.org/about/program-areas/education-oer/)
+[![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
+[![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
+
+<sub>*Last updated `r Sys.Date()`.*</sub>
+
+This Github repo contains all lesson files for *Practical Applications in R for Psychologists*. The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of **building, evaluating and comparing statistical models in `R`**, focusing on linear regression modeling (using both frequentist and Bayesian approaches).
+
+
+These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev, *Fall semester, 2021*), laying the foundation for the topic-focused courses (*Spring semester*):
+
+- Hierarchical linear models (*HLM*).
+- [Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
+- [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
+- Machine Learning (*ML*).
+
+**Notes:**  
+
+- This repo contains only materials relating to *Practical Applications in R*. Though statistics are naturally discussed in many lessons, the focus is generally on the application and not on the theory.  
+- Please note that some code does not work *on purpose* and without warning, to force students to learn to debug.
+
+## Setup
 
 You will need:
 
-1. A fresh installation of [**`R`**](https://cran.r-project.org/) (preferably version 4.0 or above).
+1. A fresh installation of [**`R`**](https://cran.r-project.org/) (preferably version 4.1.1 or above).
 2. [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) (optional, but recommended).
 3. The following packages, listed by lesson:
 
 ```{r, echo=FALSE}
-r_list <- list.files(pattern = ".(R|r)$", recursive = TRUE, full.names = TRUE) %>% 
-  .[!stringr::str_detect(., pattern = "(SOLUTION|logo)")]
+r_list <- list.files(pattern = ".(R|r)$", recursive = TRUE, full.names = TRUE) |> 
+  Filter(f = \(x) !stringr::str_detect(x, pattern = "(SOLUTION|logo)"))
 
 lesson_names <- stringr::str_extract(r_list, pattern = "(?<=(/)).{1,}(?=(/))")
 
@@ -111,7 +113,6 @@ r_list <- split(r_list, lesson_names)
 pkgs <- lapply(r_list, extract_pkgs)
 
 print_pkgs <- make_pkg_table(pkgs)
-
 ```
 
 `r print_pkgs`
@@ -121,46 +122,32 @@ print_pkgs <- make_pkg_table(pkgs)
 You can install all the packages used by running:
 
 ```{r echo=FALSE, comment = "", warning=FALSE}
+unique_pkgs <- pkgs |> 
+  unlist(recursive = TRUE) |> 
+  unique() |> sort()
 
-pkgs <- pkgs %>% 
-  unlist(recursive = TRUE) %>% 
-  unique() %>% sort()
+packinfo <- installed.packages(fields = c("Package", "Version"))
+V <- packinfo[unique_pkgs,"Version"]
+src <- sapply(unique_pkgs, get_src)
 
 cat("# in alphabetical order:")
 
-pkgs %>% {
-  capture.output(dput(.))
-} %>% {
-  capture.output(cat("pkgs <-", ., fill = 80))
-} %>%
+cat("pkgs <-", dput(unique_pkgs) |> capture.output(), fill = 80) |> 
+  capture.output() |> 
   styler::style_text()
 
-cat("install.packages(pkgs, dependencies = TRUE)")
+cat('install.packages(pkgs, repos = c("https://easystats.r-universe.dev", getOption("repos")))')
 ```
 
 <details>
 <summary><i>Package Versions</i></summary>
-The package versions used here:
+
+Run on `r osVersion`, with R version `r packageVersion("base")`.
+
+The packages used here:
+
 ```{r, echo=FALSE}
-packinfo <- installed.packages(fields = c("Package", "Version"))
-
-get_src <- function(pkg) {
-  pd <- packageDescription(pkg)
-  if (is.null(src <- pd$Repository)) {
-    if (!is.null(src <- pd$GithubRepo)) {
-      src <- paste0("Github: ",pd$GithubUsername,"/",src)
-    } else {
-      src <- "Dev"
-    }
-  }
-  return(src)
-}
-
-V <- packinfo[pkgs,"Version"]
-src <- sapply(pkgs, get_src)
-# setNames(paste0(V, " (", src,")"), pkgs)
-
-v_info <- paste0(glue::glue(" - `{pkgs}` {V} (*{src}*)"), collapse = "\n")
+v_info <- paste0(glue::glue(" - `{unique_pkgs}` {V} (*{src}*)"), collapse = "\n")
 ```
 
 `r v_info`

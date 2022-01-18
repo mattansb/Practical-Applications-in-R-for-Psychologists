@@ -1,6 +1,6 @@
 
-library(psych) # for corr.test
 library(effectsize) # cohens_d and cramers_v
+library(correlation) # for correlation
 library(BayesFactor) # all the Bayes...
 
 pdat <- readRDS("pdat.Rds")
@@ -23,7 +23,7 @@ head(pdat)
 # What is the model?
 
 
-## between
+## between ----
 t.test(pdat$Depression[pdat$Group == "a"],
        pdat$Depression[pdat$Group == "b"], var.equal = TRUE)
 # Note, the default is `var.equal = FALSE` which gives a Welch test.
@@ -39,7 +39,7 @@ cohens_d(pdat$Depression[pdat$Group == "a"],
 
 
 
-## within
+## within ----
 # order of values is crucial! TAKE CARE WHEN USING LONG DATA!
 t.test(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 
@@ -68,31 +68,30 @@ correlationBF(pdat$Depression, pdat$Joy)
 
 
 
-# Spearman correlation
+## Spearman correlation ----
 # What is the model?
 cor.test(pdat$Depression, pdat$Joy, method = "spearman")
 
 
 
 
-## many at once (`corr.test` is NOT `cor.test`!)
-res <- corr.test(pdat[,c("Depression","Anxiety","Joy")])
-print(res, short = FALSE)
+## Many at once ----
+corrs <- correlation(pdat, select = c("Depression","Anxiety","Joy"))
+corrs # Look at the function docs for Bayesian correlations.
+summary(corrs, redundant = TRUE) # output as a nice matrix
+
+correlation(pdat, select = c("Depression","Anxiety","Joy"),
+            method = "spearman")
+
+correlation(pdat, select = c("Depression","Anxiety","Joy"),
+            partial = TRUE) # for partial correlations
 
 
-res <- corr.test(pdat[,c("Depression","Anxiety","Joy")],
-                 method = "spearman", use = "complete")
-# `use = "complete"` to only use full cases for all correlations!
-print(res, short = FALSE)
-
-
-
-# The `psych` package has a lot more correlation-related things... We will meet
-# some of them next semester.
-# The `ppcor` also offers partial and semi-partial (part) correlations. You
-# might also find the `correlation` package interesting for quick (and tidy)
-# exploration and visualization of correlations.
-
+# correlation() akso supports group_by()!
+library(dplyr)
+pdat |>
+  group_by(Group) |>
+  correlation(select = c("Depression","Anxiety","Joy"))
 
 
 # Proportion test ---------------------------------------------------------
@@ -130,9 +129,13 @@ contingencyTableBF(cont_table, sampleType = "jointMulti")
 cramers_v(cont_table)
 
 
-# Chi-sqaured for goodness of fit
+
+## Goodness of fit ----
 group_table <- table(pdat$Group)
+group_table
 chisq.test(group_table, p = c(0.2,0.4,0.4))
+
+phi(group_table, p = c(0.2,0.4,0.4))
 
 
 # Exercise ----------------------------------------------------------------
@@ -141,10 +144,12 @@ chisq.test(group_table, p = c(0.2,0.4,0.4))
 #   - What is Cohen's d?
 #   - What is the Bayes Factor for this difference?
 # 2. What is the correlation between the Cond_A and Cond_B scores?
-# 3. Both frequentist and Bayesian tests support one sided tests... Conduct a
-#   one sided:
+# 3. Both frequentist and Bayesian tests (and effect sizes) support one sided
+#   tests... Conduct a one sided:
 #   - Frequentist correlation test (from Question 2).
 #   - Bayesian t test (from Question 1).
 #   How do these affect the results (compared to the two-sided test)?
-
-
+#   See also:
+?effectsize_CIs
+# 4. Look at one of the tests conducted above. How would you visually represent
+#   the results? Try to plot a relevant plot with ggplot2.

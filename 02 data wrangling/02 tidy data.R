@@ -3,8 +3,8 @@ library(tidyverse)
 
 data_raw <- read.csv("data/deaf_numer.csv")
 
-data_clean <- data_raw %>%
-  select(sID, nFingers, rt) %>%
+data_clean <- data_raw |>
+  select(sID, nFingers, rt) |>
   filter(rt < 2500)
 
 
@@ -26,7 +26,7 @@ head(subject_info)
 
 
 # We can easily JOIN these data according to some key - the subject.
-data_clean_joined <- data_clean %>%
+data_clean_joined <- data_clean |>
   full_join(subject_info, by = "sID")
 head(data_clean_joined, n = 12)
 
@@ -55,7 +55,7 @@ head(emotionalWM)
 # To make this data tidy, we need to make it LONG (it is now WIDE).
 # We can do this with `pivot_longer()`:
 
-emotionalWM_long <- emotionalWM %>%
+emotionalWM_long <- emotionalWM |>
   pivot_longer(
     cols = positive_average:negative_O2,
     names_to = "condition",
@@ -70,7 +70,7 @@ head(emotionalWM_long)
 
 ## Long to wide ----
 
-emotionalWM_long <- emotionalWM %>%
+emotionalWM_long <- emotionalWM |>
   pivot_longer(
     cols = positive_average:negative_O2,
     names_sep = "_",
@@ -86,7 +86,7 @@ head(emotionalWM_long)
 
 # Sometimes we might want to take long form data and make it wide.
 # We can do this with `pivot_wider()`
-emotionalWM_wide_again <- emotionalWM_long %>%
+emotionalWM_wide_again <- emotionalWM_long |>
   pivot_wider(
     names_from = c("emotion", "area"),
     values_from = "mV"

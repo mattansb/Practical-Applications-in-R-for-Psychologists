@@ -2,8 +2,9 @@
 library(dplyr)
 library(parameters)
 library(performance) # for `compare_performance()`
-library(emmeans) # for simple slope analysis
-library(ggeffects) # for model plotting
+library(bayestestR)  # for `bayesfactor_models()`
+library(emmeans)     # for simple slope analysis
+library(ggeffects)   # for model plotting
 
 parental_iris <- read.csv("parental_iris.csv")
 
@@ -22,9 +23,11 @@ head(parental_iris)
 # Categorical moderator ---------------------------------------------------
 
 # Let's prep the data for modeling:
-parental_iris <- parental_iris %>%
-  mutate(attachment = relevel(factor(attachment), ref = "secure"),
-         involvement_c = scale(parental_involvement, center = TRUE, scale = FALSE))
+parental_iris <- parental_iris |>
+  mutate(
+    attachment = relevel(factor(attachment), ref = "secure"),
+    involvement_c = scale(parental_involvement, center = TRUE, scale = FALSE)
+  )
 # Here we don't want to get z scores (or maybe we do?) just to center the
 # variable around 0.
 
@@ -33,6 +36,7 @@ parental_iris <- parental_iris %>%
 
 
 ## 1. Fit the model(s) ----------------------------------------------------
+
 m_additive <- lm(child_satisfaction ~ involvement_c + attachment,
                  data = parental_iris)
 
@@ -44,8 +48,12 @@ m_moderation <- lm(child_satisfaction ~ involvement_c + attachment + involvement
 m_moderation <- lm(child_satisfaction ~ involvement_c * attachment,
                    data = parental_iris)
 
-anova(m_additive, m_moderation)
+
+# Does the model with an interaction have a better fit?
 compare_performance(m_additive, m_moderation)
+anova(m_additive, m_moderation)
+bayesfactor_models(m_moderation, denominator = m_additive)
+
 
 
 # Look at the parameters. What do they mean?
@@ -63,17 +71,18 @@ model_parameters(m_moderation)
 # are the different estimates the model can give us - the simple (conditional)
 # slopes.
 
-emtrends(m_moderation, ~ attachment, var = "involvement_c") %>%
-  summary(infer = TRUE)
+emtrends(m_moderation, ~ attachment, var = "involvement_c",
+         infer = TRUE)
 
 # we can also use contrasts here to COMPARE slopes:
-emtrends(m_moderation, ~ attachment, var = "involvement_c") %>%
-  contrast(method = "pairwise")
+emtrends(m_moderation, ~ attachment, var = "involvement_c") |>
+  contrast(method = "pairwise",
+           infer = TRUE)
 
 
 ## Plot
-plot(ggemmeans(m_moderation, c("involvement_c","attachment")),
-     add.data = TRUE, jitter = 0)
+ggemmeans(m_moderation, c("involvement_c","attachment")) |>
+  plot(add.data = TRUE, jitter = 0)
 
 
 
@@ -81,8 +90,9 @@ plot(ggemmeans(m_moderation, c("involvement_c","attachment")),
 
 # Continuous moderator ----------------------------------------------------
 
+
 ## Prep the data
-parental_iris <- parental_iris %>%
+parental_iris <- parental_iris |>
   mutate(strictness_c = scale(parental_strictness, TRUE, FALSE))
 
 
@@ -95,8 +105,10 @@ m_moderation <- lm(child_satisfaction ~ involvement_c * strictness_c,
                    data = parental_iris)
 
 # compare models:
-anova(m_additive, m_moderation)
 compare_performance(m_additive, m_moderation)
+anova(m_additive, m_moderation)
+bayesfactor_models(m_additive, m_moderation)
+
 
 
 # Look at the parameters. What do they mean?
@@ -112,6 +124,18 @@ model_parameters(m_moderation)
 ## 2. Explore the model  --------------------------------------------------
 # simple slope analysis!
 
+emtrends(m_moderation, ~ strictness_c, var = "involvement_c")
+# Unfortunately, emmeans/emmtrends reduce covariables (numerical predictors) to
+# their mean! If we want to probe the moderation at other multiple values, we
+# have two ways to do so:
+
+
+
+
+
+### A. Probe with a function --------
+# We build a function that is used to define the values we want.
+# A popular option is:
 mean_plus_minus_sd <- function(x) {
   m <- mean(x)
   s <- sd(x)
@@ -119,16 +143,32 @@ mean_plus_minus_sd <- function(x) {
   c(m - s, m, m + s)
 }
 
+
+
 emtrends(m_moderation, ~strictness_c, "involvement_c",
-         # Condition on the mean+-sd of `strictness_c`:
-         cov.reduce = list(strictness_c = mean_plus_minus_sd)) %>%
-  summary(infer = TRUE)
+         # Reduce `strictness_c` to its mean+-sd:
+         cov.reduce = list(strictness_c = mean_plus_minus_sd),
+         infer = TRUE)
 
 
-plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")),
-     add.data = TRUE, jitter = 0)
-# See how ggemmeans took the mean +- sd? So smart...
+ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")) |>
+  plot(add.data = TRUE, jitter = 0)
 
+
+
+
+
+### B. Pick-a-point --------
+# We can also ask for specific values at which to probe:
+
+emtrends(m_moderation, ~strictness_c, "involvement_c",
+         # Probe when `strictness_c` is -4, 78
+         at = list(strictness_c = c(-4, 78)),
+         infer = TRUE)
+
+
+ggemmeans(m_moderation, c("involvement_c","strictness_c [-4, 78]")) |>
+  plot(add.data = TRUE, jitter = 0)
 
 
 
@@ -152,12 +192,16 @@ plot(ggemmeans(m_moderation, c("involvement_c","strictness_c [meansd]")),
 
 # Exercise ----------------------------------------------------------------
 
-# 1. Using the `interactions` package, plot a Johnson-Neyman plot
-#   (`interactions::johnson_neyman()`). What does it do? (Note, both the
-#   predictor and the moderator must be continuous.)
+# 1. The `modelbased::estimate_slopes()` function can be used to plot a
+#    Johnson-Neyman plot. What does it do? (Hint, read the axis titles.)
+slope_grid <- modelbased::estimate_slopes(m_moderation,
+                                          trend = "involvement_c",
+                                          at = "strictness_c", length = 100)
+plot(slope_grid)
+
 # 2. Fit the same moderation model with the original *non-centered* predictors.
-#   How does it differ from the moderation model with the centered predictors?
-#   A. How do the parameters differ? Interpret them.
-#   B. How does the model fit (R^2) differ?
-#   C. How do the simple slopes analysis differ?
+#    How does it differ from the moderation model with the centered predictors?
+#    A. How do the parameters differ? Interpret them.
+#    B. How does the model fit (R^2) differ?
+#    C. How do the simple slopes analysis differ?
 

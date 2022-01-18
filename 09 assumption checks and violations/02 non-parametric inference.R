@@ -1,3 +1,4 @@
+
 library(permuco)    # for permutation tests
 library(parameters) # for model_bootstrap
 
@@ -30,6 +31,10 @@ summary(modp) # why so many p-values??
 
 bootstrap_parameters(mod, iterations = 599) # uses quantile CIs
 # how do the permutation results and the bootstrap results differ?
+
+
+
+
 
 
 # For more complex models more complex methods are required for permutation

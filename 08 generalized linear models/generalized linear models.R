@@ -19,14 +19,14 @@
 # Suggested reading: Chapter 15 in Fox, J. (2015). Applied regression analysis
 # and generalized linear models. Sage Publications.
 
-
+library(dplyr)
 library(parameters)
 library(performance)
 library(ggeffects)
 library(emmeans)
 
-depression_language <- read.csv("depression_language.csv")
-depression_language$is.depressed <- factor(depression_language$is.depressed)
+depression_language <- read.csv("depression_language.csv") |>
+  mutate(is.depressed = factor(is.depressed))
 head(depression_language)
 # The variables:
 #              is.depressed : is the participant depressed?
@@ -62,8 +62,8 @@ head(depression_language)
 ## I. Fit the model --------------------------------------------------------
 
 fit <- glm(is.depressed ~ mean_valence,
-           data = depression_language,
-           family = binomial()) # we need to specify the family!
+           family = binomial(link = "logit"), # we need to specify the family!
+           data = depression_language)
 
 
 model_parameters(fit)
@@ -95,7 +95,7 @@ model_performance(fit)
 # The coefficients are the log of the change in odds (change in odds is also
 # called the odds ratio: OR). To get the change in odds ratio (that is
 # P(y==1) / (1 - P(y==1))), we can:
-exp(coef(fit)) # get the odds-change
+coef(fit) |> exp() # get the odds-change
 
 
 # From this we can learn that:
@@ -115,11 +115,15 @@ exp(coef(fit)) # get the odds-change
 # We can use the `plogis()` function to convert mu to P(y==1):
 plogis(2.76 + -0.48 * 6)
 # we can also use the `qlogis()` to convert P(y==1) to mu:
-qlogis(0.47)
+qlogis(-0.12)
 
 # Note that change in odds are easier to interpret when the predictor is
 # categorical, where we can compare groups. But for continuous predictors, we
 # need to use the **pick-a-point** to see the change between the two points!
+
+
+
+
 
 
 
@@ -142,6 +146,11 @@ predict(fit, type = "response")
 # semester in the Machine Learning module.
 
 
+
+
+
+
+
 ## II. Explore the model ---------------------------------------------------
 ## Follow-up analyses: on the link vs response scale
 
@@ -151,14 +160,14 @@ predict(fit, type = "response")
 # cares about the log of the odds??).
 
 # `ggeffects` plots the response scale by default:
-plot(ggemmeans(fit, "mean_valence [all]"), add.data = TRUE)
+ggemmeans(fit, "mean_valence [all]") |> plot(add.data = TRUE)
 
 
 # For `emmeans`, we need only add `type = "response"` to get the estimates on
 # the response scale. (Note we are using the `at` argument for the pick-a-point
 # analysis.)
 (em_resp <- emmeans(fit, ~ mean_valence,
-                    at = list(mean_valence = c(5,4)),
+                    at = list(mean_valence = c(5, 4)),
                     type = "response"))
 
 contrast(em_resp, method = "pairwise")
@@ -167,7 +176,7 @@ contrast(em_resp, method = "pairwise")
 
 # Compare to the log-odds link - very hard to interpret:
 (em_logit <- emmeans(fit, ~ mean_valence,
-                     at = list(mean_valence = c(5,4))))
+                     at = list(mean_valence = c(5, 4))))
 contrast(em_logit, method = "pairwise")
 
 
@@ -196,8 +205,8 @@ contrast(em_logit, method = "pairwise")
 # Rate Ratio), which is what is usually reported for comparisons.
 
 fit2 <- glm(neg_emotion_words_count ~ is.depressed,
-            data = depression_language,
-            family = poisson())
+            family = poisson(link = "log"), # family!
+            data = depression_language)
 
 model_parameters(fit2)
 model_parameters(fit2, standardize = "basic")
@@ -217,9 +226,10 @@ model_performance(fit2)
 
 # Even MORE ---------------------------------------------------------------
 
-# Logistic and Poisson regression models are the most popular GLMs, but they are
-# by no means the only ones! There are models for *ordinal* outcomes, for
-# *truncated* outcomes, for *reaction times*, and more and more and more...
+# Logistic and Poisson regression models are the most popular GLMs in
+# psychology, but they are by no means the only ones! There are models for
+# *ordinal* outcomes, for *truncated* outcomes, for *reaction times*, and more
+# and more and more...
 #
 # See a short review of the different outcomes and their corresponding models
 # and packages: https://strengejacke.github.io/mixed-models-snippets/overview_modelling_packages
@@ -228,15 +238,28 @@ model_performance(fit2)
 
 # Exercise ----------------------------------------------------------------
 
+anxiety_adhd <- read.csv("anxiety_adhd.csv") |>
+  mutate(
+    sex = factor(sex),
+    # we will "diagnose" anyone with more than 4 symptoms as having ADHD
+    ADHD_rx = factor(ADHD_symptoms >= 4, labels = c("TD", "ADHD"))
+  )
 
-# 1. Plot (with `ggeffects`) the relationship between depression and the RATE of
-#   negative words (in the Poisson model). Interpret these results.
-# 2. Build a second Poisson model with `mean_valence` as an additional
-#   predictor. Compare this model to the first model (use `anova()` - see
-#   ?anova.glm for how to get a test statistic and a p-value).
-# 3. Predict the number of negative words for a non-depressed person who found
-#   the words to have a mean_valence of 7.4.
-# 4. In Poisson models, we can also conduct an follow-up analysis (with
-#   `emmeans`) on the latent ("linear") or on the outcome ("response") level.
-#   Compare the levels of `is.depressed` on both levels.
+# 1. Predict the probability of having ADHD from sex. What is the probability of
+#   having ADHD in both sexes? Use emmeans().
+# 2. Build a second model with `anxiety` as an additional predictor. Compare
+#   this model to the first model (use `anova()` - see ?anova.glm for how to get
+#   a test statistic and a p-value).
+# 3. Plot (with `ggeffects`) the relationship between ADHD(rx) and anxiety.
+#   Interpret these results.
+# 4. What is the probability of ADHD for a female with {anxiety = -1}?
+#
+# 5. Going back to the Poisson model above: in Poisson models, we can also
+#   conduct an follow-up analysis (with `emmeans`) on the latent ("linear") or
+#   on the outcome ("response") level. Compare the levels of `is.depressed` on
+#   both levels.
+#
+# *. Conduct a Chi-square test for independence between ADHD_rx and sex.
+#   How do these results differ compared to the binomial model from (1).
+
 

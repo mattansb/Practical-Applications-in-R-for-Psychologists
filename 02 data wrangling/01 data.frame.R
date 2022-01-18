@@ -102,7 +102,7 @@ school_grades_clean
 
 
 
-# install.packages(c("tidyverse", "haven))
+# install.packages(c("tidyverse", "haven"))
 library(haven) # for importing and exporting 'SPSS' file :(
 library(tidyverse)
 # You only need to install packages once, but you need to load them (with
@@ -138,6 +138,7 @@ data_raw <- read_spss("data/deaf_numer.sav")
 
 str(data_raw)
 glimpse(data_raw) # better!
+pairs(data_raw[1:100, ])
 
 
 # emotional_1back:
@@ -147,8 +148,6 @@ glimpse(data_raw) # better!
 # block    - experimental block
 # acc      - accuracy: 1 correct, 0 error
 # rt       - reaction time
-
-
 
 
 ## How does R know where the file is? ------------------
@@ -233,16 +232,16 @@ View(data_clean)
 # There are many packages that can help with manipulating, recoding and
 # transforming data.
 #
-# `dplyr` itself has some useful functions that can be used in `mutate()`
+# `dplyr` itself has some useful functions that can be used inside `mutate()`
 # functions (https://dplyr.tidyverse.org/reference/index.html#section-vector-functions),
-# but a real powerhouse is the `sjmisc` package - see examples: http://strengejacke.de/sjmisc-cheatsheet.pdf.
+# and another real powerhouse is the `sjmisc` package - see examples: http://strengejacke.de/sjmisc-cheatsheet.pdf.
 
 
 
-## Piping with %>% ("and then") -------------------------------------------
+## Piping with  |>  ("and then") -------------------------------------------
 
 
-# The aim of the pipe (%>%) is to make code more human readable.
+# The aim of the pipe (|>) is to make code more human readable.
 
 # For example this:
 sqrt(mean(c(1,2,3,4,NA), na.rm = TRUE))
@@ -260,8 +259,8 @@ sqrt(
 
 
 # But using the pipe...
-c(1,2,3,4,NA) %>%
-  mean(na.rm = TRUE) %>%
+c(1,2,3,4,NA) |>
+  mean(na.rm = TRUE) |>
   sqrt()
 # amazing!
 
@@ -271,13 +270,8 @@ c(1,2,3,4,NA) %>%
 # When reading code aloud we will say "and then".
 
 
-# The pipe will always* "send" the results from the left, into the FIRST
+# The pipe will always* "send" the results from the left, into the FIRST unnamed
 # argument of the function on the right.
-# ...unless we explicitly tell it otherwise, with the dot (`.`).
-# For example:
-TRUE %>%
-  mean(c(1,2,3,4,NA), na.rm = .) %>%
-  sqrt()
 
 
 
@@ -285,17 +279,23 @@ TRUE %>%
 # philosophy. For example, because the `dplyr` function all take a *data frame*
 # as the FIRST argument, and also all RETURN a data frame, we can PIPE `dplyr`
 # functions:
-data_clean_piped <- data_raw %>%
-  select(sID, nFingers, rt) %>%
-  filter(rt < 2500) %>%
+data_clean_piped <- data_raw |>
+  select(sID, nFingers, rt) |>
+  filter(rt < 2500) |>
   mutate(sqrt_rt = sqrt(rt),
-         rt = rt / 1000) %>%
-  group_by(nFingers) %>%
-  mutate(rt_z = scale(rt)) %>%
+         rt = rt / 1000) |>
+  group_by(nFingers) |>
+  mutate(rt_z = scale(rt)) |>
   ungroup()
 
 # This pipe does all the things we did above:
 all.equal(data_clean, data_clean_piped)
+
+
+
+# Sometimes you will see this type of pipe %>% - it is sort of an older version
+# of the |> pipe, and in 99% of cases they both do the same thing.
+
 
 
 
@@ -309,6 +309,8 @@ write.csv(data_clean_piped, file = "data_clean.csv") # read.csv() into object
 # save to a `.sav` file
 write_sav(data_clean_piped, path = "data_clean.sav")
 # BUT WHY??????????? NOOOOOOOOOO
+
+
 
 
 # save to a `.rds` file
@@ -329,7 +331,7 @@ saveRDS(xlist, file = "some list I made.Rds")
 
 
 
-# we can also save multiple objects into `.rdata` files (Don't!!):
+# we can also save multiple objects into `.rdata` files (BUT DON'T!!):
 save(data_clean_piped, xlist, file = "selected_objects.rdata")
 # Or the whole current environment (Don't!!!!)
 save.image(file = "all_objects.rdata")
@@ -345,15 +347,15 @@ save.image(file = "all_objects.rdata")
 
 data_raw <- read.csv("data/deaf_numer.csv")
 # (Try to do the following with dplyr functions.)
-# 1. Create a Group variable: (the RA forgot to do it...)
-#        - For Subject <= 15, Group should be 1,
+# 1. Create a `Group` variable: (the RA forgot to do it...)
+#        - For Subject (`sID`) <= 15, Group should be 1,
 #        - For Subject >  15, Group should be 2.
 #    TIP: use `ifelse()`
-#    (see `02 control_and_functions.R` from last lesson)
+#    (see `02 flow control.R` from last lesson)
 # 2. remove the first, practice block (Where block == 1)
 # 3. remove trials following an error
 #    TIP: use `lag()`
-# 4. remove error trials (where ACC == 0)
+# 4. remove error trials (where `acc` == 0)
 # 5. remove RTs that fall beyond +/- 2 SD from *each participant's*
 #    mean in *each* of the "finger" conditions.
 # 6. create the variable `vib_strength`, randomly sampled from
@@ -366,5 +368,5 @@ data_raw <- read.csv("data/deaf_numer.csv")
 #        - an Rds file
 #        - a csv file
 
-# 9. Rewrite this ugly code using the pipe (%>%):
+# 9. Rewrite this ugly code using the pipe (|>):
 diff(range(sample(head(iris[[1]], n = 10), size = 5, replace = TRUE)))
