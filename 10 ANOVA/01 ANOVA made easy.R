@@ -58,7 +58,7 @@ head(Phobia)
 
 ## 1. Build a model ----
 m_aov <- aov_ez(id = "ID", dv = "BehavioralAvoidance",
-                between = c("Condition", "Phobia"),
+                between = c("Condition", "Gender"),
                 data = Phobia,
                 anova_table = list(es = "pes")) # pes = partial eta squared
 
@@ -76,13 +76,12 @@ eta_squared(m_aov, partial = TRUE)
 
 
 ## 2. Explore the model ----
-ggemmeans(m_aov, c("Condition", "Phobia")) |>
+ggemmeans(m_aov, c("Condition", "Gender")) |>
   plot(add.data = TRUE, connect.lines = TRUE)
 # see also:
-# afex_plot(m_aov, ~ Condition, ~ Phobia)
+# afex_plot(m_aov, ~ Condition, ~ Gender)
 
 
-#
 
 
 
@@ -121,11 +120,10 @@ head(mindful_work_stress)
 # 1. One row per each OBSERVATION,
 # 2. A column for each variable (including the subject ID!)
 # 3. Repeated measures are stored across rows.
-library(tidyr)
 mindful_work_stress_long <- mindful_work_stress |>
-  pivot_longer(cols = c(T1,T2),
-               names_to = "Time",
-               values_to = "work_stress")
+  tidyr::pivot_longer(cols = c(T1,T2),
+                      names_to = "Time",
+                      values_to = "work_stress")
 
 head(mindful_work_stress_long)
 

@@ -15,14 +15,14 @@ library(ggeffects) # for plotting
 # What conditional (simple) effects does it look like we have here?
 
 coffee_data <- read.csv('coffee.csv')
-coffee_data$time <- factor(coffee_data$time,levels = c('morning','noon','afternoon'))
+coffee_data$time <- factor(coffee_data$time, levels = c('morning', 'noon', 'afternoon'))
 head(coffee_data)
 
 
 
 
-coffee_fit <- aov_ez('ID','alertness',coffee_data,
-                     within = c('time','coffee'),
+coffee_fit <- aov_ez('ID', 'alertness', coffee_data,
+                     within = c('time', 'coffee'),
                      between = 'sex',
                      anova_table = list(es = "pes"))
 
@@ -38,6 +38,11 @@ ggemmeans(coffee_fit, c("time", "coffee", "sex")) |>
 
 # We will be looking at the Coffee-by-Time interaction.
 
+
+
+# === NOTE ===
+# The model we used here is an ANOVA - but what follows is applicable to any
+# type of multiple regression with categorical predictors.
 
 
 
@@ -78,15 +83,16 @@ em_time.coffee
 
 # Here too we can use both types of methods:
 contrast(em_time.coffee, method = "consec", by = "coffee") # note p-value correction
+contrast(em_time.coffee, method = "poly", by = "coffee") # note p-value correction
+
 
 
 w.time <- data.frame(
-  "wakeup vs later" = c(-2, 1, 1) / 2, # make sure each "side" sums to 1!
-  "wakeup vs later2" = c(-2, 1, 1),    # (Let's see why this matters)
+  "wakeup vs later" = c(-2, 1, 1) / 2, # make sure each "side" sums to (+/-)1!
   "start vs end of day" = c(-1, 0, 1)
 )
-w.time
-
+w.time # Are these orthogonal contrasts?
+cor(w.time)
 
 contrast(em_time.coffee, method = w.time, by = "coffee")
 
@@ -98,7 +104,7 @@ contrast(em_time.coffee, method = w.time, by = "coffee")
 # Follow-Up: Interaction Contrasts ----------------------------------------
 
 # After seeing the conditional contrasts - the contrasts for the effect of time
-# within the levels of coffee, we can now ask: to there contrasts DIFFER BETWEEN
+# within the levels of coffee, we can now ask: do these contrasts DIFFER BETWEEN
 # the levels of coffee?
 
 
@@ -130,7 +136,7 @@ contrast(em_time.coffee, interaction = list(time = w.time, coffee = "pairwise"))
 # Exercise ----------------------------------------------------------------
 
 
-# Explore the sex-by-time interaction using all the step from above.
+# Explore the sex-by-time interaction using all the steps from above.
 # Answer these questions:
 # A. Which sex is the most alert in the morning?
 # B. What is the difference between noon and the afternoon for males?

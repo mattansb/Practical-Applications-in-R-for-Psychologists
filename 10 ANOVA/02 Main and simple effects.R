@@ -12,7 +12,7 @@ head(Phobia)
 
 
 m_aov <- aov_ez(id = "ID", dv = "BehavioralAvoidance",
-                between = c("Condition", "Phobia"),
+                between = c("Condition", "Gender"),
                 data = Phobia,
                 anova_table = list(es = "pes")) # pes = partial eta squared
 
@@ -36,17 +36,22 @@ m_aov
 
 
 
+# === NOTE ===
+# The model we used here is an ANOVA - but what follows is applicable to any
+# type of multiple regression with categorical predictors.
 
 
 
-## A. Main Effect Analysis (Phobia) ========
+
+
+## A. Main Effect Analysis (Condition) ========
 # We are looking at a main effect in a 2-way design, so this means we are
-# averaging over the levels sex and coffee.
+# averaging over the levels Gender.
 
 
-# Only the main effect for Phobia was significant. Let's conduct a contrast on
+# Only the main effect for Condition was significant. Let's conduct a contrast on
 # the main effect.
-ggemmeans(m_aov, "Phobia") |>
+ggemmeans(m_aov, "Condition") |>
   plot(add.data = TRUE, connect.lines = TRUE)
 
 
@@ -54,7 +59,7 @@ ggemmeans(m_aov, "Phobia") |>
 
 
 ### Step 1. Get estimated means ----
-(em_Phobia <- emmeans(m_aov, ~ Phobia))
+(em_Condition <- emmeans(m_aov, ~ Condition))
 # Note the footnote!
 
 
@@ -63,7 +68,7 @@ ggemmeans(m_aov, "Phobia") |>
 
 
 ### Step 2. Estimate the contrasts ----
-contrast(em_Phobia, method = "consec") # consecutive differences
+contrast(em_Condition, method = "pairwise")
 
 
 ?`emmc-functions` # see for different types of built-in contrast weights.
@@ -71,16 +76,13 @@ contrast(em_Phobia, method = "consec") # consecutive differences
 
 # But we can also build custom contrast weights!
 w <- data.frame(
-  "Mild vs Other2" = c(-2, 1, 1) / 2, # make sure each "side" sums to 1!
-  "Mild vs Other" = c(-2, 1, 1),
-  "Moderate vs Severe" = c(0, -1, 1)
+  "Implosion vs Other2" = c(-1, 2, -1) / 2, # make sure each "side" sums to 1!
+  "Implosion vs Other" = c(-1, 2, -1),
+  "Desens vs CBT" = c(-1, 0, 1)
 )
+w
 
-
-contrast(em_Phobia, method = w)
-
-
-
+contrast(em_Condition, method = w)
 
 
 
@@ -91,13 +93,16 @@ contrast(em_Phobia, method = w)
 
 
 
-## B. Simple Effect Analysis (Phobia by Condition) ========
+
+
+
+## B. Simple Effect Analysis (Condition by Gender) ========
 
 
 # A "simple" effect, is the effect of some variable, conditional on some other
 # variable.
 
-ggemmeans(m_aov, c("Phobia", "Condition")) |>
+ggemmeans(m_aov, c("Condition", "Gender")) |>
   plot(add.data = TRUE, connect.lines = TRUE, facet = TRUE)
 
 
@@ -105,8 +110,8 @@ ggemmeans(m_aov, c("Phobia", "Condition")) |>
 
 # We can "split" our model *by* some variable to see the effects conditional on
 # its levels. For example, we can look at each Condition to see test if there
-# are differences between the levels of Phobia within each condition:
-joint_tests(m_aov, by = "Condition")
+# are differences between the levels of Gender within each condition:
+joint_tests(m_aov, by = "Gender")
 
 
 
@@ -115,14 +120,29 @@ joint_tests(m_aov, by = "Condition")
 
 
 ### Step 1. Get estimated means ----
- (em_Phobia_by_Condition <- emmeans(m_aov, ~ Phobia + Condition))
+(em_Condition_by_Gender <- emmeans(m_aov, ~ Condition + Gender))
 
 
 
 
 ### Step 2. Estimate the contrasts (conditionally) ----
-contrast(em_Phobia_by_Condition, method = "consec", by = "Condition")
-contrast(em_Phobia_by_Condition, method = w, by = "Condition")
+
+(c_simpeff <- contrast(em_Condition_by_Gender, method = "pairwise", by = "Gender"))
+
+# Note that we have an mvt correction for each of the 2 contrasts.
+# We can have any other type of correction:
+update(c_simpeff, adjust = "bonf")
+update(c_simpeff, adjust = "fdr")
+# Or even have the corrections done on all 6 contrasts:
+update(c_simpeff, adjust = "bonf", by = NULL) # by = NULL removes partitioning
+
+
+# Same, but with custom contrasts:
+contrast(em_Condition_by_Gender, method = w, by = "Gender")
+
+
+
+
 
 
 
@@ -130,8 +150,8 @@ contrast(em_Phobia_by_Condition, method = w, by = "Condition")
 
 # Exercise ----------------------------------------------------------------
 
-# A. Add `Gender` as a predictor in the Phobia*Condition ANOVA (making it a
-#    3-way between-Ss ANOVA)
+# A. Add `Phobia` as a predictor in the Condition*Gender ANOVA (making it a
+#    3-way between-subjects ANOVA)
 # B. What is the effect size of the Gender:Phobia interaction?
 # C. Explore the 2-way interaction between Condition:Phobia:
 #    - Plots
