@@ -272,6 +272,10 @@ c(1,2,3,4,NA) |>
 
 # The pipe will always* "send" the results from the left, into the FIRST unnamed
 # argument of the function on the right.
+# If we want to send to another argument, we can use the _ placeholder:
+TRUE |>
+  mean(c(1,2,3,4,NA), na.rm = _) |>
+  sqrt()
 
 
 
