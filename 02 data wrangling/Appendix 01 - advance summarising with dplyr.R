@@ -2,7 +2,7 @@
 library(dplyr)
 library(parameters) # for kurtosis & skewness
 
-e2b_data <- read.csv("emotional_2back.csv") |>
+e2b_data <- read.csv("data/emotional_2back.csv") |>
   mutate(Group = ifelse(Subject <= 30, 1, 2) |> factor(),
          Subject = factor(Subject),
          Emotion = factor(Emotion),
