@@ -86,7 +86,7 @@ ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) +
 
 ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) + 
   geom_density(mapping = aes(linetype = gender), 
-               size = 1, fill = "yellow", alpha = 0.4)
+               linewidth = 1, fill = "yellow", alpha = 0.4)
 # note that `linetype` is in `aes()` - so it varies according to some variable,
 # whereas shape, fill, and alpha (the opacity) are not inside `aes()` so there
 # are FIXED to a constant.
@@ -169,7 +169,7 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
   geom_point(aes(color = gender), alpha = 0.7, shape = 3) + 
   geom_smooth(aes(color = gender), method = "lm", 
-              size = 1.5, fill = "gray") + 
+              linewidth = 1.5, fill = "gray") + 
   facet_grid(cols = vars(urban),
              # We can change the facet labels:
              labeller = as_labeller(c("0" = "N/A", "1" = "Rural", "2" = "Suburban", "3" = "Urban"))) + 

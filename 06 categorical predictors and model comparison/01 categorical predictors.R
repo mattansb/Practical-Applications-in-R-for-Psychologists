@@ -121,7 +121,7 @@ model_parameters(fit_factor3) # what do there mean???
 
 
 ?contr.treatment # even more types...
-
+# We can also use weighted effect coding with the {wec} package.
 
 
 

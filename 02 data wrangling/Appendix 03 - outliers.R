@@ -1,5 +1,6 @@
 
 library(dplyr)
+library(datawizard)
 
 # There are many rules of thumb for defining what an outlier* IS (relative
 # thresholds, absolute thresholds). For the purposes of this demo, an outlier
@@ -10,7 +11,7 @@ tai_missing <- readRDS("data/tai_missing.Rds")
 head(tai_missing)
 
 (moEd_range <- tai_missing |>
-    summarise(range = c(-1.1,1.1) * IQR(moED) + median(moED)))
+    reframe(range = c(-1.1,1.1) * IQR(moED) + median(moED)))
 
 
 {
@@ -41,9 +42,7 @@ tai_no_OL <- tai_missing |>
 # Replace Extreme Values By Less Extreme Ones
 
 tai_winzorize_OL <- tai_missing |>
-  mutate(moED_win = DescTools::Winsorize(moED,
-                                         minval = -1.1 * IQR(moED) + median(moED),
-                                         maxval = 1.1 * IQR(moED) + median(moED)))
+  mutate(moED_win = winsorize(moED, threshold = c(5.6, 14.4), method = "raw"))
 
 # Compare -----------------------------------------------------------------
 

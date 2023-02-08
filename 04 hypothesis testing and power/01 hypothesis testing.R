@@ -135,7 +135,7 @@ group_table <- table(pdat$Group)
 group_table
 chisq.test(group_table, p = c(0.2,0.4,0.4))
 
-phi(group_table, p = c(0.2,0.4,0.4))
+fei(group_table, p = c(0.2,0.4,0.4))
 
 
 # Exercise ----------------------------------------------------------------

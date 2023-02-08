@@ -1,5 +1,6 @@
 
 library(dplyr)
+library(datawizard)
 library(parameters)
 library(performance) # for `compare_performance()`
 library(bayestestR)  # for `bayesfactor_models()`
@@ -26,7 +27,7 @@ head(parental_iris)
 parental_iris <- parental_iris |>
   mutate(
     attachment = relevel(factor(attachment), ref = "secure"),
-    involvement_c = scale(parental_involvement, center = TRUE, scale = FALSE)
+    involvement_c = center(parental_involvement)
   )
 # Here we don't want to get z scores (or maybe we do?) just to center the
 # variable around 0.
@@ -93,7 +94,7 @@ ggemmeans(m_moderation, c("involvement_c","attachment")) |>
 
 ## Prep the data
 parental_iris <- parental_iris |>
-  mutate(strictness_c = scale(parental_strictness, TRUE, FALSE))
+  mutate(strictness_c = center(parental_strictness))
 
 
 
@@ -134,20 +135,9 @@ emtrends(m_moderation, ~ strictness_c, var = "involvement_c")
 
 
 ### A. Probe with a function --------
-# We build a function that is used to define the values we want.
-# A popular option is:
-mean_plus_minus_sd <- function(x) {
-  m <- mean(x)
-  s <- sd(x)
-
-  c(m - s, m, m + s)
-}
-
-
-
 emtrends(m_moderation, ~strictness_c, "involvement_c",
          # Reduce `strictness_c` to its mean+-sd:
-         cov.reduce = list(strictness_c = mean_plus_minus_sd),
+         cov.reduce = list(strictness_c = mean_sd),
          infer = TRUE)
 
 
