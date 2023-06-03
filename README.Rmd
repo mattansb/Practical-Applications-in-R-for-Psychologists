@@ -82,12 +82,12 @@ get_src <- function(pkg) {
 This Github repo contains all lesson files for *Practical Applications in R for Psychologists*. The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots), and the foundations of **building, evaluating and comparing statistical models in `R`**, focusing on linear regression modeling (using both frequentist and Bayesian approaches).
 
 
-These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev, *Fall semester, 2021*), laying the foundation for the topic-focused courses (*Spring semester*):
+These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev), laying the foundation for the following topic-focused courses:
 
-- Hierarchical linear models (*HLM*).
-- [Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
+- [Hierarchical linear models (*HLM*)](https://github.com/mattansb/Hierarchical-Linear-Models-foR-Psychologists)
+- [Machine Learning (*ML*)](https://github.com/mattansb/Machine-Learning-foR-Psychologists)
 - [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
-- Machine Learning (*ML*).
+- [Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
 
 **Notes:**  
 

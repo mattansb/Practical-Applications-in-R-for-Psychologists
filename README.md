@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2023-02-08.*</sub>
+<sub>*Last updated 2023-06-03.*</sub>
 
 This Github repo contains all lesson files for *Practical Applications
 in R for Psychologists*. The goal is to impart students with the basic
@@ -18,15 +18,17 @@ frequentist and Bayesian approaches).
 
 These topics were taught in the graduate-level course ***Advanced
 Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University
-of the Negev, *Fall semester, 2021*), laying the foundation for the
-topic-focused courses (*Spring semester*):
+of the Negev), laying the foundation for the following topic-focused
+courses:
 
-- Hierarchical linear models (*HLM*).
-- [Analysis of Factorial Designs
-  (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
+- [Hierarchical linear models
+  (*HLM*)](https://github.com/mattansb/Hierarchical-Linear-Models-foR-Psychologists)
+- [Machine Learning
+  (*ML*)](https://github.com/mattansb/Machine-Learning-foR-Psychologists)
 - [Structural equation modelling
   (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
-- Machine Learning (*ML*).
+- [Analysis of Factorial Designs
+  (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)
 
 **Notes:**
 
@@ -87,37 +89,37 @@ Run on Windows 10 x64 (build 22621), with R version 4.2.2.
 
 The packages used here:
 
-- `afex` 1.2-1 (*CRAN*)
+- `afex` 1.3-0 (*CRAN*)
 - `BayesFactor` 0.9.12-4.4 (*CRAN*)
 - `bayesplot` 1.10.0 (*CRAN*)
-- `bayestestR` 0.13.0.2 (*Local version*)
-- `correlation` 0.8.3 (*CRAN*)
-- `datawizard` 0.6.5.5 (*Local version*)
-- `dplyr` 1.1.0 (*CRAN*)
-- `effectsize` 0.8.3.2 (*Local version*)
-- `emmeans` 1.8.4-1 (*CRAN*)
+- `bayestestR` 0.13.1 (*CRAN*)
+- `correlation` 0.8.4 (*CRAN*)
+- `datawizard` 0.7.1 (*CRAN*)
+- `dplyr` 1.1.1 (*CRAN*)
+- `effectsize` 0.8.3.11 (*Local version*)
+- `emmeans` 1.8.6 (*CRAN*)
 - `finalfit` 1.0.6 (*CRAN*)
-- `ggeffects` 1.1.5 (*CRAN*)
-- `ggplot2` 3.4.0 (*CRAN*)
-- `haven` 2.5.1 (*CRAN*)
-- `Hmisc` 4.7-2 (*CRAN*)
-- `insight` 0.19.0 (*CRAN*)
+- `ggeffects` 1.2.1.9 (*Github: strengejacke/ggeffects*)
+- `ggplot2` 3.4.2 (*CRAN*)
+- `haven` 2.5.2 (*CRAN*)
+- `Hmisc` 5.0-1 (*CRAN*)
+- `insight` 0.19.1 (*CRAN*)
 - `mediation` 4.5.0 (*CRAN*)
 - `mice` 3.15.0 (*CRAN*)
 - `modelbased` 0.8.6 (*CRAN*)
-- `parameters` 0.20.2 (*CRAN*)
-- `performance` 0.10.2 (*CRAN*)
+- `parameters` 0.21.0 (*CRAN*)
+- `performance` 0.10.3 (*CRAN*)
 - `permuco` 1.1.2 (*CRAN*)
-- `psych` 2.2.9 (*CRAN*)
-- `psychTools` 2.2.9 (*CRAN*)
+- `psych` 2.3.3 (*CRAN*)
+- `psychTools` 2.3.3 (*CRAN*)
 - `pwr` 1.3-0 (*CRAN*)
 - `qqplotr` 0.0.6 (*CRAN*)
 - `ragg` 1.2.5 (*CRAN*)
-- `readxl` 1.4.1 (*CRAN*)
-- `see` 0.7.4 (*CRAN*)
+- `readxl` 1.4.2 (*CRAN*)
+- `see` 0.7.5 (*CRAN*)
 - `summarytools` 1.0.1 (*CRAN*)
 - `tidyr` 1.3.0 (*CRAN*)
 - `tidySEM` 0.2.3 (*CRAN*)
-- `tidyverse` 1.3.2 (*CRAN*)
+- `tidyverse` 2.0.0 (*CRAN*)
 
 </details>
