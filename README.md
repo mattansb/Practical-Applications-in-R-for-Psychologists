@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2023-06-03.*</sub>
+<sub>*Last updated 2023-06-11.*</sub>
 
 This Github repo contains all lesson files for *Practical Applications
 in R for Psychologists*. The goal is to impart students with the basic
@@ -57,7 +57,7 @@ You will need:
 | [05 regression 101](/05%20regression%20101)                                                                 | [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`parameters`](https://CRAN.R-project.org/package=parameters), [**`performance`**](https://CRAN.R-project.org/package=performance), [**`ggeffects`**](https://CRAN.R-project.org/package=ggeffects), [**`psychTools`**](https://CRAN.R-project.org/package=psychTools)                                                                                                                                                                                                                                                                                                                                                             |
 | [06 categorical predictors and model comparison](/06%20categorical%20predictors%20and%20model%20comparison) | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [**`emmeans`**](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [**`bayestestR`**](https://CRAN.R-project.org/package=bayestestR), [`performance`](https://CRAN.R-project.org/package=performance)                                                                                                                                                                                                                                                                                                                  |
 | [07 moderation and curvilinear](/07%20moderation%20and%20curvilinear)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`datawizard`](https://CRAN.R-project.org/package=datawizard), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`bayestestR`](https://CRAN.R-project.org/package=bayestestR), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [**`modelbased`**](https://CRAN.R-project.org/package=modelbased), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)                                                                                                                               |
-| [08 generalized linear models](/08%20generalized%20linear%20models)                                         | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`emmeans`](https://CRAN.R-project.org/package=emmeans)                                                                                                                                                                                                                                                                                                                                                                                         |
+| [08 generalized linear models](/08%20generalized%20linear%20models)                                         | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [**`marginaleffects`**](https://CRAN.R-project.org/package=marginaleffects)                                                                                                                                                                                                                                                                                                            |
 | [09 assumption checks and violations](/09%20assumption%20checks%20and%20violations)                         | [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`performance`](https://CRAN.R-project.org/package=performance), [**`see`**](https://CRAN.R-project.org/package=see), [**`bayesplot`**](https://CRAN.R-project.org/package=bayesplot), [**`qqplotr`**](https://CRAN.R-project.org/package=qqplotr), [`datawizard`](https://CRAN.R-project.org/package=datawizard), [**`permuco`**](https://CRAN.R-project.org/package=permuco), [`parameters`](https://CRAN.R-project.org/package=parameters), [**`insight`**](https://CRAN.R-project.org/package=insight)                                                                                                                           |
 | [10 ANOVA](/10%20ANOVA)                                                                                     | [**`afex`**](https://CRAN.R-project.org/package=afex), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`tidyr`](https://CRAN.R-project.org/package=tidyr)                                                                                                                                                                                                                                                                                                                                                                                                   |
 | [11 mediation](/11%20mediation)                                                                             | [**`mediation`**](https://CRAN.R-project.org/package=mediation), [**`tidySEM`**](https://CRAN.R-project.org/package=tidySEM)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -72,10 +72,10 @@ You can install all the packages used by running:
     pkgs <- c(
       "afex", "BayesFactor", "bayesplot", "bayestestR", "correlation",
       "datawizard", "dplyr", "effectsize", "emmeans", "finalfit", "ggeffects",
-      "ggplot2", "haven", "Hmisc", "insight", "mediation", "mice",
-      "modelbased", "parameters", "performance", "permuco", "psych",
-      "psychTools", "pwr", "qqplotr", "ragg", "readxl", "see", "summarytools",
-      "tidyr", "tidySEM", "tidyverse"
+      "ggplot2", "haven", "Hmisc", "insight", "marginaleffects", "mediation",
+      "mice", "modelbased", "parameters", "performance", "permuco",
+      "psych", "psychTools", "pwr", "qqplotr", "ragg", "readxl", "see",
+      "summarytools", "tidyr", "tidySEM", "tidyverse"
     )
 
     install.packages(pkgs, repos = c("https://easystats.r-universe.dev", getOption("repos")))
@@ -104,6 +104,7 @@ The packages used here:
 - `haven` 2.5.2 (*CRAN*)
 - `Hmisc` 5.0-1 (*CRAN*)
 - `insight` 0.19.1 (*CRAN*)
+- `marginaleffects` 0.11.2 (*CRAN*)
 - `mediation` 4.5.0 (*CRAN*)
 - `mice` 3.15.0 (*CRAN*)
 - `modelbased` 0.8.6 (*CRAN*)
