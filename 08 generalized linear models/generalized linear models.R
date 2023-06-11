@@ -26,7 +26,9 @@ library(ggeffects)
 library(emmeans)
 
 depression_language <- read.csv("depression_language.csv") |>
-  mutate(is.depressed = factor(is.depressed))
+  mutate(
+    is.depressed = factor(is.depressed)
+  )
 head(depression_language)
 # The variables:
 #              is.depressed : is the participant depressed?

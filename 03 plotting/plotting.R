@@ -7,8 +7,10 @@ library(dplyr)
 # (data from https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses)
 df_NPAS <- read.csv("NPAS data.csv") |> 
   tidyr::drop_na(Q1:Q26, gender, age) |> # this is similar to na.omit() but for specific vars
-  mutate(Nerdy = across(Q1:Q26, .fns = as.numeric) |> rowMeans(na.rm = TRUE),
-         gender = factor(gender, levels = c(2, 1, 3), labels = c("woman", "man", "other"))) |>
+  mutate(
+    Nerdy = across(Q1:Q26, .fns = as.numeric) |> rowMeans(na.rm = TRUE),
+    gender = factor(gender, levels = c(2, 1, 3), labels = c("woman", "man", "other"))
+  ) |>
   select(-(Q1:Q26)) |> 
   filter(age < 100) |> 
   sample_n(200) # get just some of the data

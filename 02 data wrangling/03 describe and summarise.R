@@ -78,8 +78,10 @@ deaf_numer |>
 # cognitive tasks):
 deaf_numer_subjsumm <- deaf_numer |>
   group_by(sID, nFingers) |> # for each of...
-  summarise(mRT = mean(rt[acc == 1]),
-            mACC = mean(acc)) |>
+  summarise(
+    mRT = mean(rt[acc == 1]),
+    mACC = mean(acc)
+  ) |>
   ungroup()
 
 head(deaf_numer_subjsumm, n = 12)
@@ -91,8 +93,10 @@ head(deaf_numer_subjsumm, n = 12)
 # but we can add them back in:
 deaf_numer_subjsumm <- deaf_numer |>
   group_by(sID, nFingers) |> # for each of...
-  summarise(mRT = mean(rt[acc == 1]),
-            mACC = mean(acc)) |>
+  summarise(
+    mRT = mean(rt[acc == 1]),
+    mACC = mean(acc)
+  ) |>
   ungroup() |>
   full_join(deaf_numer_sinfo, by = "sID") # JOIN!
 
@@ -105,8 +109,10 @@ head(deaf_numer_subjsumm, n = 12)
 # We can now also summarise THIS summarised data further!
 deaf_numer_subjsumm |>
   group_by(Group, nFingers) |>
-  summarise(mRT_M = mean(mRT),
-            mRT_S = sd(mRT)) |>
+  summarise(
+    mRT_M = mean(mRT),
+    mRT_S = sd(mRT)
+  ) |>
   ungroup()
 
 
@@ -116,7 +122,9 @@ deaf_numer_subjsumm |>
 # counting subjects in each group
 deaf_numer_subjsumm |>
   group_by(sex, Group) |>
-  summarise(N = n_distinct(sID)) |>  # `n_distinct` counts unique values
+  summarise(
+    N = n_distinct(sID) # `n_distinct` counts unique values
+  ) |>
   ungroup()
 
 

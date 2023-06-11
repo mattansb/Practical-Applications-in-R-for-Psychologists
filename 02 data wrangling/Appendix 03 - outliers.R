@@ -30,8 +30,10 @@ head(tai_missing)
 # This is the easiest option - remove them!
 
 tai_no_OL <- tai_missing |>
-  mutate(moED_std_d = (moED - median(moED)) / IQR(moED),
-         moEd_ol = moED_std_d > 1.1 | moED_std_d < -1.1) |>
+  mutate(
+    moED_std_d = (moED - median(moED)) / IQR(moED),
+    moEd_ol = moED_std_d > 1.1 | moED_std_d < -1.1
+  ) |>
   filter(!moEd_ol)
 
 
@@ -42,7 +44,9 @@ tai_no_OL <- tai_missing |>
 # Replace Extreme Values By Less Extreme Ones
 
 tai_winzorize_OL <- tai_missing |>
-  mutate(moED_win = winsorize(moED, threshold = c(5.6, 14.4), method = "raw"))
+  mutate(
+    moED_win = winsorize(moED, threshold = c(5.6, 14.4), method = "raw")
+  )
 
 # Compare -----------------------------------------------------------------
 

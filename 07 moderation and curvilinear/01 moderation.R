@@ -94,7 +94,9 @@ ggemmeans(m_moderation, c("involvement_c","attachment")) |>
 
 ## Prep the data
 parental_iris <- parental_iris |>
-  mutate(strictness_c = center(parental_strictness))
+  mutate(
+    strictness_c = center(parental_strictness)
+  )
 
 
 

@@ -3,11 +3,13 @@ library(dplyr)
 library(parameters) # for kurtosis & skewness
 
 e2b_data <- read.csv("data/emotional_2back.csv") |>
-  mutate(Group = ifelse(Subject <= 30, 1, 2) |> factor(),
-         Subject = factor(Subject),
-         Emotion = factor(Emotion),
-         SameDiff = factor(SameDiff),
-         Gender = factor(SameDiff))
+  mutate(
+    Group = ifelse(Subject <= 30, 1, 2) |> factor(),
+    Subject = factor(Subject),
+    Emotion = factor(Emotion),
+    SameDiff = factor(SameDiff),
+    Gender = factor(SameDiff)
+  )
 
 glimpse(e2b_data)
 
@@ -35,14 +37,18 @@ suff_i_wanna_know <- list(
 
 # Use the `across()` function:
 e2b_data |>
-  summarise(across(.cols = c(RT, ACC),
-                   .fns = suff_i_wanna_know))
+  summarise(
+    across(.cols = c(RT, ACC),
+           .fns = suff_i_wanna_know)
+  )
 
 # other ways to select variables.
 e2b_data |>
-  summarise(across(.cols = c(Subject,Group), nlevels),
-            across(.cols = c(RT, ACC),
-                   .fns = suff_i_wanna_know))
+  summarise(
+    across(.cols = c(Subject,Group), nlevels),
+    across(.cols = c(RT, ACC),
+           .fns = suff_i_wanna_know)
+  )
 
 
 # Read more about using `across()`:

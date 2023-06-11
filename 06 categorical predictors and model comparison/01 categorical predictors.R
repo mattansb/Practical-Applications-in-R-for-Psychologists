@@ -4,9 +4,11 @@ library(parameters)
 
 
 anxiety_adhd <- read.csv("anxiety_adhd.csv") |>
-  mutate(ID = factor(ID),
-         treat_group = factor(treat_group),
-         sex = factor(sex))
+  mutate(
+    ID = factor(ID),
+    treat_group = factor(treat_group),
+    sex = factor(sex)
+  )
 
 glimpse(anxiety_adhd)
 
@@ -57,8 +59,10 @@ levels(anxiety_adhd$treat_group)
 
 
 anxiety_adhd <- anxiety_adhd |>
-  mutate(d_placebo = ifelse(treat_group == "placebo", 1, 0),
-         d_treat   = ifelse(treat_group == "treat",   1, 0))
+  mutate(
+    d_placebo = ifelse(treat_group == "placebo", 1, 0),
+    d_treat   = ifelse(treat_group == "treat",   1, 0)
+  )
 
 
 fit_dummy <- lm(anxiety ~ d_placebo + d_treat,

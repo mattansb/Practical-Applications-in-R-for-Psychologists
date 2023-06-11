@@ -4,9 +4,11 @@ library(parameters)
 
 
 anxiety_adhd <- read.csv("anxiety_adhd.csv") |>
-  mutate(ID = factor(ID),
-         treat_group = factor(treat_group),
-         sex = factor(sex))
+  mutate(
+    ID = factor(ID),
+    treat_group = factor(treat_group),
+    sex = factor(sex)
+  )
 
 
 # When working with categorical predictors that produce more than 1 dummy

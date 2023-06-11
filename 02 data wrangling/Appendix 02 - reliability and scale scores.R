@@ -5,7 +5,9 @@ library(dplyr)
 
 # data from https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses
 NPAS <- read.csv("data/NPAS data.csv") |>
-  mutate(across(starts_with("Q"), .fns = as.numeric)) # what does this do?
+  mutate(
+    across(starts_with("Q"), .fns = as.numeric) # what does this do?
+  )
 
 glimpse(NPAS)
 

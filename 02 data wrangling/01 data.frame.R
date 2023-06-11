@@ -195,8 +195,9 @@ nrow(data_raw)
 
 ## mutate -- makes a new variable, or change an existing one
 data_clean <- mutate(data_clean,
-                     sqrt_rt = sqrt(rt), # new
-                     rt = rt / 1000)     # change RT from ms to seconds
+  sqrt_rt = sqrt(rt), # new
+  rt = rt / 1000 # change RT from ms to seconds
+)
 head(data_clean)
 
 
@@ -210,7 +211,8 @@ group_keys(data_clean) # see what is grouped by
 
 # For example, mutate():
 data_clean <- mutate(data_clean,
-                     rt_z = scale(rt))
+  rt_z = scale(rt)
+)
 # What did this do?
 
 
@@ -286,10 +288,14 @@ TRUE |>
 data_clean_piped <- data_raw |>
   select(sID, nFingers, rt) |>
   filter(rt < 2500) |>
-  mutate(sqrt_rt = sqrt(rt),
-         rt = rt / 1000) |>
+  mutate(
+    sqrt_rt = sqrt(rt),
+    rt = rt / 1000
+  ) |>
   group_by(nFingers) |>
-  mutate(rt_z = scale(rt)) |>
+  mutate(
+    rt_z = scale(rt)
+  ) |>
   ungroup()
 
 # This pipe does all the things we did above:
