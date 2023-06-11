@@ -31,7 +31,8 @@ t.test(pdat$Depression[pdat$Group == "a"],
 ?var.test
 
 ttestBF(pdat$Depression[pdat$Group == "a"],
-        pdat$Depression[pdat$Group == "b"])
+        pdat$Depression[pdat$Group == "b"],
+        rscale = 0.6) # set the prior on Cohen's d
 
 cohens_d(pdat$Depression[pdat$Group == "a"],
          pdat$Depression[pdat$Group == "b"])
@@ -43,7 +44,8 @@ cohens_d(pdat$Depression[pdat$Group == "a"],
 # order of values is crucial! TAKE CARE WHEN USING LONG DATA!
 t.test(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 
-ttestBF(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
+ttestBF(pdat$Cond_A, pdat$Cond_B, paired = TRUE,
+        rscale = 1.2) # expecting HUGE Cohen's d
 
 cohens_d(pdat$Cond_A, pdat$Cond_B, paired = TRUE)
 
@@ -64,7 +66,8 @@ cor(pdat$Depression, pdat$Joy)
 # What is the model?
 cor.test(pdat$Depression, pdat$Joy)
 
-correlationBF(pdat$Depression, pdat$Joy)
+correlationBF(pdat$Depression, pdat$Joy,
+              rscale = 1) # flat prior on r
 
 
 
@@ -101,7 +104,8 @@ pdat |>
 
 prop.test(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
 
-proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5)
+proportionBF(sum(pdat$sex == "F"), nrow(pdat), p = 0.5,
+             rscale = 1)
 
 # What's the effect size?
 
@@ -124,7 +128,8 @@ proportions(cont_table, margin = 2) # % from columns
 # What is the model?
 chisq.test(cont_table, correct = FALSE)
 
-contingencyTableBF(cont_table, sampleType = "jointMulti")
+contingencyTableBF(cont_table, sampleType = "jointMulti",
+                   priorConcentration = 1)
 
 cramers_v(cont_table)
 
