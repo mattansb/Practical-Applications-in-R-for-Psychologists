@@ -1,12 +1,12 @@
 
-# GLMs (generalized linear models) allow modeling of non-linear dependent
+# GLMs (generalized linear models) allow modeling of non-normal dependent
 # variables.
 #
 # Unlike linear models, where the model is fit to the outcome directly, in GLMs
 # the model is fit to some function of the outcome - f(outcome) - where this
 # function is called the "link function". Another difference is that GLMs do not
 # use OLS to fit the model's parameters, instead using maximum likelihood
-# methods, which are unique foe each type of outcome.
+# methods, which are unique for each type of outcome.
 
 # You can see a list of families and link functions provided by R (but there are
 # many more!)
@@ -24,6 +24,7 @@ library(parameters)
 library(performance)
 library(ggeffects)
 library(emmeans)
+library(marginaleffects)
 
 depression_language <- read.csv("depression_language.csv") |>
   mutate(
@@ -189,6 +190,15 @@ contrast(em_logit, method = "pairwise")
 # different types of follow-up analyses of GLMs here:
 # https://shouldbewriting.netlify.com/posts/2020-04-13-estimating-and-testing-glms-with-emmeans/
 
+
+
+# An increasingly popular alternative to comparing generalized means (what
+# emmeans does) is to compute average marginal effects with {marginaleffects}.
+avg_slopes(fit, variables = "mean_valence")
+# These are super easy to understand - these are the average differences in
+# probabilities. (However, it is harder to understand how these are computed.)
+# I highly recoomend these for GLMs - read me here:
+# https://vincentarelbundock.github.io/marginaleffects/
 
 
 
