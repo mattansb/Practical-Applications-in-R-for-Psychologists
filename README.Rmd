@@ -127,6 +127,7 @@ unique_pkgs <- pkgs |>
   unique() |> sort()
 
 packinfo <- installed.packages(fields = c("Package", "Version"))
+# unique_pkgs[!is.element(unique_pkgs, rownames(packinfo))]
 V <- packinfo[unique_pkgs,"Version"]
 src <- sapply(unique_pkgs, get_src)
 

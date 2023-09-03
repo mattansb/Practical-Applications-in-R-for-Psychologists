@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)  
 [![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
 
-<sub>*Last updated 2023-06-11.*</sub>
+<sub>*Last updated 2023-09-03.*</sub>
 
 This Github repo contains all lesson files for *Practical Applications
 in R for Psychologists*. The goal is to impart students with the basic
@@ -56,7 +56,7 @@ You will need:
 | [04 hypothesis testing and power](/04%20hypothesis%20testing%20and%20power)                                 | [**`effectsize`**](https://CRAN.R-project.org/package=effectsize), [**`correlation`**](https://CRAN.R-project.org/package=correlation), [**`BayesFactor`**](https://CRAN.R-project.org/package=BayesFactor), [`dplyr`](https://CRAN.R-project.org/package=dplyr), [**`pwr`**](https://CRAN.R-project.org/package=pwr), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)                                                                                                                                                                                                                                                                                                                    |
 | [05 regression 101](/05%20regression%20101)                                                                 | [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`parameters`](https://CRAN.R-project.org/package=parameters), [**`performance`**](https://CRAN.R-project.org/package=performance), [**`ggeffects`**](https://CRAN.R-project.org/package=ggeffects), [**`psychTools`**](https://CRAN.R-project.org/package=psychTools)                                                                                                                                                                                                                                                                                                                                                             |
 | [06 categorical predictors and model comparison](/06%20categorical%20predictors%20and%20model%20comparison) | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [**`emmeans`**](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [**`bayestestR`**](https://CRAN.R-project.org/package=bayestestR), [`performance`](https://CRAN.R-project.org/package=performance)                                                                                                                                                                                                                                                                                                                  |
-| [07 moderation and curvilinear](/07%20moderation%20and%20curvilinear)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`datawizard`](https://CRAN.R-project.org/package=datawizard), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`bayestestR`](https://CRAN.R-project.org/package=bayestestR), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [**`modelbased`**](https://CRAN.R-project.org/package=modelbased), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2)                                                                                                                               |
+| [07 moderation and curvilinear](/07%20moderation%20and%20curvilinear)                                       | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`datawizard`](https://CRAN.R-project.org/package=datawizard), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`bayestestR`](https://CRAN.R-project.org/package=bayestestR), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`ggplot2`](https://CRAN.R-project.org/package=ggplot2), [**`modelbased`**](https://CRAN.R-project.org/package=modelbased)                                                                                                                               |
 | [08 generalized linear models](/08%20generalized%20linear%20models)                                         | [`dplyr`](https://CRAN.R-project.org/package=dplyr), [`parameters`](https://CRAN.R-project.org/package=parameters), [`performance`](https://CRAN.R-project.org/package=performance), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [**`marginaleffects`**](https://CRAN.R-project.org/package=marginaleffects)                                                                                                                                                                                                                                                                                                            |
 | [09 assumption checks and violations](/09%20assumption%20checks%20and%20violations)                         | [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`performance`](https://CRAN.R-project.org/package=performance), [**`see`**](https://CRAN.R-project.org/package=see), [**`bayesplot`**](https://CRAN.R-project.org/package=bayesplot), [**`qqplotr`**](https://CRAN.R-project.org/package=qqplotr), [`datawizard`](https://CRAN.R-project.org/package=datawizard), [**`permuco`**](https://CRAN.R-project.org/package=permuco), [`parameters`](https://CRAN.R-project.org/package=parameters), [**`insight`**](https://CRAN.R-project.org/package=insight)                                                                                                                           |
 | [10 ANOVA](/10%20ANOVA)                                                                                     | [**`afex`**](https://CRAN.R-project.org/package=afex), [`emmeans`](https://CRAN.R-project.org/package=emmeans), [`effectsize`](https://CRAN.R-project.org/package=effectsize), [`ggeffects`](https://CRAN.R-project.org/package=ggeffects), [`tidyr`](https://CRAN.R-project.org/package=tidyr)                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -85,42 +85,42 @@ You can install all the packages used by running:
 <i>Package Versions</i>
 </summary>
 
-Run on Windows 10 x64 (build 22621), with R version 4.2.2.
+Run on Windows 11 x64 (build 22621), with R version 4.3.1.
 
 The packages used here:
 
 - `afex` 1.3-0 (*CRAN*)
 - `BayesFactor` 0.9.12-4.4 (*CRAN*)
 - `bayesplot` 1.10.0 (*CRAN*)
-- `bayestestR` 0.13.1 (*CRAN*)
+- `bayestestR` 0.13.1.2 (*Local version*)
 - `correlation` 0.8.4 (*CRAN*)
-- `datawizard` 0.7.1 (*CRAN*)
-- `dplyr` 1.1.1 (*CRAN*)
-- `effectsize` 0.8.3.11 (*Local version*)
-- `emmeans` 1.8.6 (*CRAN*)
+- `datawizard` 0.8.0.7 (*Local version*)
+- `dplyr` 1.1.2 (*CRAN*)
+- `effectsize` 0.8.5 (*Local version*)
+- `emmeans` 1.8.7 (*CRAN*)
 - `finalfit` 1.0.6 (*CRAN*)
-- `ggeffects` 1.2.1.9 (*Github: strengejacke/ggeffects*)
-- `ggplot2` 3.4.2 (*CRAN*)
-- `haven` 2.5.2 (*CRAN*)
-- `Hmisc` 5.0-1 (*CRAN*)
-- `insight` 0.19.1 (*CRAN*)
-- `marginaleffects` 0.11.2 (*CRAN*)
+- `ggeffects` 1.3.0.5 (*Github: strengejacke/ggeffects*)
+- `ggplot2` 3.4.3 (*CRAN*)
+- `haven` 2.5.3 (*CRAN*)
+- `Hmisc` 5.1-0 (*CRAN*)
+- `insight` 0.19.3.3 (*Github: easystats/insight*)
+- `marginaleffects` 0.13.0 (*CRAN*)
 - `mediation` 4.5.0 (*CRAN*)
-- `mice` 3.15.0 (*CRAN*)
+- `mice` 3.16.0 (*CRAN*)
 - `modelbased` 0.8.6 (*CRAN*)
-- `parameters` 0.21.0 (*CRAN*)
-- `performance` 0.10.3 (*CRAN*)
+- `parameters` 0.21.1 (*CRAN*)
+- `performance` 0.10.4 (*CRAN*)
 - `permuco` 1.1.2 (*CRAN*)
-- `psych` 2.3.3 (*CRAN*)
-- `psychTools` 2.3.3 (*CRAN*)
+- `psych` 2.3.6 (*CRAN*)
+- `psychTools` 2.3.6 (*CRAN*)
 - `pwr` 1.3-0 (*CRAN*)
 - `qqplotr` 0.0.6 (*CRAN*)
 - `ragg` 1.2.5 (*CRAN*)
-- `readxl` 1.4.2 (*CRAN*)
-- `see` 0.7.5 (*CRAN*)
+- `readxl` 1.4.3 (*CRAN*)
+- `see` 0.8.0.2 (*Local version*)
 - `summarytools` 1.0.1 (*CRAN*)
 - `tidyr` 1.3.0 (*CRAN*)
-- `tidySEM` 0.2.3 (*CRAN*)
+- `tidySEM` 0.2.4 (*CRAN*)
 - `tidyverse` 2.0.0 (*CRAN*)
 
 </details>

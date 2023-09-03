@@ -184,12 +184,14 @@ ggemmeans(m_moderation, c("involvement_c","strictness_c [-4, 78]")) |>
 
 # Exercise ----------------------------------------------------------------
 
-# 1. The `modelbased::estimate_slopes()` function can be used to plot a
-#    Johnson-Neyman plot. What does it do? (Hint, read the axis titles.)
-slope_grid <- modelbased::estimate_slopes(m_moderation,
-                                          trend = "involvement_c",
-                                          at = "strictness_c", length = 100)
-plot(slope_grid)
+# 1. The `ggeffects::johnson_neyman()` function can be used to plot a
+#   Johnson-Neyman plot. What does it do? (Hint, read the axis titles.)
+jn <- ggemmeans(m_moderation, c("involvement_c","strictness_c")) |>
+  johnson_neyman()
+jn
+
+plot(jn)
+
 
 # 2. Fit the same moderation model with the original *non-centered* predictors.
 #    How does it differ from the moderation model with the centered predictors?
