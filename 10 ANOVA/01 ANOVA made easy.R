@@ -162,6 +162,11 @@ ggemmeans(fit_mfs, c("Time", "Family_status")) |>
 
 
 
+# Assumptions -------------------------------------------------------------
+
+
+# See this vignette:
+vignette("assumptions_of_ANOVAs", package = "afex")
 
 
 

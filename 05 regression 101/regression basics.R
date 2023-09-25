@@ -63,6 +63,7 @@ confint(fit)
 # beta
 standardize_parameters(fit, method = "basic")
 
+
 # Get all at once:
 model_parameters(fit)
 model_parameters(fit, standardize = "basic")
