@@ -47,11 +47,7 @@ library(ggplot2)
 #   the X axis change according to age? Etc...
 
 
-
 # Example 1 ---------------------------------------------------------------
-
-
-
 
 # The main function is `ggplot()`, and it takes a data frame.
 ggplot(df_NPAS)
@@ -62,40 +58,68 @@ ggplot(df_NPAS)
 # `aes()` is the mapping function - it lets us MAP variables onto visual
 # features. For example, I want the X-axis to represent `Nerdy`, and color to
 # represent `gender`.
-ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender))
+ggplot(df_NPAS, mapping = aes(x = age, y = Nerdy))
 # This still does nothing, because we didn't add any layers - we didn't tell
 # ggplot what to draw!
 
 
 
-# All the actual "drawing" is specified with the "geoms". Here we might want to
-# draw a histogram. So lets add that - literally, with a `+`!
-ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) + 
-  geom_histogram()
+# All the actual "drawing" is specified with the layers - "geoms" and "stats".
+# Here we might want to draw a histogram. 
+# So lets add that - literally, with a `+`!
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point()
 # Starting to get somewhere!
 
+# We can also 'map' variables to other aesthetics, such as color:
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = gender))
 
-# Seems like we don't want the color to represent gender, but maybe the filling
-# instead? Just MAP onto `fill`.
-ggplot(df_NPAS, mapping = aes(x = Nerdy, fill = gender)) + 
-  geom_histogram()
-
-
-# Or maybe I want a density plot instead?
-ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) + 
-  geom_density()
+# We can also map color on to a continuous variable:
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = TIPI2))
 
 
-ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) + 
-  geom_density(mapping = aes(linetype = gender), 
-               linewidth = 1, fill = "yellow", alpha = 0.4)
-# note that `linetype` is in `aes()` - so it varies according to some variable,
-# whereas shape, fill, and alpha (the opacity) are not inside `aes()` so there
-# are FIXED to a constant.
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = gender)) + 
+  stat_smooth() # add regression line
+# "stats" process the raw data and produces new data. In this case - a line and
+# error ribbon. All layers have a geom (the drawing) and a stat (how the did is,
+# or isn't, processed).
+
+
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = gender)) + 
+  stat_smooth(aes(color = gender), method = "lm")
+
+
+
+# we can split into subplots using facets:
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = gender)) + 
+  stat_smooth(aes(color = gender), method = "lm") + 
+  facet_grid(rows = vars(urban))
 
 
 
 
+
+# We can "prettify" the plot with themes, change the "scales", and more...
+ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
+  geom_point(aes(color = gender), alpha = 0.7, shape = 3) + 
+  stat_smooth(aes(color = gender), method = "lm", 
+              linewidth = 1.5, fill = "gray") + 
+  facet_grid(cols = vars(urban),
+             # We can change the facet labels:
+             labeller = as_labeller(c("0" = "N/A", "1" = "Rural", "2" = "Suburban", "3" = "Urban"))) + 
+  # scale_*() functions can be used to control the appearance of different
+  # scales (x, y, color, fill, size...) - things that we've mapped.
+  scale_color_manual(values = c(woman = "red4", man = "steelblue4", other = "purple1"),
+                     labels = c("Woman", "Man", "Other")) +
+  coord_cartesian(ylim = c(0, 5)) + 
+  labs(x = "Age [years]", color = "Gender") + 
+  theme_light() + 
+  theme(legend.position = "bottom")
 
 # Example 2 ---------------------------------------------------------------
 
@@ -111,19 +135,19 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy)) +
 # because the x-variable is categorical, we might get a better understanding of
 # the data with a box plot:
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
-  geom_boxplot()
+  stat_boxplot()
 
 
 
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
-  geom_boxplot() + 
-  geom_violin()
+  stat_boxplot() + 
+  stat_ydensity()
 
 
 # Can't really see the boxes! Order of geoms matters!
 ggplot(df_NPAS, aes(x = gender, y = Nerdy)) + 
-  geom_violin(trim = FALSE) + 
-  geom_boxplot(mapping = aes(color = gender), fill = NA)
+  stat_ydensity(trim = FALSE) + 
+  stat_boxplot(mapping = aes(color = gender), fill = NA)
 
 
 # Note that both geom_violin and geom_boxplot didn't draw the raw data as is,
@@ -132,57 +156,29 @@ ggplot(df_NPAS, aes(x = gender, y = Nerdy)) +
 
 
 
-# Example 3 ---------------------------------------------------------------
 
 
+# Example 2 ---------------------------------------------------------------
 
 
-# What will this draw?
-ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(color = gender)
-
-# We can also map color on to a continious variable:
-ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(aes(color = TIPI2))
+# What will this do?
+ggplot(df_NPAS, mapping = aes(x = Nerdy)) + 
+  stat_bin(color = gender)
 
 
-ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(aes(color = gender)) + 
-  geom_smooth() # add regression line
+# Seems like we don't want the color to represent gender, but maybe the filling
+# instead? Just MAP onto `fill`.
+ggplot(df_NPAS, mapping = aes(x = Nerdy, fill = gender)) + 
+  stat_bin()
 
 
-ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(aes(color = gender)) + 
-  geom_smooth(aes(color = gender), method = "lm")
+ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) + 
+  stat_bin(mapping = aes(linetype = gender), 
+           linewidth = 1, fill = "yellow", alpha = 0.4)
+# note that `linetype` is in `aes()` - so it varies according to some variable,
+# whereas shape, fill, and alpha (the opacity) are not inside `aes()` so there
+# are FIXED to a constant.
 
-
-
-# we can split into subplots using facets:
-ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(aes(color = gender)) + 
-  geom_smooth(aes(color = gender), method = "lm") + 
-  facet_grid(rows = vars(urban))
-
-
-
-
-
-# We can "prettify" the plot with themes, change the "scales", and more...
-ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
-  geom_point(aes(color = gender), alpha = 0.7, shape = 3) + 
-  geom_smooth(aes(color = gender), method = "lm", 
-              linewidth = 1.5, fill = "gray") + 
-  facet_grid(cols = vars(urban),
-             # We can change the facet labels:
-             labeller = as_labeller(c("0" = "N/A", "1" = "Rural", "2" = "Suburban", "3" = "Urban"))) + 
-  # scale_*() functions can be used to control the appearance of different
-  # scales (x, y, color, fill, size...) - things that we've mapped.
-  scale_color_manual(values = c(woman = "red4", man = "steelblue4", other = "purple1"),
-                     labels = c("Woman", "Man", "Other")) +
-  coord_cartesian(ylim = c(0, 5)) + 
-  labs(x = "Age [years]", color = "Gender") + 
-  theme_light() + 
-  theme(legend.position = "bottom")
 
 
 
@@ -247,6 +243,7 @@ ggsave(filename = "p2.png", plot = p,
        # - Resolution -
        dpi = 600,
        scaling = 1) # play with this one to get it juuuust right
+
 
 # As pdf
 ggsave(filename = "p2.pdf", plot = p,

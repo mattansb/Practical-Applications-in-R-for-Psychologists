@@ -5,7 +5,7 @@ library(tidyverse)
 
 p_r <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
   geom_point(size = 2, alpha = 0.6, shape = 16) + 
-  geom_smooth(method = "lm", se = FALSE) + 
+  stat_smooth(method = "lm", se = FALSE) + 
   scale_color_brewer(type = "qual", palette = 6) + 
   theme_void() + 
   theme_transparent() + 

@@ -163,9 +163,9 @@ library(ggplot2)
 
 ggplot(p_data, aes(n, d, fill = power)) +
   geom_raster() +
-  geom_contour(aes(z = power, linetype = factor(after_stat(level))),
+  stat_contour(aes(z = power, linetype = after_stat(factor(level))),
                breaks = c(0.5, 0.8, 0.9, 0.99),
-               color = "black", size = 1) +
+               color = "black", linewidth = 1) +
   scale_fill_distiller("Power", type = "seq", palette = 3, direction = 1) +
   scale_linetype_discrete("Power", guide = guide_legend(reverse = TRUE)) +
   theme_minimal() +
@@ -185,10 +185,12 @@ ggplot(p_data, aes(n, power, color = d, group = d)) +
   geom_line(size = 1) +
   scale_color_distiller("Cohen's d", type = "seq", palette = 1, direction = 1) +
   theme_minimal() +
-  labs(x = "Sample Size [per group]",
-       y = "Power",
-       title = "Power Curve Analysis",
-       subtitle = "for an independent samples t-test")
+  labs(
+    x = "Sample Size [per group]",
+    y = "Power",
+    title = "Power Curve Analysis",
+    subtitle = "for an independent samples t-test"
+  )
 # (Or with the effect size on x, and lines for samples size - try it yourself!)
 
 
