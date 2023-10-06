@@ -56,8 +56,8 @@ ggplot(df_NPAS)
 
 
 # `aes()` is the mapping function - it lets us MAP variables onto visual
-# features. For example, I want the X-axis to represent `Nerdy`, and color to
-# represent `gender`.
+# features. For example, I want the X-axis to represent `age` and th Y-axis to
+# represent `Nerdy`.
 ggplot(df_NPAS, mapping = aes(x = age, y = Nerdy))
 # This still does nothing, because we didn't add any layers - we didn't tell
 # ggplot what to draw!
@@ -65,7 +65,7 @@ ggplot(df_NPAS, mapping = aes(x = age, y = Nerdy))
 
 
 # All the actual "drawing" is specified with the layers - "geoms" and "stats".
-# Here we might want to draw a histogram. 
+# Here we might want to draw the data points.
 # So lets add that - literally, with a `+`!
 ggplot(df_NPAS, aes(x = age, y = Nerdy)) + 
   geom_point()
@@ -124,7 +124,8 @@ ggplot(df_NPAS, aes(x = age, y = Nerdy)) +
 # Example 2 ---------------------------------------------------------------
 
 
-# Let's try another example, with the same data and variables (Nerdy & gender):
+# Let's try another example, with the same data, this time with the `Nerdy` and
+# `gender` variables:
 ggplot(df_NPAS, aes(x = gender, y = Nerdy))
 
 
@@ -173,7 +174,7 @@ ggplot(df_NPAS, mapping = aes(x = Nerdy, fill = gender)) +
 
 
 ggplot(df_NPAS, mapping = aes(x = Nerdy, color = gender)) + 
-  stat_bin(mapping = aes(linetype = gender), 
+  stat_bin(mapping = aes(linetype = gender),
            linewidth = 1, fill = "yellow", alpha = 0.4)
 # note that `linetype` is in `aes()` - so it varies according to some variable,
 # whereas shape, fill, and alpha (the opacity) are not inside `aes()` so there
