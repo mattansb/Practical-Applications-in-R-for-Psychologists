@@ -115,9 +115,3 @@ You can install all the R packages used by running:
     )
 
 </details>
-
-------------------------------------------------------------------------
-
-Prior to 2025, this course was based on the `{caret}` package - this
-version can still be found
-[here](https://github.com/mattansb/Machine-Learning-foR-Psychologists/tree/caret).
