@@ -1,7 +1,7 @@
-
-library(ggeffects)    # for partial residual plots
-library(performance)  # for check_*
+library(ggeffects) # for partial residual plots
+library(performance)
 library(see)
+library(parameters)
 
 
 exp_grades <- read.csv("Exp_Psych_Grades.csv")
@@ -10,9 +10,7 @@ exp_grades$in_couple <- factor(exp_grades$in_couple)
 head(exp_grades)
 
 
-
-
-mod <- lm(Report ~ DOI + OSF + in_couple, data = exp_grades)
+mod <- lm(Report ~ DOI + OSF, data = exp_grades)
 
 
 # When we talk about assumption checks, these are often 2 types of assumptions
@@ -38,52 +36,10 @@ mod <- lm(Report ~ DOI + OSF + in_couple, data = exp_grades)
 # result, you should take a step back and consider why you decided to fit THIS
 # type of model THIS way with THESE predictors to THESE data to begin with.
 
-
-
-
-
-
-
-
-# 0. The Bare Minimum ------------------------------------------------------
-
-
-# For *parameteric* models (we'll talk about non-parametric models in a bit),
-# the bare minimal check is to see if your model is good is to examine how well
-# it *fits* the overall (marginal) distribution of your data.
-#
-# Often times this check will fail because our predictors are not good enough,
-# or that we are fitting the wrong KIND of model; e.g., a linear model to binary
-# data, an ordinal regression to a scale outcome? These will necessarily have a
-# bad fit to our target data...
-
-
-bayesplot::pp_check(mod) # For non Bayesian models, requires {performance}
-
-# In this case it seems like the answer is "not great":
-# 1. The data is bi-modal, while our model does not capture this in the data: it
-#   expects more grades ~60 than we actually have.
-# 2. Our model expects some NEGATIVE grades (though not a lot).
-
-
-# >>> What to do if violated? <<<
-# Perhaps the conditional model (our regression equation) is not good enough?
-# Or maybe our distributional model isn't of the right kind (See GLM lesson)...
-# We need to probe a bit more to see what's up...
-
-
-
-
-
-
 # Assumptions of the conditional model ------------------------------------
 
 # These assumptions are related to the specification of conditional model - is
 # our regression equation well specified?
-
-
-
-
 
 ## 1. "Linearity" ---------------------------------------------------------
 
@@ -93,26 +49,22 @@ bayesplot::pp_check(mod) # For non Bayesian models, requires {performance}
 # are no interactions or any other complex relationship that is missing from our
 # model.
 
+# Optional
+
 # We can do this visually, using *partial residual plots*:
 
-ggemmeans(mod, "DOI [all]") |>
-  plot(jitter = 0, residuals = TRUE, residuals.line = TRUE)
+ggaverage(mod, "DOI [all]") |>
+  plot(show_residuals = TRUE, show_residuals_line = TRUE)
 
-ggemmeans(mod, "in_couple") |>
-  plot(jitter = 0.1, residuals = TRUE, residuals.line = TRUE)
+ggaverage(mod, "OSF") |>
+  plot(show_residuals = TRUE, show_residuals_line = TRUE)
 
-ggemmeans(mod, c("OSF","in_couple")) |>
-  plot(jitter = 0, residuals = TRUE, residuals.line = TRUE)
+ggaverage(mod, c("OSF", "DOI")) |>
+  plot(residuals = TRUE, residuals.line = TRUE)
 # etc...
-
-
 
 # >>> What to do if violated? <<<
 # Fix your model? (Warning: this is post-hoc model fitting...)
-
-
-
-
 
 ## 2. (Low) Collinearity --------------------------------------------------
 
@@ -122,37 +74,21 @@ ggemmeans(mod, c("OSF","in_couple")) |>
 # 2. It reduces power (by increasing SEs).
 
 # To measure collinearity we will compute the VIF:
-check_collinearity(mod)
+check_collinearity(mod) # VIF 1 means low collinearity and so is tolerance
+
 
 # NOTE: when the model includes interactions, centering will prevent spurious
 # results (falsely inflated VIFs).
 
-
-
 # >>> What to do if violated? <<<
 # Option 1: worry -
-# - Remove a term, OR
+# - Remove a term (but think of your DAG), OR
 # - Combine the collinear terms
 # But this might reduce the explanatory power of your model...
+# Causality...????
 #
 # Option 2: don't worry.
 # ... but be very cautions about interpreting your model's parameters.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Assumptions of the distributional model ---------------------------------
 
@@ -174,11 +110,9 @@ check_collinearity(mod)
 #
 # Here I will be focusing on the assumption of linear models.
 
-
 # But first...
 
 ## 0. Independence of errors -----------------------------------------------
-
 
 # One assumption that ALL regression models (not just linear regression) have in
 # common it that the prediction errors / residuals are independence of one
@@ -190,17 +124,11 @@ check_collinearity(mod)
 # design, then there is some dependency between the observations; if we have
 # time-series data, then there is some temporal correlation between time points.
 
-
-
 # >>> What to do if violated? <<<
 # We need to account for the dependence by using a mixed model (see HLM/LMM next
 # semester), rmANOVA, or something of the sort.
 
-
-
-
 ## 1. Homoscedasticity (of residuals) -------------------------------------
-
 
 het <- check_heteroscedasticity(mod)
 
@@ -209,27 +137,25 @@ het <- check_heteroscedasticity(mod)
 plot(het)
 # How do we want this to look?
 
-
-
-
-
 # >>> What to do if violated? <<<
-# 1. Re-fit the model with a heteroscedasticity consistent estimators (See
-#    the `sandwich` package).
-# 2. Switch to non-parametric tests.
+# 1. Use a heteroscedasticity consistent estimators for SEs
+model_parameters(mod)
+model_parameters(mod, vcov = "HC3")
 
+# 2. Switch to non-parametric tests ( bootstrapping or permutation testing)
+# Many ways to do this - here is bootstrap based SEs:
+model_parameters(mod, vcov = "BS", vcov_args = list(R = 1000))
 
+# It is important to understand that if these assumption is violated,
+# it has absolutely no implications or effect on the correctness of your model.
+# A linear model with heteroscedastic residuals is still a linear model!!!!
 
 # *. There are other, more advanced (Bayesian) models.
 #    Ask me about them (if you dare).
 
-
-
-
 ## 2. Normality (of residuals) --------------------------------------------
 
 # The true normality assumption is about the normality of the residuals!
-
 
 # Shapiro-Wilk test for the normality (of THE RESIDUALS!!!)
 norm <- check_normality(mod)
@@ -238,15 +164,13 @@ norm <- check_normality(mod)
 # https://notstatschat.rbind.io/2019/02/09/what-have-i-got-against-the-shapiro-wilk-test/
 
 # So you should really LOOK at the residuals:
-plot(norm, type = "qq") # see ?qqplotr::stat_qq_band for conf-bands
+plot(norm, type = "qq", detrend = FALSE)
+# see ?qqplotr::stat_qq_band for conf-bands
 
 # # Can *also* check skewness & kurtosis
 # e <- residuals(mod)
 # datawizard::skewness(e) |> summary(test = TRUE)
 # datawizard::kurtosis(e) |> summary(test = TRUE)
-
-
-
 
 # >>> What to do if violated? <<<
 # This might suggest that we shouldn't have used a Gaussian (normal)
@@ -255,41 +179,39 @@ plot(norm, type = "qq") # see ?qqplotr::stat_qq_band for conf-bands
 #    a completely different model family. Or...
 # 2. Switch to non-parametric tests.
 
+# The only thing that is affected by the violations of these assumptions (any of
+# them), (independence of residuals, normality of residuals or homoscedasticity
+# of residuals.) is the ability to conduct NHST based on F or t-ratio
 
-
-
-
-
-
-
-
-
+# If the assumptions regarding the fitting of the model parameters are wrong
+# there is no way to overcome its violation other than specifying the correct
+# model. This might include adding or omitting variables in the model, or it
+# might include using some non-linear models, such as a Poisson or logistic
+# regression (or others). The bottom like here is that even if you find that the
+# linear model is significant (even if it is "very significant"), that cannot
+# and never will be enough to overcome the fact that the specified model - is
+# wrong.
 
 ## For ANOVAs -------------------------------------------------------------
-
 
 # The previous tests allow for assumptions checks for linear regression. For
 # ANOVAs (and specifically for mixed ANOVAs), there are slightly different
 # assumptions that need to be tested. You can see how to do this, here:
 # https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists/tree/master/06%20assumption%20check%20and%20non-parametric%20tests
 
-
-
-
-
 ## For GLMs ---------------------------------------------------------------
-
 
 # As noted above, each distribution has a slightly different set of assumptions
 # See also:
 # https://easystats.github.io/performance/reference/index.html#check-model-assumptions-or-data-properties
 # and ?check_model()
 
-
 ### For logistic regression ---------
 
+# Check model quality of binomial logistic regression models.
 ?binned_residuals()
 
+# check if the observed variance is larger than the assumed variance
 ?check_overdispersion()
 
 
@@ -297,14 +219,5 @@ plot(norm, type = "qq") # see ?qqplotr::stat_qq_band for conf-bands
 
 ?check_overdispersion()
 
+# whether count models are over- or underfitting zeros in the outcome.
 ?check_zeroinflation()
-
-
-
-
-# Exercise ----------------------------------------------------------------
-
-# Fit the model: Report ~ Test + in_couple
-# 1. Test 3 of the assumptions and interpret the results.
-# 2. Conduct a bootstrap or permutation analysis. How does this affect the
-#   results?

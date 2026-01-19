@@ -1,4 +1,3 @@
-
 # "Power corrupts. Absolute power corrupts absolutely."
 #
 # Generally speaking, power indicates how likely we are to detect an effect of a
@@ -16,9 +15,8 @@
 #
 # Suggesting reading - "Five Common Power Fallacies" by Richard D. Morey.
 
-
 library(pwr)
-library(effectsize) # since power is always a function of effect size
+library(effectsize) # since power is always a function of effect size...
 
 pdat <- readRDS("pdat.Rds")
 
@@ -30,25 +28,21 @@ head(pdat)
 #
 # Note that in most of the post-hoc examples the power is awful. oh well...
 
-
 # t test ------------------------------------------------------------------
 # For the difference of two means.
 
 ## Ad-hoc power analysis:
-pwr.t.test(d = 0.2, sig.level = .05, power = .8, type = "two.sample") # what n (per group)?
-pwr.t.test(n = 15, sig.level = .05, power = .8, type = "two.sample") # what d?
+# what n (per group)?
+pwr.t.test(d = 0.2, sig.level = .05, power = .8, type = "two.sample")
+# what d?
+pwr.t.test(n = 15, sig.level = .05, power = .8, type = "two.sample")
 # Or use `pwr.t2n.test()` for unequal group size.
 
-
-## Post-hoc power analysis:
-cohens_d(pdat$Depression[pdat$Group == "a"],
-         pdat$Depression[pdat$Group == "b"])
+## Post-hoc power analysis (not really a thing):
+cohens_d(pdat$Depression[pdat$Group == "a"], pdat$Depression[pdat$Group == "b"])
 
 pwr.t.test(d = 0.11, n = 23, sig.level = .05) # what power?
 # Or use `pwr.t2n.test()` for unequal group size.
-
-
-
 
 # Correlation -------------------------------------------------------------
 # Spearman or Pearson
@@ -64,37 +58,24 @@ cor.test(pdat$Depression, pdat$Joy)
 pwr.r.test(r = 0.04, n = 46, sig.level = .05) # what power?
 
 
-
-
 # Proportion --------------------------------------------------------------
-
 
 ## Ad-hoc power analysis:
 pwr.p.test(h = ES.h(0.3, 0.5), sig.level = .05, power = .8) # what n?
 pwr.p.test(n = 30, sig.level = .05, power = .8) # what h?
 # convert h to p... somehow?
 
-
 ## Post-hoc power analysis:
 mean(pdat$sex == "F")
 pwr.p.test(h = ES.h(0.565, 0.5), n = 46, sig.level = .05) # what power?
-
-
-
-
 
 
 # Or use:
 # pwr.2p.test: two-sample proportion test
 # pwr.2p2n.test: two-sample proportion test (unequal sample sizes)
 
-
-
-
-
 # Chi-squared test --------------------------------------------------------
 # For association (but also possible for goodness of fit)
-
 
 ## Ad-hoc power analysis:
 # (w is phi)
@@ -109,12 +90,8 @@ cohens_w(cont_table, correct = FALSE) # Cohen's w is equivalent to Phi
 pwr.chisq.test(w = 0.05, N = 46, df = 1, sig.level = .05) # what power?
 
 
-
-
-
 # F tests -----------------------------------------------------------------
 # general test for any F statistic (or t^2 statistic...)
-
 
 ## Ad-hoc power analysis:
 # f2 is Cohen's f squared
@@ -137,13 +114,6 @@ t_to_f2(3.567, 41) # for Joy
 pwr.f2.test(f2 = 0.31, v = 41, u = 1, sig.level = .05) # what power?
 
 
-
-
-
-
-
-
-
 # Power Curve Analysis ----------------------------------------------------
 
 # This is a basic example for an independent samples t-test - the idea of a
@@ -155,29 +125,35 @@ p_data <- expand.grid(
 )
 
 p_data$power <- pwr.t.test(
-  n = p_data$n, d = p_data$d,
-  sig.level = .05, type = "two.sample"
+  n = p_data$n,
+  d = p_data$d,
+  sig.level = .05,
+  type = "two.sample"
 )$power # get only the power values
 
 library(ggplot2)
 
 ggplot(p_data, aes(n, d, fill = power)) +
   geom_raster() +
-  stat_contour(aes(z = power, linetype = after_stat(factor(level))),
-               breaks = c(0.5, 0.8, 0.9, 0.99),
-               color = "black", linewidth = 1) +
+  geom_contour(
+    aes(z = power, linetype = factor(after_stat(level))),
+    breaks = c(0.5, 0.8, 0.9, 0.99),
+    color = "black",
+    size = 1
+  ) +
   scale_fill_distiller("Power", type = "seq", palette = 3, direction = 1) +
   scale_linetype_discrete("Power", guide = guide_legend(reverse = TRUE)) +
   theme_minimal() +
-  labs(x = "Sample Size [per group]",
-       y = "Cohen's d",
-       title = "Power Curve Analysis",
-       subtitle = "for an independent samples t-test")
+  labs(
+    x = "Sample Size [per group]",
+    y = "Cohen's d",
+    title = "Power Curve Analysis",
+    subtitle = "for an independent samples t-test"
+  )
 
 # We can see that smaller effect sizes can more reliably be detected with larger
 # sample sizes, and that for each sample size there is some effect size for
 # which there is 80% power (or any other threshold).
-
 
 # (Note that often power is shown on the y axis, and different lines represent
 # the different effect sizes).
@@ -193,8 +169,10 @@ ggplot(p_data, aes(n, power, color = d, group = d)) +
   )
 # (Or with the effect size on x, and lines for samples size - try it yourself!)
 
+# Power for equivalence tests ------------------------------------------------
 
-
+?TOSTER::power_t_TOST()
+help.search("power", package = "TOSTER") # and other functions
 
 # MORE POWER --------------------------------------------------------------
 
@@ -207,6 +185,3 @@ ggplot(p_data, aes(n, power, color = d, group = d)) +
 # - `Superpower` for Factorial designs (within, between, or mixed).
 # - `simsem` (https://simsem.org/) for SEMs.
 # - `simstudy` - a general purpose package for data simulation.
-
-
-

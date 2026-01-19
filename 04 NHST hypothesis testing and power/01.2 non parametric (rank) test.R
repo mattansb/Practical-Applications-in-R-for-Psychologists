@@ -1,5 +1,5 @@
-
 library(effectsize)
+
 
 pdat <- readRDS("pdat.Rds")
 head(pdat)
@@ -9,14 +9,12 @@ head(pdat)
 # For example:
 x <- c(1.45, 2.01, 0.47, 0.79)
 rank(x) # or
-ranktransform(x) # more options
+datawizard::ranktransform(x) # more options
 
 
 # However, note that the tests themselves are parametric, it is the underlying
 # models that are not. Read more here:
 # https://lindeloev.github.io/tests-as-linear/
-
-
 
 # Compare two samples -----------------------------------------------------
 
@@ -26,17 +24,17 @@ ranktransform(x) # more options
 # and the other rank based effect sizes here:
 # https://easystats.github.io/effectsize/articles/simple_htests.html#rank-based-tests-1
 
-
-
 ## Mann-Whitney U Test --------------
 # (compare two independent samples)
-wilcox.test(pdat$Depression[pdat$Group == "a"],
-            pdat$Depression[pdat$Group == "b"])
+wilcox.test(
+  pdat$Depression[pdat$Group == "a"],
+  pdat$Depression[pdat$Group == "b"]
+)
 
-rank_biserial(pdat$Depression[pdat$Group == "a"],
-              pdat$Depression[pdat$Group == "b"])
-
-
+rank_biserial(
+  pdat$Depression[pdat$Group == "a"],
+  pdat$Depression[pdat$Group == "b"]
+)
 
 
 ## Wilcoxon Signed-rank Test --------
@@ -44,13 +42,6 @@ rank_biserial(pdat$Depression[pdat$Group == "a"],
 wilcox.test(pdat$Cond_B, pdat$Cond_C, paired = TRUE)
 
 rank_biserial(pdat$Cond_B, pdat$Cond_C, paired = TRUE)
-
-
-
-
-
-
-
 
 
 # Compare more than 2 samples ---------------------------------------------
@@ -64,8 +55,6 @@ kruskal.test(Depression ~ Group, data = pdat)
 rank_epsilon_squared(Depression ~ Group, data = pdat)
 
 
-
-
 ## Friedman Test --------------------
 # (compare k dependent samples)
 
@@ -75,5 +64,3 @@ head(m) # row per subject, column per condition
 friedman.test(m)
 
 kendalls_w(m)
-
-

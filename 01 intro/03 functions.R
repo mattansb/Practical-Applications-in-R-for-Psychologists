@@ -1,7 +1,4 @@
-
-
 # Functions ---------------------------------------------------------------
-
 
 # Functions are also R objects, just like any other!
 sqrt
@@ -20,14 +17,11 @@ blahblah("a")
 
 # We can also make new function!
 
-
-
-
 # sum of two dice (from: "Hands-on programming with R")
 two_dice <- function() {
   die <- 1:6
   dice <- sample(die, 2, replace = TRUE)
-  sum(dice)  # the function will return the last command by default
+  sum(dice) # the function will return the last command by default
 }
 
 two_dice
@@ -41,8 +35,7 @@ n_dice <- function(n) {
   sum(dice)
 }
 
-n_dice(5)
-
+n_dice()
 
 
 # default values:
@@ -54,14 +47,6 @@ n_dice <- function(n = 2) {
 
 n_dice()
 n_dice(50)
-
-
-
-
-
-
-
-
 
 
 # a new measure of distribution symmetry: mean/median.
@@ -87,6 +72,4 @@ symmetry <- function(x, top = "mean") {
 symmetry(a)
 symmetry(a, top = "mean")
 symmetry(a, top = "median")
-symmetry(a, top = "mode")
-
-
+symmetry(a, top = "ttt")

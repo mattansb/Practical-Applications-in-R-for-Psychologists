@@ -1,13 +1,12 @@
-
 # Reliability and sum / mean scores ---------------------------------------
 
 library(dplyr)
+library(datawizard) # for standardize()
 
-# data from https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses
+# data from
+# https://www.kaggle.com/lucasgreenwell/nerdy-personality-attributes-scale-responses
 NPAS <- read.csv("data/NPAS data.csv") |>
-  mutate(
-    across(starts_with("Q"), .fns = as.numeric) # what does this do?
-  )
+  mutate(across(starts_with("Q"), .fns = as.numeric)) # what does this do?
 
 glimpse(NPAS)
 
@@ -17,12 +16,12 @@ NPAS |>
   psych::alpha()
 
 # A little helper function to be used in `mutate()`
-across_sum <- function(..., mean = FALSE, na.rm = FALSE) {
+pick_and_sum <- function(..., mean = FALSE, na.rm = FALSE) {
   if (mean) {
-    across(...) |>
+    pick(...) |>
       rowMeans(na.rm = na.rm)
   } else {
-    across(...) |>
+    pick(...) |>
       rowSums(na.rm = na.rm)
   }
 }
@@ -32,16 +31,17 @@ across_sum <- function(..., mean = FALSE, na.rm = FALSE) {
 NPAS_with_score <- NPAS |>
   mutate(
     # Raw Sum/Mean scores
-    Nerd_sum_raw = across_sum(Q1:Q26, na.rm = TRUE),
-    Nerd_mean_raw = across_sum(Q1:Q26, mean = TRUE, na.rm = TRUE), # better for missing data
+    Nerd_sum_raw = pick(Q1:Q26) |> rowSums(na.rm = TRUE),
+
+    # better for missing data to use the mean
+    Nerd_mean_raw = pick(Q1:Q26) |> rowMeans(na.rm = TRUE),
+
     # Standardized Sum/Mean scores
-    Nerd_sum_std = across_sum(Q1:Q26, .fns = scale, na.rm = TRUE),
-    Nerd_mean_std = across_sum(Q1:Q26, .fns = scale, mean = TRUE, na.rm = TRUE), # better for missing data
+    Nerd_sum_std = across(Q1:Q26, standardize) |> rowMeans(na.rm = TRUE),
+    Nerd_mean_std = across(Q1:Q26, standardize) |> rowSums(na.rm = TRUE)
   ) |>
   select(-(Q1:Q26)) # what does this do?
 
 head(NPAS_with_score)
-
-
 
 # For more reliability measures see the `psych` and `irr` packages.

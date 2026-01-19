@@ -1,13 +1,13 @@
-
-
 3 + 4 # execute a line with Ctrl + Enter
 # Results of any command will appear in the CONSOLE below
 
 # Anything after a "#" symbol is ignored by R, so we can (and should!) use it to
-# write comments. 
+# write comments.
 #
-# It is best to write your comments in English, ×›×™ ××¨ ×œ× ×ª×ž×™×“
-# ×ž×¡×ª×“×¨ ×¢× ×¢×‘×¨×™×ª
+# It is best to write your comments in English
+
+# Variables ---------------------------------------------------------------
+# Variables - an object which can vary...
 
 # ASSIGN a value to an object with <- (shortcut alt+-)
 # (it will now appear as an object in the ENVIRONMENT)
@@ -19,32 +19,52 @@ a
 
 # You can use the object just as you would its value:
 a + 4
-# Note that the value of "a" is not changed, 
-# and that the results were not saved anywhere
+# Note that the value of "a" is not changed, and that the results were not saved
+# anywhere
 
 b <- 4
 a + b
 a * b
 a <- 8
 
-
 c <- a + b
 c <- a * b
 c <- b - a
 c <- B - A # Your first ERROR. Why?
 
-
 c <- a + b # assign without print
-c          # then print
+c # then print
 # or
 (c <- a + b) # assign and print at the same time
 
 
+# More types of objects ------------------------------------------------
 
-# Learning to code is like learning a language - we have different type of
-# information that we want to mix in the correct way in otder to make new
-# information. (So maybe this is like baking?)
+# character
+chracter <- "sequence of characters (letters/ numbers/ symbols)"
+Group1 <- "77"
+Group2 <- "experimental"
+Group1 / a
 
+# numeric
+a <- 3
+b <- 4
+
+# logical / boolean (TRUE/FALSE object)
+a > b
+b > a
+a = 7
+a == 7
+a != 7
+a < 10 & b > 8
+a < 10 | b > 8
+
+# `is.*()` functions can test if an object is of a certain type:
+is.logical(a)
+is.logical("TRUE")
+is.logical(TRUE)
+is.numeric(a)
+is.character(a)
 
 
 # Operators ---------------------------------------------------------------
@@ -58,7 +78,6 @@ c          # then print
 #   %/% integer division. E.g., 7 %/% 3  gives  2
 
 # Order of operations
-
 a + b / 2
 a + (b / 2)
 (a + b) / 2
@@ -68,8 +87,8 @@ a + (b / 2)
 #   sqrt(x)     square root
 #   abs(x)      absolute value
 #   exp(x)      exponent
-#   log(x)      natural logaritm
-#   log10(x)
+#   log(x)      natural logarithm (e^log(x)=x)
+#   log10(x)    (10^log10(x)=x)
 #   ceiling(x)  round upwards
 #   floor(x)    round downwards
 #   round(x)    round to the nearest integer
@@ -80,58 +99,8 @@ sqrt(a)
 # So if you want to use a result, DON'T FORGET: assign (<-) it!
 sqrt_of_a <- sqrt(a)
 
-
-
 # Get help on a function
 ?exp
-
-
-
-
-
-
-
-
-# Other types of objects ------------------------------------------------
-
-
-
-# character
-Group1 <- "control"
-Group2 <- "experimental"
-Group1 / a
-
-
-
-
-
-
-
-# logical
-a > b
-b > a
-a = 7
-a == 7
-a != 7
-a < 10 & b > 8
-a < 10 | b > 8
-
-
-
-
-
-# `is.*()` functions can test if an object is of a certain type:
-is.logical(a)
-is.logical("TRUE")
-is.logical(TRUE)
-is.numeric(a)
-is.character(a)
-
-
-
-
-
-
 
 
 # Vectors -----------------------------------------------------------------
@@ -141,10 +110,6 @@ is.character(a)
 
 math.grades <- c(93, 30, 84, 88, 100, 67)
 english.grades <- c(100, 45, 90, 77, 88, 90)
-
-
-
-
 
 # Some function work on or summarize a whole vector:
 is.numeric(math.grades)
@@ -156,27 +121,16 @@ range(math.grades)
 median(math.grades)
 hist(math.grades)
 
-
-
-
 # Some functions accept more than 1 ARGUMENT.
 # For examples, these functions accept 2 arguments - both numeric vectors:
 cor(math.grades, english.grades)
 plot(math.grades, english.grades)
 
-
-
-
 # QUIZ: What will these make?
 pass.english <- english.grades >= 56
 pass.english
 sum(pass.english)
-mean(pass.english)
-TRUE + 4
-
-
-
-
+mean(pass.english) # NOTE the mean is equal to 5/6!
 
 hebrew.grades <- c(100, NA, 99, 100, 80, 75)
 # NA is "not available" - it is a way to mark missing data
@@ -186,25 +140,23 @@ mean(hebrew.grades, na.rm = TRUE) # (na.rm = NA remove)
 # here we used a second, named, argument.
 # You can see all the arguments with:
 ?mean
-
-
+?sd
 # You can directly name all the arguments,
 sd(x = hebrew.grades, na.rm = TRUE)
 # But don't have to if they're in order
 sd(hebrew.grades, TRUE)
 # If you name the arguments, they can be in any order
 sd(na.rm = TRUE, x = hebrew.grades)
-sd(na.rm = TRUE, hebrew.grades)
-
-
-
-
-
+sd(TRUE, hebrew.grades)
 
 # Statistical distributions
-rnorm(1)
+rnorm(1) # random number generation from normal distribution (mean = 0, sd = 1)
 rnorm(10)
 
+?rnorm
+
+# notice that each time we'll get another random number, to keep the same
+# "random" number we can use set.seed()
 x <- rnorm(1000)
 hist(x)
 
@@ -217,17 +169,6 @@ hist(x)
 x <- rexp(1000)
 hist(x)
 
-
-qnorm(.05) # input is probability - turns into a quantile.
-pnorm(-1.96) # input is random variable value - returns a Probability
-qt(.95, df = 12)
-
-
-
-
-
-
-
 ## Working with vectors ---------------------------------------------------
 
 ## Creating vectors
@@ -239,8 +180,9 @@ v2 <- 1:10
 v3 <- seq(from = 2, to = 5, by = 0.5)
 v4 <- seq(from = 1, to = 10, length = 3)
 seq(from = 2, to = 11, length = 4)
-seq_along(51:53)
-seq_len(123)
+seq_along(50:52) # creates a vector that contains a sequence of numbers from 1
+# to the length of the object
+seq_len(123) # generates a sequence from 1 to the specified number
 
 # repeat a value
 v5 <- rep(0, 10)
@@ -254,16 +196,11 @@ v7 <- rep(c(1, 2, 5), times = 10)
 c(v6, v7) # same as
 c(rep(c(1, 2, 5), each = 10), rep(c(1, 2, 5), times = 10))
 
-
-
-
 ## Math operations on vectors
 v8 <- v1 * 5
 v9 <- v6 + v7
 c(1, 2, 3, 4) + c(1, 2)
 c(1, 2, 3, 4) + c(1, 2, 3)
-
-
 
 ## sample
 v10 <- sample(v9, 40, replace = TRUE)
@@ -272,7 +209,6 @@ v10
 set.seed(1)
 v10 <- sample(v9, 40, replace = TRUE)
 v10
-
 
 ## Extract and replace
 # by index
@@ -286,30 +222,24 @@ v9[c(1, 3, 5)] # same
 v9[c(1, 2, 3, 4)]
 v9[c(4, 3, 1, 2)]
 
-
 # What will this do?
 v9[c(1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
 
-
-head(v9,  3)
-tail(v9,  3)
-
-
-
+head(v9, 3)
+tail(v9, 3)
 
 v9[1]
 v9[1] <- 100
+v9[1]
 v9[c(2, 4, 6)] <- -99
 v9
-
 
 # with a logical vector
 v9[v9 > 6]
 mean(v9[v9 > 6])
 
-
 which(math.grades > 80 & math.grades <= 90)
-
+math.grades
 
 
 ## naming vector elements
@@ -318,55 +248,38 @@ english.grades
 english.grades["shira"]
 english.grades[4]
 english.grades[9 %% 5]
+# (reminder: modulo gives the remainder after division. E.g., 5 %% 2  gives  1)
 
-french.grades <- c("anat" = 90,
-                   "yoav" = 100,
-                   "mattan" = 56) # Je ne parle pas bien francais :(
+french.grades <- c("anat" = 90, "yoav" = 100, "mattan" = 56)
 mean(french.grades)
 french.grades["anat"] + 2
 
 
-
-
-
-
-
-
-
 ## Factors ----------------------------------------------------------------
-
 # A factor is a vector of CATEGORIES.
-# Unlike a character vector, factors usually represent "levels".
+# Unlike a character vector, factors usually represent "levels"
+set.seed(2)
+(sex <- sample(c("M", "F"), size = 10, replace = TRUE))
 
-sex <- sample(c("F", "M"), size = 10, replace = TRUE)
+x <- sex
+x[4] <- "G"
+factor(x, levels = c("M", "F"))
 
-x <- factor(sex)
-# x[4] <- "G"
 factor(sex, levels = c("M", "F")) # who cares about the order?
+# for most cases it will not matter whether a factor is ordered or unordered if
+# the factor is ordered, then the specific order of the levels matters (small <
+# medium < large)
+
 factor(sex, levels = c("m", "f")) # be careful...
 factor(sex, levels = c("M"))
 
-# change the labels
+# Change the labels
+
 factor(sex, labels = c("Female", "Male"))
+#factor(sex, labels = c("Male", "Female"))
+
+# Change labels *and* order of levels:
 factor(sex, levels = c("M", "F"), labels = c("Male", "Female"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Lists -------------------------------------------------------------------
@@ -375,8 +288,6 @@ factor(sex, levels = c("M", "F"), labels = c("Male", "Female"))
 list1 <- c(100, "gugu", FALSE, "TRUE", 255)
 str(list1)
 
-c(TRUE, 2, FALSE) # What is the lowest common denominator?
-
 # Use `list`!
 list1 <- list(100, "gugu", FALSE, "TRUE", 255)
 str(list1)
@@ -384,61 +295,36 @@ str(list1)
 # each "value" in a list is an element.
 
 # We can name elements
-list2 <- list("Name" = "Beer-Sheva",
-              "Population" = 200000,
-              "is_negev" = TRUE)
+list2 <- list(
+  "Name" = "Beer-Sheva",
+  "Population" = 200000,
+  "is_negev" = TRUE
+)
 str(list2)
 
 # We can now extract elements by their name:
-list2$Name
-list2[["Name"]]
-list2[[1]]
+list2[1] # accessing the first element
+list2$Name # using name of access element
+list2[["Name"]] # inner element of the specific name
 list2["Name"]
-
-
 
 list2[["Population"]] + 5
 list2["Population"] + 5
-list2[1] # whats the difference???
-list2[c("Name","Population")]
+list2[c("Name", "Population")]
 
 # list with sub list (etc...)
-list3 <- list("a" = 4,
-              "b" = c(2, 3),
-              "c" = list(1, 3, 5, T, "T"))
+list3 <- list(
+  "a" = 4,
+  "b" = c(2, 3),
+  "c" = list(1, 3, 5, T, "T")
+)
 str(list3)
 
 
-list3[1]*3
-list3[[1]]*3
+list3[1] * 3
+list3[[1]] * 3
 
 list3[[3]][5]
 list3[["c"]][[5]]
 
 list3[["d"]] <- list3[["b"]] + 2
-
-
-
-
-
-
-
-# Exercise ----------------------------------------------------------------
-
-# 1. What does this do?
-# TIP: try and break it down to its components.
-set.seed(4)
-x <- sample(seq(1, 8, length.out = 25), 10000, replace = TRUE) %% 7
-
-# 2. create a new object that counts how many times does x equal 2.75.
-
-# 3. What is the 102nd value of x?
-
-# 4. create a new object of type list with the following elements:
-#   a. your name
-#   b. how many cousins you have
-#   c. the names of the people to the left and right of you (as a vector).
-
-# *. What will this do?
-# (TIP: work outwards)
-tail(head(c(2,3,4,5,6,7)[2:6][1:4], n = 3), n = 2)[1] # (don't ever do this)

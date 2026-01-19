@@ -1,0 +1,160 @@
+---
+format: gfm
+execute:
+  echo: false
+  warning: false
+---
+
+<img src='logo/Hex.png' align="right" height="139" />
+
+```{r}
+#| include: false
+
+library(tidyverse)
+library(glue)
+
+extract_pkgs <- function(fl) {
+  if (length(fl) == 1) {
+    txt <- read.delim(fl, header = FALSE)[[1]]
+
+    pkgs <- str_extract_all(
+      string = txt,
+      pattern = "((?<=(library|require)\\()[a-zA-Z0-9\\.]{1,}(?=\\))|[a-zA-Z0-9\\.]{1,}(?=\\:{2}))"
+    )
+
+    pkgs <- unlist(pkgs)
+  } else if (length(fl) > 1) {
+    pkgs <- sapply(fl, extract_pkgs)
+  }
+
+  pkgs |>
+    unlist(recursive = TRUE) |>
+    unique()
+}
+```
+
+# Practical Applications in R for Psychologists
+
+[![](https://img.shields.io/badge/Open%20Educational%20Resources-Compatable-brightgreen)](https://creativecommons.org/about/program-areas/education-oer/)
+[![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)
+[![](https://img.shields.io/badge/Language-R-blue)](http://cran.r-project.org/)
+
+<sub>*Last updated `r Sys.Date()`.*</sub>
+
+This Github repo contains all lesson files for *Practical Applications in R for Psychologists*.
+(Materials developed with Kim Rubinstein and Lihi Nagar.)
+The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots),
+and the foundations of **building, evaluating and comparing statistical models in `R`**,
+focusing on linear regression modeling (using both frequentist and Bayesian approaches).
+
+
+These topics were taught in the graduate-level course ***Advanced Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University of the Negev), laying the foundation for the following topic-focused courses:
+
+- [Structural equation modelling (*SEM*)](https://github.com/mattansb/Structural-Equation-Modeling-foR-Psychologists)
+- [Machine Learning (*ML*)](https://github.com/mattansb/Machine-Learning-foR-Psychologists)
+- [Hierarchical linear models (*HLM*)](https://github.com/mattansb/Hierarchical-Linear-Models-foR-Psychologists)
+- ~~[Analysis of Factorial Designs (*ANOVA*)](https://github.com/mattansb/Analysis-of-Factorial-Designs-foR-Psychologists)~~ (no longer offered)
+
+**Notes:**
+
+- This repo contains only materials relating to *Practical Applications in R*. Though statistics are naturally discussed in many lessons, the focus is generally on the application and not on the theory.
+- Please note that some code does not work *on purpose* and without warning, to force students to learn to debug.
+
+## Setup
+
+You will need:
+
+1. A fresh installation of [**`R`**](https://cran.r-project.org/) (preferably version 4.5.0 or above).
+2. [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) or [Positron](https://positron.posit.co/download) (optional, but recommended).
+3. The following packages, listed by lesson:
+
+
+```{r}
+r_files <- list.files(pattern = ".R$", recursive = TRUE, full.names = TRUE)
+
+r_files <- r_files[str_detect(r_files, "^\\./\\d{2}")]
+
+r_lesson_names <- str_extract(r_files, pattern = "(?<=(/)).{1,}(?=(/))")
+
+r_list <- split(r_files, r_lesson_names)
+
+r_pkgs <- lapply(r_list, extract_pkgs)
+
+r_df <- tibble(
+  Lesson = names(r_pkgs),
+  Packages = r_pkgs
+)
+
+r_df |>
+  mutate(
+    Lesson = glue("[{Lesson}](//{Lesson})"),
+    Packages = sapply(Packages, \(x) glue('`{x}`') |> glue_collapse(sep = ", "))
+  ) |>
+  knitr::kable()
+```
+
+<details><summary><i>Installing R Packages</i></summary>
+
+You can install all the R packages used by running:
+
+```{r}
+r_pkgs <- r_pkgs |>
+  unlist(recursive = TRUE) |>
+  unique() |>
+  sort()
+
+packinfo <- installed.packages(fields = c("Package", "Version"))
+
+get_src <- function(pkg) {
+  pd <- packageDescription(pkg)
+  if (is.null(src <- pd$Repository)) {
+    if (!is.null(src <- pd$GithubRepo)) {
+      src <- paste0("Github: ", pd$GithubUsername, "/", src)
+    } else {
+      src <- "Dev"
+    }
+  }
+  return(src)
+}
+
+r_pkg_info <- tibble(
+  pkg = r_pkgs,
+  source = sapply(r_pkgs, get_src),
+  version = packinfo[r_pkgs, "Version"]
+) |>
+  filter(version != packageVersion("base")) |>
+  mutate(
+    pak_src = case_when(
+      source == "Dev" ~ NA,
+      source == "CRAN" ~ "cran",
+      str_detect(source, "Github") ~ "github",
+      str_detect(source, "Bioconductor") ~ "bioc"
+    ),
+
+    pak = case_match(
+      pak_src,
+      "cran" ~ glue("cran::{pkg}"),
+      "bioc" ~ glue("bioc::{pkg}"),
+      "github" ~ glue("github::{str_remove_all(source, 'Github: ')}"),
+      .default = pkg
+    )
+  ) |>
+  arrange(pkg)
+
+cat("# in alphabetical order:\n\n")
+
+cat("pak::pak(\n  c(")
+r_pkg_info$comma <- rep(",", nrow(r_pkg_info))
+r_pkg_info$comma[nrow(r_pkg_info)] <- ""
+cat(
+  glue_data(r_pkg_info, '    "{pak}"{comma} # {version}') |>
+    glue_collapse(sep = "\n")
+)
+cat("  )\n)")
+```
+
+</details>
+
+---
+
+Prior to 2025, this course was based on the `{caret}` package - this version can still be found [here](https://github.com/mattansb/Machine-Learning-foR-Psychologists/tree/caret).
