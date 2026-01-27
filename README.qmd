@@ -42,7 +42,6 @@ extract_pkgs <- function(fl) {
 <sub>*Last updated `r Sys.Date()`.*</sub>
 
 This Github repo contains all lesson files for *Practical Applications in R for Psychologists*.
-(Materials developed with Kim Rubinstein and Lihi Nagar.)
 The goal is to impart students with the basic tools to process data, describe data (w/ summary statistics and plots),
 and the foundations of **building, evaluating and comparing statistical models in `R`**,
 focusing on linear regression modeling (using both frequentist and Bayesian approaches).
@@ -154,3 +153,9 @@ cat("  )\n)")
 ```
 
 </details>
+
+---
+
+### Acknowledgements
+
+Materials developed with Kim Rubinstein and Lihi Nagar.

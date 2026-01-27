@@ -8,15 +8,14 @@
 [![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)
 [![](https://img.shields.io/badge/Language-R-blue.png)](http://cran.r-project.org/)
 
-<sub>*Last updated 2026-01-19.*</sub>
+<sub>*Last updated 2026-01-27.*</sub>
 
 This Github repo contains all lesson files for *Practical Applications
-in R for Psychologists*. (Materials developed with Kim Rubinstein and
-Lihi Nagar.) The goal is to impart students with the basic tools to
-process data, describe data (w/ summary statistics and plots), and the
-foundations of **building, evaluating and comparing statistical models
-in `R`**, focusing on linear regression modeling (using both frequentist
-and Bayesian approaches).
+in R for Psychologists*. The goal is to impart students with the basic
+tools to process data, describe data (w/ summary statistics and plots),
+and the foundations of **building, evaluating and comparing statistical
+models in `R`**, focusing on linear regression modeling (using both
+frequentist and Bayesian approaches).
 
 These topics were taught in the graduate-level course ***Advanced
 Research Methods for Psychologists*** (Psych Dep., Ben-Gurion University
@@ -94,7 +93,7 @@ You can install all the R packages used by running:
         "cran::ggbeeswarm", # 0.7.3
         "cran::ggeffects", # 2.3.2
         "cran::ggplot2", # 4.0.1
-        "cran::insight", # 1.4.4
+        "insight", # 1.4.4.3
         "cran::marginaleffects", # 0.31.0
         "cran::mice", # 3.19.0
         "cran::modelbased", # 0.13.1
@@ -115,3 +114,9 @@ You can install all the R packages used by running:
     )
 
 </details>
+
+------------------------------------------------------------------------
+
+### Acknowledgements
+
+Materials developed with Kim Rubinstein and Lihi Nagar.
