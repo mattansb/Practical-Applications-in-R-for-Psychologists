@@ -86,7 +86,7 @@ r_df <- tibble(
 
 r_df |>
   mutate(
-    Lesson = glue("[{Lesson}](//{Lesson})"),
+    Lesson = glue("[{Lesson}]({Lesson}//)"),
     Packages = sapply(Packages, \(x) glue('`{x}`') |> glue_collapse(sep = ", "))
   ) |>
   knitr::kable()
@@ -100,6 +100,9 @@ You can install all the R packages used by running:
 r_pkgs <- r_pkgs |>
   unlist(recursive = TRUE) |>
   unique() |>
+  setdiff(tidyverse::tidyverse_packages()) |>
+  setdiff(easystats::easystats_packages()) |>
+  c("tidyverse", "easystats") |>
   sort()
 
 packinfo <- installed.packages(fields = c("Package", "Version"))

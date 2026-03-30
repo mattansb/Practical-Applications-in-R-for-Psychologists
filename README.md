@@ -8,7 +8,7 @@
 [![](https://img.shields.io/badge/CC-BY--NC%204.0-lightgray)](http://creativecommons.org/licenses/by-nc/4.0/)
 [![](https://img.shields.io/badge/Language-R-blue.png)](http://cran.r-project.org/)
 
-<sub>*Last updated 2026-01-27.*</sub>
+<sub>*Last updated 2026-03-30.*</sub>
 
 This Github repo contains all lesson files for *Practical Applications
 in R for Psychologists*. The goal is to impart students with the basic
@@ -53,17 +53,17 @@ You will need:
 
 | Lesson | Packages |
 |:---|:---|
-| [01 intro](/01%20intro) |  |
-| [02 data wrangling](/02%20data%20wrangling) | `tidyverse`, `readxl`, `dplyr`, `datawizard`, `summarytools`, `psych`, `ggplot2`, `performance`, `see`, `finalfit`, `Hmisc`, `mice` |
-| [03 plotting](/03%20plotting) | `dplyr`, `tidyr`, `ggplot2`, `ragg` |
-| [04 NHST hypothesis testing and power](/04%20NHST%20hypothesis%20testing%20and%20power) | `tidyverse`, `effectsize`, `correlation`, `TOSTER`, `parameters`, `datawizard`, `pwr`, `ggplot2` |
-| [05 Bayesian](/05%20Bayesian) | `effectsize`, `correlation`, `BayesFactor`, `bayestestR`, `see` |
-| [06 regression basics](/06%20regression%20basics) | `ggplot2`, `effectsize`, `parameters`, `performance`, `marginaleffects` |
-| [07 categorical predictors and model comparison](/07%20categorical%20predictors%20and%20model%20comparison) | `tidyverse`, `parameters`, `marginaleffects`, `datawizard`, `tidyverse`, `parameters`, `performance`, `bayestestR` |
-| [08 moderation and curvilinear](/08%20moderation%20and%20curvilinear) | `dplyr`, `ggplot2`, `datawizard`, `parameters`, `performance`, `bayestestR`, `marginaleffects`, `modelbased` |
-| [09 assumption checks and violations](/09%20assumption%20checks%20and%20violations) | `ggeffects`, `performance`, `see`, `parameters`, `qqplotr`, `datawizard`, `permuco`, `insight` |
-| [10 ANOVA](/10%20ANOVA) | `afex`, `effectsize`, `tidyr`, `emmeans`, `ggbeeswarm`, `marginaleffects` |
-| [11 generalized linear models](/11%20generalized%20linear%20models) | `dplyr`, `ggplot2`, `parameters`, `performance`, `marginaleffects`, `effectsize` |
+| [01 intro](01%20intro//) |  |
+| [02 data wrangling](02%20data%20wrangling//) | `tidyverse`, `readxl`, `dplyr`, `datawizard`, `summarytools`, `psych`, `ggplot2`, `performance`, `see`, `finalfit`, `Hmisc`, `mice` |
+| [03 plotting](03%20plotting//) | `dplyr`, `tidyr`, `ggplot2`, `ragg` |
+| [04 NHST hypothesis testing and power](04%20NHST%20hypothesis%20testing%20and%20power//) | `tidyverse`, `effectsize`, `correlation`, `TOSTER`, `parameters`, `datawizard`, `pwr`, `ggplot2` |
+| [05 Bayesian](05%20Bayesian//) | `effectsize`, `correlation`, `BayesFactor`, `bayestestR`, `see` |
+| [06 regression basics](06%20regression%20basics//) | `ggplot2`, `effectsize`, `parameters`, `performance`, `marginaleffects` |
+| [07 categorical predictors and model comparison](07%20categorical%20predictors%20and%20model%20comparison//) | `tidyverse`, `parameters`, `marginaleffects`, `datawizard`, `tidyverse`, `parameters`, `performance`, `bayestestR` |
+| [08 moderation and curvilinear](08%20moderation%20and%20curvilinear//) | `dplyr`, `ggplot2`, `datawizard`, `parameters`, `performance`, `bayestestR`, `marginaleffects`, `modelbased` |
+| [09 assumption checks and violations](09%20assumption%20checks%20and%20violations//) | `ggeffects`, `performance`, `see`, `parameters`, `qqplotr`, `datawizard`, `permuco`, `insight` |
+| [10 ANOVA](10%20ANOVA//) | `afex`, `effectsize`, `tidyr`, `emmeans`, `ggbeeswarm`, `marginaleffects` |
+| [11 generalized linear models](11%20generalized%20linear%20models//) | `dplyr`, `ggplot2`, `parameters`, `performance`, `marginaleffects`, `effectsize` |
 
 <details>
 
@@ -79,35 +79,22 @@ You can install all the R packages used by running:
     pak::pak(
       c(
 
-        "cran::BayesFactor", # 0.9.12-4.7
+        "cran::BayesFactor", # 0.9.12-4.8
         "cran::Hmisc", # 5.2-5
         "cran::TOSTER", # 0.8.6
         "cran::afex", # 1.5-1
-        "bayestestR", # 0.17.0.2
-        "cran::correlation", # 0.8.8
-        "datawizard", # 1.3.0
-        "cran::dplyr", # 1.1.4
-        "effectsize", # 1.0.1.2
-        "cran::emmeans", # 2.0.1
+        "cran::easystats", # 0.7.5
+        "cran::emmeans", # 2.0.2
         "cran::finalfit", # 1.1.0
         "cran::ggbeeswarm", # 0.7.3
         "cran::ggeffects", # 2.3.2
-        "cran::ggplot2", # 4.0.1
-        "insight", # 1.4.4.3
-        "cran::marginaleffects", # 0.31.0
+        "cran::marginaleffects", # 0.32.0
         "cran::mice", # 3.19.0
-        "cran::modelbased", # 0.13.1
-        "parameters", # 0.28.3
-        "cran::performance", # 0.15.3
         "cran::permuco", # 1.1.3
-        "cran::psych", # 2.5.6
+        "cran::psych", # 2.6.1
         "cran::pwr", # 1.3-0
         "cran::qqplotr", # 0.0.7
-        "cran::ragg", # 1.5.0
-        "cran::readxl", # 1.4.5
-        "cran::see", # 0.12.0
-        "cran::summarytools", # 1.1.4
-        "cran::tidyr", # 1.3.2
+        "cran::summarytools", # 1.1.5
         "cran::tidyverse" # 2.0.0
 
       )
